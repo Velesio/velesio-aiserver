@@ -63,11 +63,13 @@ services:
     ports:
       - "9121:9121"
     environment:
-      - REDIS_ADDR=localhost:6379
-      - REDIS_PASSWORD=your_strong_password_here
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PASS=${REDIS_PASS}
     restart: unless-stopped
     networks:
       - monitoring
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 volumes:
   prometheus_data:

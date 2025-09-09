@@ -3,7 +3,7 @@
 
 ## Quick Start
 
-0. Download the undreamai_server binaries
+0. Download the undreamai_server binaries and make sure you have a model in /gpu/models, the MODEL_URL will wget a model if you do not.
 ```bash
 cd gpu
 ./server_setup.sh

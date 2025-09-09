@@ -1,4 +1,57 @@
-# Monitoring Stack Setup
+# Monitoring Stack
+
+This monitoring setup provides comprehensive observability for the graycat-aiserver with pre-configured dashboards.
+
+## Components
+
+- **Prometheus**: Metrics collection and storage
+- **Grafana**: Visualization and dashboards with auto-provisioned dashboards
+- **Redis Exporter**: Exports Redis metrics to Prometheus
+- **Node Exporter**: Exports system metrics to Prometheus
+
+## Pre-configured Dashboards
+
+The following dashboards are automatically provisioned on startup:
+
+- **Redis Dashboard** (ID: 14091): Comprehensive Redis monitoring including memory usage, commands, connections, and performance metrics
+- **Node Exporter Full** (ID: 1860): Complete system resource monitoring including CPU, memory, disk, network, and system stats
+
+## Quick Start
+
+1. Make sure your main Redis instance is running (the one used by graycat-aiserver)
+
+2. Set the Redis password environment variable to match your main Redis instance:
+```bash
+export REDIS_PASS="your_actual_redis_password"
+```
+
+3. Start the monitoring stack:
+```bash
+cd monitoring
+docker-compose up -d
+```
+
+4. Access services:
+   - **Grafana**: http://localhost:3000 (admin/admin)
+   - **Prometheus**: http://localhost:9090
+   - **Redis Exporter**: http://localhost:9121
+   - **Node Exporter**: http://localhost:9100
+
+## Configuration
+
+The dashboards are automatically loaded from `/grafana/dashboards/` directory. The setup includes:
+
+- Prometheus scraping configuration for all exporters
+- Grafana data source auto-configuration
+- Dashboard auto-provisioning
+- Persistent volumes for data retention
+
+## Troubleshooting
+
+If Redis metrics aren't showing:
+1. Verify Redis is accessible from Docker containers
+2. Check the REDIS_PASS environment variable matches your Redis password
+3. Ensure Redis is listening on the expected port (6379) Stack Setup
 
 This directory contains a complete monitoring stack with Grafana, Prometheus, Node Exporter, and Redis monitoring.
 
