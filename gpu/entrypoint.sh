@@ -8,7 +8,7 @@ fi
 ./undreamai_server \
     --model /app/models/model.gguf \
     --host 0.0.0.0 \
-    --port 1337 \
+    --port "$PORT" \
     --gpu-layers "$GPU_LAYERS" \
     --template chatml &
 

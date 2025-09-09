@@ -34,12 +34,13 @@ services:
     ports: 
       - "1337:1337"
     environment:
+      - GPU_LAYERS=${GPU_LAYERS}
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PASS=${REDIS_PASS}
       - LLAMA_SERVER_URL=${LLAMA_SERVER_URL}
       - REMOTE=${REMOTE}
-      - GPU_LAYERS=${GPU_LAYERS}
       - MODEL_URL=${MODEL_URL}
+      - PORT=${PORT}
     # if you mount your model directory:
     restart: unless-stopped
     volumes:
