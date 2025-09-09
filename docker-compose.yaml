@@ -19,44 +19,49 @@ services:
     depends_on:
       - redis
     environment:
-      - REDIS_URL=redis://redis:6379
+      - REDIS_HOST=${REDIS_HOST}
       - REDIS_PASS=${REDIS_PASS}
       - API_TOKENS=${API_TOKENS}
     ports:
       - "8000:8000"
     restart: unless-stopped
 
-  gpu-worker:
+  gpu:
     build:
       context: ./gpu
       dockerfile: Dockerfile
     container_name: llama_worker
     ports: 
-      - "50018:50018"
+      - "1337:1337"
     environment:
-      - REDIS_HOST=redis
+      - REDIS_HOST=${REDIS_HOST}
       - REDIS_PASS=${REDIS_PASS}
       - LLAMA_SERVER_URL=${LLAMA_SERVER_URL}
+      - REMOTE=${REMOTE}
+      - GPU_LAYERS=${GPU_LAYERS}
+      - MODEL_URL=${MODEL_URL}
     # if you mount your model directory:
     restart: unless-stopped
     volumes:
       - ./gpu/models:/app/models
+    depends_on:
+      - api
     deploy:
       resources:
         reservations:
           devices:
             - capabilities: [gpu]
 
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/ssl:/etc/nginx/ssl:ro
-      - ./nginx/logs/nginx:/var/log/nginx
-    restart: unless-stopped
-    depends_on:
-      - api
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./nginx/ssl:/etc/nginx/ssl:ro
+  #     - ./nginx/logs/nginx:/var/log/nginx
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - api

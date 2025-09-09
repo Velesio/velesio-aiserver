@@ -24,6 +24,10 @@ app = FastAPI(
     root_path="/api"
 )
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+REDIS_HOST = os.getenv("REDIS_HOST", "redis")
+REDIS_PASS = os.getenv("REDIS_PASS", "")
+if not os.getenv("REDIS_URL"):
+    redis_url = f"redis://:{REDIS_PASS}@{REDIS_HOST}:6379"
 redis_pass = os.getenv("REDIS_PASS", None)
 redis_conn = Redis.from_url(redis_url, password=redis_pass)
 redis_client = redis.from_url(redis_url, password=redis_pass, decode_responses=True)
