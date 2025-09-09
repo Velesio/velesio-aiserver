@@ -26,7 +26,7 @@ docker-compose up -d --build
 - **API Server** (`api/`): FastAPI service with authentication, queues inference jobs to Redis
 - **Redis**: Job queue and message broker between API and workers
 - **Nginx**: Reverse proxy for secure remote hosting
-- **Monitoring** (`monitoring/`): Grafana stack and templates for observability
+- **Monitoring** (`monitoring/`): Grafana stack and templates for observability; By default brings up Redis and Node Exporter dashboards
 
 ## Endpoints
 
