@@ -26,26 +26,26 @@ services:
       - "8000:8000"
     restart: unless-stopped
 
-  # gpu-worker:
-  #   build:
-  #     context: ./gpu
-  #     dockerfile: Dockerfile
-  #   container_name: llama_worker
-  #   ports: 
-  #     - "50018:50018"
-  #   environment:
-  #     - REDIS_HOST=redis
-  #     - REDIS_PASS=${REDIS_PASS}
-  #     - LLAMA_SERVER_URL=${LLAMA_SERVER_URL}
-  #   # if you mount your model directory:
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./gpu/models:/app/models
-  #   deploy:
-  #     resources:
-  #       reservations:
-  #         devices:
-  #           - capabilities: [gpu]
+  gpu-worker:
+    build:
+      context: ./gpu
+      dockerfile: Dockerfile
+    container_name: llama_worker
+    ports: 
+      - "50018:50018"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PASS=${REDIS_PASS}
+      - LLAMA_SERVER_URL=${LLAMA_SERVER_URL}
+    # if you mount your model directory:
+    restart: unless-stopped
+    volumes:
+      - ./gpu/models:/app/models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
 
   nginx:
     image: nginx:alpine

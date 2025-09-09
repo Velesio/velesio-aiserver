@@ -22,11 +22,11 @@ docker-compose up -d --build
 
 ## Architecture
 
+- **GPU Worker** (`gpu/`): LLM inference using CUDA-enabled undreamai(llmacpp customized for unity) server, locally or connecting to a remote API Server through Redis Queue
 - **API Server** (`api/`): FastAPI service with authentication, queues inference jobs to Redis
-- **GPU Worker** (`gpu/`): Processes LLM inference using CUDA-enabled llama.cpp server
 - **Redis**: Job queue and message broker between API and workers
-- **Monitoring** (`monitoring/`): Prometheus + Grafana stack for observability
-- **RunPod Controller** (`runpod-controller/`): Auto-scaling script for cloud GPU instances
+- **Nginx**: Reverse proxy for secure remote hosting
+- **Monitoring** (`monitoring/`): Grafana stack and templates for observability
 
 ## Endpoints
 
@@ -38,8 +38,6 @@ docker-compose up -d --build
 - `POST /tokenize` - Tokenize text
 - `GET /health` - Health check (no auth required)
 
-## Additional Features`
-
-- **Authentication**: Secure API access with Bearer tokens stored in Postgres
-- **Frontend**: User-friendly interface with secure login, creating an api key and credits
-- **Stable Diffusion Integration**: Host Automatic 1111 SD server with /gpu and use it with [this Unity Asset](https://github.com/dobrado76/Stable-Diffusion-Unity-Integration)
+## Unity Integration Links
+- `[Undream LLM for Unity](https://assetstore.unity.com/packages/tools/ai-ml-integration/llm-for-unity-273604)
+- `[dobrado76 Stable Diffusion Unity Integration](https://github.com/dobrado76/Stable-Diffusion-Unity-Integration/discussions)
