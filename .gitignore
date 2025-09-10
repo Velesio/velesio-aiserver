@@ -1,6 +1,6 @@
 **/models
 .env
-gpu/libundreamai*
-gpu/undreamai_server
+gpu/llama/libundreamai*
+gpu/llama/undreamai_server
 logs
 ssl
