@@ -1,2 +1,3 @@
-server_setup.sh
-models
+data/llama/server_setup.sh
+data/models
+data/sd
