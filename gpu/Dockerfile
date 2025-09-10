@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y \
 COPY . /app
 RUN chmod +x entrypoint.sh
 
-# Install your requirements
+# Install your requirements with CUDA support
+RUN pip install --no-cache-dir torch torchvision torchaudio xformers --index-url https://download.pytorch.org/whl/cu124
 RUN pip install --no-cache-dir -r requirements.txt
 
 CMD ["./entrypoint.sh"]

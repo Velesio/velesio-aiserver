@@ -18,7 +18,9 @@ if [ "$RUN_SD" = "true" ]; then
         fi
         # Remove incomplete installation and clone fresh
         rm -rf /app/data/sd
-        git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git /app/data/sd
+        git clone --depth 1 https://github.com/AUTOMATIC1111/stable-diffusion-webui.git /app/data/sd
+        # Remove .git folder to avoid git repository issues
+        rm -rf /app/data/sd/.git
         # Restore models directory if backup exists
         if [ -d "/tmp/sd_models_backup" ]; then
             echo "📦 Restoring models directory..."
@@ -32,9 +34,21 @@ if [ "$RUN_SD" = "true" ]; then
     # Set up Python virtual environment if not already done
     if [ ! -d "venv" ]; then
         echo "🐍 Creating Python virtual environment..."
-        python3 -m venv venv
-        ./venv/bin/pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+        python3 -m venv venv --system-site-packages
+        # Install any additional A1111-specific packages if needed
+        ./venv/bin/pip install --upgrade pip
     fi
+    
+    # Create webui-user.sh for optimal settings WITH xformers
+    cat > webui-user.sh << 'EOF'
+#!/bin/bash
+export COMMANDLINE_ARGS="--skip-version-check --xformers"
+export TORCH_COMMAND="pip install torch torchvision torchaudio xformers --index-url https://download.pytorch.org/whl/cu124"
+EOF
+    chmod +x webui-user.sh
+    
+    # Set environment variables for optimal performance
+    export COMMANDLINE_ARGS="--skip-version-check --xformers"
     
     # Create models directory structure if not exists
     mkdir -p models/Stable-diffusion models/VAE models/Lora models/embeddings
@@ -53,11 +67,13 @@ if [ "$RUN_SD" = "true" ]; then
         fi
     done
     
-    # Start A1111 with API enabled, no browser, and listen on all interfaces
+    # Start A1111 with xformers optimization
     ./venv/bin/python launch.py \
-        --listen --port 7860 --api  \
-        --xformers --skip-torch-cuda-test \
-        --no-half-vae --medvram &
+        --listen --port 7860 --api \
+        --skip-torch-cuda-test \
+        --no-half-vae --medvram \
+        --xformers \
+        --skip-version-check &
     
     # Wait for A1111 to start up
     echo "⏳ Waiting for A1111 to start..."
