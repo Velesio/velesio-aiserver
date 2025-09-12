@@ -1,7 +1,51 @@
 #!/bin/bash
 
+# Create necessary directories if they don't exist
+mkdir -p /app/data/models/text
+mkdir -p /app/data/models/image/models/Stable-diffusion
+mkdir -p /app/data/models/image/models/VAE
+mkdir -p /app/data/models/image/models/Lora
+mkdir -p /app/data/models/image/models/embeddings
+mkdir -p /app/data/sd
+mkdir -p /app/data/llama
+
 if [ ! -f /app/data/models/text/model.gguf ]; then
     wget -O /app/data/models/text/model.gguf "$MODEL_URL"
+fi
+
+# Download image model if the models directory is empty
+if [ -z "$(ls -A /app/data/models/image/models/Stable-diffusion 2>/dev/null)" ]; then
+    if [ -n "$SD_MODEL_URL" ]; then
+        echo "📦 Downloading Stable Diffusion model..."
+        # Extract filename from URL or use default
+        MODEL_FILENAME=$(basename "$SD_MODEL_URL" | cut -d'?' -f1)
+        if [[ "$MODEL_FILENAME" != *.safetensors && "$MODEL_FILENAME" != *.ckpt ]]; then
+            MODEL_FILENAME="sd-model.safetensors"
+        fi
+        wget -O "/app/data/models/image/models/Stable-diffusion/$MODEL_FILENAME" "$SD_MODEL_URL"
+    fi
+fi
+
+# Download LoRA model if URL is provided
+if [ -n "$LORA_URL" ] && [ ! -f "/app/data/models/image/models/Lora/lora-model.safetensors" ]; then
+    echo "📦 Downloading LoRA model..."
+    LORA_FILENAME=$(basename "$LORA_URL" | cut -d'?' -f1)
+    if [[ "$LORA_FILENAME" != *.safetensors && "$LORA_FILENAME" != *.ckpt ]]; then
+        LORA_FILENAME="lora-model.safetensors"
+    fi
+    wget -O "/app/data/models/image/models/Lora/$LORA_FILENAME" "$LORA_URL"
+fi
+
+# Download VAE model if URL is provided
+if [ -n "$VAE_URL" ] && [ ! -f "/app/data/models/image/models/VAE/vae-model.safetensors" ]; then
+    echo "📦 Downloading VAE model..."
+    # Handle the VAE_URL which has extra parameters
+    VAE_CLEAN_URL=$(echo "$VAE_URL" | cut -d' ' -f1)
+    VAE_FILENAME=$(basename "$VAE_CLEAN_URL")
+    if [[ "$VAE_FILENAME" != *.safetensors && "$VAE_FILENAME" != *.ckpt ]]; then
+        VAE_FILENAME="vae-model.safetensors"
+    fi
+    wget -O "/app/data/models/image/models/VAE/$VAE_FILENAME" "$VAE_CLEAN_URL"
 fi
 
 # Start Automatic1111 WebUI if RUN_SD is enabled
