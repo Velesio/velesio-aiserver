@@ -10,6 +10,10 @@ services:
     ports:
       - "6379:6379"
     restart: unless-stopped
+    labels:
+      container_name: "redis"
+      service_name: "graycat"
+      pod_name: "redis-pod"
 
   api:
     build:
@@ -25,6 +29,10 @@ services:
     ports:
       - "8000:8000"
     restart: unless-stopped
+    labels:
+      container_name: "llama_api"
+      service_name: "graycat"
+      pod_name: "api-pod"
 
   gpu:
     build:
@@ -54,6 +62,10 @@ services:
         reservations:
           devices:
             - capabilities: [gpu]
+    labels:
+      container_name: "llama_worker"
+      service_name: "graycat"
+      pod_name: "gpu-worker-pod"
 
   # nginx:
   #   image: nginx:alpine
@@ -68,3 +80,7 @@ services:
   #   restart: unless-stopped
   #   depends_on:
   #     - api
+  #   labels:
+  #     container_name: "nginx"
+  #     service_name: "reverse-proxy"
+  #     pod_name: "nginx-pod"
