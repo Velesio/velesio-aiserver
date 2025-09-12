@@ -22,6 +22,11 @@ scrape_configs:
     static_configs:
       - targets: ['redis-exporter:9121']
 
+  # NVIDIA GPU Exporter
+  - job_name: 'nvidia-gpu'
+    static_configs:
+      - targets: ['nvidia-gpu-exporter:9835']
+
   # Optional: Monitor host machine directly (if node-exporter is running on host)
   # Uncomment if you have node-exporter running directly on the host
   # - job_name: 'host-node-exporter'

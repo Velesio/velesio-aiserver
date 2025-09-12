@@ -8,6 +8,7 @@ This monitoring setup provides comprehensive observability for the graycat-aiser
 - **Grafana**: Visualization and dashboards with auto-provisioned dashboards
 - **Redis Exporter**: Exports Redis metrics to Prometheus
 - **Node Exporter**: Exports system metrics to Prometheus
+- **NVIDIA GPU Exporter**: Exports GPU metrics including utilization, memory, temperature, and power consumption
 
 ## Pre-configured Dashboards
 
@@ -15,6 +16,7 @@ The following dashboards are automatically provisioned on startup:
 
 - **Redis Dashboard** (ID: 14091): Comprehensive Redis monitoring including memory usage, commands, connections, and performance metrics
 - **Node Exporter Full** (ID: 1860): Complete system resource monitoring including CPU, memory, disk, network, and system stats
+- **NVIDIA GPU Metrics** (ID: 14574): GPU monitoring including utilization, memory usage, temperature, power draw, fan speed, and clock speeds
 
 ## Quick Start
 
@@ -48,10 +50,26 @@ The dashboards are automatically loaded from `/grafana/dashboards/` directory. T
 
 ## Troubleshooting
 
+### Redis Metrics
 If Redis metrics aren't showing:
 1. Verify Redis is accessible from Docker containers
 2. Check the REDIS_PASS environment variable matches your Redis password
-3. Ensure Redis is listening on the expected port (6379) Stack Setup
+3. Ensure Redis is listening on the expected port (6379)
+
+### GPU Metrics  
+If GPU metrics aren't showing:
+1. Ensure NVIDIA drivers are installed on the host system
+2. Verify Docker has access to GPU devices (`docker run --gpus all nvidia/cuda nvidia-smi`)
+3. Check that `/dev/nvidia*` devices exist on the host
+4. Ensure `nvidia-smi` command works on the host system
+5. For multiple GPUs, add additional device mappings in docker-compose.yaml:
+   ```yaml
+   devices:
+     - /dev/nvidiactl:/dev/nvidiactl
+     - /dev/nvidia0:/dev/nvidia0
+     - /dev/nvidia1:/dev/nvidia1  # Add for each GPU
+     - /dev/nvidia-uvm:/dev/nvidia-uvm
+   ``` Stack Setup
 
 This directory contains a complete monitoring stack with Grafana, Prometheus, Node Exporter, and Redis monitoring.
 
