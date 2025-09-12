@@ -19,8 +19,10 @@ if [ "$RUN_SD" = "true" ]; then
         # Remove incomplete installation and clone fresh
         rm -rf /app/data/sd
         git clone --depth 1 https://github.com/AUTOMATIC1111/stable-diffusion-webui.git /app/data/sd
-        # Remove .git folder to avoid git repository issues
-        rm -rf /app/data/sd/.git
+        
+        # Remove ALL .git folders to avoid git repository issues completely
+        find /app/data/sd -name ".git" -type d -exec rm -rf {} + 2>/dev/null || true
+        
         # Restore models directory if backup exists
         if [ -d "/tmp/sd_models_backup" ]; then
             echo "📦 Restoring models directory..."
@@ -30,6 +32,11 @@ if [ "$RUN_SD" = "true" ]; then
     fi
     
     cd /app/data/sd
+    
+    # Fix Git ownership issues before any Git operations
+    git config --global --add safe.directory '*'
+    git config --global user.name "Docker User"
+    git config --global user.email "docker@example.com"
     
     # Set up Python virtual environment if not already done
     if [ ! -d "venv" ]; then
@@ -52,6 +59,18 @@ EOF
     
     # Create models directory structure if not exists
     mkdir -p models/Stable-diffusion models/VAE models/Lora models/embeddings
+    
+    # Symlink the entire models folder from /data/models/image/models to SD models folder
+    if [ -d "/app/data/models/image/models" ]; then
+        echo "📁 Symlinking models directory from /app/data/models/image/models to SD models folder..."
+        # Remove existing models directory if it exists and is not a symlink
+        if [ -d "models" ] && [ ! -L "models" ]; then
+            echo "📁 Backing up existing models directory..."
+            mv models models_backup_$(date +%s)
+        fi
+        # Create the symlink
+        ln -sfn /app/data/models/image/models models
+    fi
     
     # Link your existing model to A1111's expected location
     if [ -f /app/data/models/image/dnd.safetensors ]; then

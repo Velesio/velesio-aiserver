@@ -1,7 +1,4 @@
 .env
-gpu/data/models/*
-gpu/data/sd/*
-gpu/data/llama/libundreamai*
-gpu/data/llama/undreamai_server
+gpu/data
 nginx/logs/*
 nginx/ssl/*

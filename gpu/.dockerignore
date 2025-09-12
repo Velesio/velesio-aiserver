@@ -1,3 +1,17 @@
+# Exclude large model files and SD installation
+data/models/
+data/sd/
 data/llama/server_setup.sh
-data/models
-data/sd
+
+# Exclude other large files that shouldn't be in the image
+**/*.ckpt
+**/*.safetensors
+**/*.bin
+**/*.pt
+**/*.pth
+**/*.gguf
+__pycache__/
+*.pyc
+.git/
+.gitignore
+*.log
