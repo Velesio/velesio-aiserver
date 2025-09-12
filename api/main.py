@@ -4,6 +4,7 @@ import logging
 import time
 import uuid
 import asyncio
+import httpx
 from fastapi import FastAPI, HTTPException, Request, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import StreamingResponse
@@ -26,6 +27,7 @@ app = FastAPI(
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
 REDIS_HOST = os.getenv("REDIS_HOST", "redis")
 REDIS_PASS = os.getenv("REDIS_PASS", "")
+A1111_URL = os.getenv("A1111_URL", "http://llama_worker:7860")  # Internal container URL
 if not os.getenv("REDIS_URL"):
     redis_url = f"redis://:{REDIS_PASS}@{REDIS_HOST}:6379"
 redis_pass = os.getenv("REDIS_PASS", None)
@@ -140,6 +142,18 @@ class SlotRequest(BaseModel):
     id_slot: int
     filepath: str
     action: str
+
+class SDGenerationRequest(BaseModel):
+    prompt: str
+    negative_prompt: Optional[str] = ""
+    steps: Optional[int] = 20
+    cfg_scale: Optional[float] = 7.0
+    width: Optional[int] = 512
+    height: Optional[int] = 512
+    sampler_name: Optional[str] = "DPM++ 2M Karras"
+    seed: Optional[int] = -1
+    batch_size: Optional[int] = 1
+    n_iter: Optional[int] = 1
 
 # Unity LLM endpoints
 @app.post("/template")
@@ -400,13 +414,50 @@ async def handle_slots(request: SlotRequest, token: str = Depends(verify_token))
         logger.error(f"Error in slots endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error in slots: {str(e)}")
 
+@app.post("/generate-image")
+async def generate_image(request: SDGenerationRequest, token: str = Depends(verify_token)):
+    """Generate images using Stable Diffusion via Redis async tasks"""
+    try:
+        logger.info(f"SD generation request: {request.prompt[:50]}...")
+        
+        # Create task for Redis
+        task_data = {
+            "endpoint": "sd_generation",
+            "data": request.dict(),
+            "timestamp": time.time()
+        }
+        
+        # Add to Redis queue specifically for SD tasks
+        task_id = str(uuid.uuid4())
+        await redis_client.lpush("sd_tasks", json.dumps({
+            "id": task_id,
+            **task_data
+        }))
+        
+        logger.info(f"SD task {task_id} added to Redis sd_tasks queue")
+        
+        # Wait for result (SD generation can take longer)
+        result = await wait_for_result(task_id, timeout=600)  # 10 minute timeout
+        if result.get("error"):
+            logger.error(f"SD generation error: {result['error']}")
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        logger.info(f"SD generation completed for task {task_id}")
+        return result.get("data", {})
+            
+    except Exception as e:
+        logger.error(f"Error in generate-image: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error generating image: {str(e)}")
+
 @app.get("/")
 def root(token: str = Depends(verify_token)):
     return {
         "message": "LLM API Server", 
         "status": "running",
         "endpoints": [
-            "/template", "/tokenize", "/completion", "/slots"
+            "/template", "/tokenize", "/completion", "/slots", "/generate-image",
+            "/sdapi/v1/sd-models", "/sdapi/v1/txt2img", "/sdapi/v1/options",
+            "/api/sd-models"
         ],
         "architecture": "Distributed Redis async task-based worker system",
         "authentication": "Authentication required for all endpoints except /health, use a Bearer token"
@@ -416,5 +467,74 @@ def root(token: str = Depends(verify_token)):
 def health_check():
     """Health check endpoint that doesn't require authentication"""
     return {"status": "healthy", "timestamp": time.time()}
+
+# A1111 WebUI API Proxy Endpoints for Unity compatibility
+@app.get("/sdapi/v1/sd-models")
+async def get_sd_models(token: str = Depends(verify_token)):
+    """Proxy endpoint for A1111 WebUI sd-models API"""
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f"{A1111_URL}/sdapi/v1/sd-models", timeout=30.0)
+            response.raise_for_status()
+            return response.json()
+    except Exception as e:
+        logger.error(f"Error proxying sd-models request: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error connecting to SD service: {str(e)}")
+
+@app.get("/api/sd-models")  
+async def get_sd_models_alt(token: str = Depends(verify_token)):
+    """Alternative proxy endpoint for A1111 WebUI sd-models API"""
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f"{A1111_URL}/sdapi/v1/sd-models", timeout=30.0)
+            response.raise_for_status()
+            return response.json()
+    except Exception as e:
+        logger.error(f"Error proxying sd-models request: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error connecting to SD service: {str(e)}")
+
+@app.post("/sdapi/v1/txt2img")
+async def txt2img_proxy(request: dict, token: str = Depends(verify_token)):
+    """Proxy endpoint for A1111 WebUI txt2img API"""
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                f"{A1111_URL}/sdapi/v1/txt2img", 
+                json=request,
+                timeout=300.0
+            )
+            response.raise_for_status()
+            return response.json()
+    except Exception as e:
+        logger.error(f"Error proxying txt2img request: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error generating image: {str(e)}")
+
+@app.get("/sdapi/v1/options")
+async def get_options(token: str = Depends(verify_token)):
+    """Proxy endpoint for A1111 WebUI options API"""
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f"{A1111_URL}/sdapi/v1/options", timeout=30.0)
+            response.raise_for_status()
+            return response.json()
+    except Exception as e:
+        logger.error(f"Error proxying options request: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error connecting to SD service: {str(e)}")
+
+@app.post("/sdapi/v1/options")
+async def set_options(request: dict, token: str = Depends(verify_token)):
+    """Proxy endpoint for A1111 WebUI options API"""
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                f"{A1111_URL}/sdapi/v1/options",
+                json=request,
+                timeout=30.0
+            )
+            response.raise_for_status()
+            return response.json()
+    except Exception as e:
+        logger.error(f"Error proxying options request: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error setting options: {str(e)}")
 
 

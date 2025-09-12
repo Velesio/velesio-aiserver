@@ -19,12 +19,18 @@ async def handle_sd_generation(request_dict):
     try:
         logger.info(f"Processing SD request: {request_dict}")
 
-        # Default payload
+        # Default payload for A1111 API
         payload = {
             "prompt": "a cat",
+            "negative_prompt": "",
             "steps": 20,
+            "cfg_scale": 7.0,
             "width": 512,
             "height": 512,
+            "sampler_name": "DPM++ 2M Karras",
+            "seed": -1,
+            "batch_size": 1,
+            "n_iter": 1
         }
         # Update with provided data
         payload.update(request_dict)
@@ -38,7 +44,7 @@ async def handle_sd_generation(request_dict):
         if "images" in r and r["images"]:
             image_data = r['images'][0]
             # The result is a base64 encoded string
-            return {"image_base64": image_data}
+            return {"image_base64": image_data, "info": r.get("info", {})}
         else:
             return {"error": "No images returned from A1111"}
 
@@ -60,15 +66,25 @@ async def process_sd_tasks():
                 task_json = task_data[1]
                 task = json.loads(task_json)
                 task_id = task["id"]
+                endpoint = task.get("endpoint", "sd_generation")
                 request_data = task["data"]
 
-                logger.info(f"Processing task {task_id} for SD generation")
+                logger.info(f"Processing task {task_id} for endpoint {endpoint}")
 
-                result = await handle_sd_generation(request_data)
-                await redis_client.set(f"result:{task_id}", json.dumps({"data": result}), ex=600)
+                if endpoint == "sd_generation":
+                    result = await handle_sd_generation(request_data)
+                    await redis_client.set(f"result:{task_id}", json.dumps({"data": result}), ex=600)
+                    logger.info(f"SD task {task_id} completed and result stored")
+                else:
+                    logger.warning(f"Unknown endpoint {endpoint} for task {task_id}")
+                    await redis_client.set(f"result:{task_id}", json.dumps({"error": f"Unknown endpoint: {endpoint}"}), ex=600)
+                    
         except asyncio.CancelledError:
             logger.info("SD task processor cancelled.")
             break
+        except json.JSONDecodeError as e:
+            logger.error(f"JSON decode error in SD task: {e}")
+            await asyncio.sleep(1)
         except Exception as e:
             logger.error(f"Error processing SD task: {e}")
             await asyncio.sleep(1)
