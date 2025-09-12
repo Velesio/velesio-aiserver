@@ -1,0 +1,210 @@
+<footer class="site-footer h-card">
+  <data class="u-url" href="{{ "/" | relative_url }}"></data>
+
+  <div class="wrapper">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3 class="footer-heading">{{ site.title | escape }}</h3>
+        <p class="footer-description">{{ site.description }}</p>
+        
+        <div class="social-links">
+          <a href="https://github.com/{{ site.github_username }}/{{ site.repository }}" class="social-link" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+          
+          {% if site.twitter_username %}
+          <a href="https://twitter.com/{{ site.twitter_username }}" class="social-link" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+            Twitter
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Documentation</h4>
+        <ul class="footer-links">
+          <li><a href="{{ '/getting-started' | relative_url }}">Getting Started</a></li>
+          <li><a href="{{ '/architecture' | relative_url }}">Architecture</a></li>
+          <li><a href="{{ '/api-reference' | relative_url }}">API Reference</a></li>
+          <li><a href="{{ '/deployment' | relative_url }}">Deployment</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul class="footer-links">
+          <li><a href="{{ '/troubleshooting' | relative_url }}">Troubleshooting</a></li>
+          <li><a href="https://github.com/{{ site.github_username }}/{{ site.repository }}/issues" target="_blank">Report Issues</a></li>
+          <li><a href="https://github.com/{{ site.github_username }}/{{ site.repository }}/discussions" target="_blank">Discussions</a></li>
+          <li><a href="https://github.com/{{ site.github_username }}/{{ site.repository }}/releases" target="_blank">Releases</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Built with</h4>
+        <div class="tech-stack">
+          <span class="tech-badge">FastAPI</span>
+          <span class="tech-badge">Docker</span>
+          <span class="tech-badge">Redis</span>
+          <span class="tech-badge">CUDA</span>
+          <span class="tech-badge">Jekyll</span>
+        </div>
+        
+        <div class="footer-meta">
+          <p>&copy; {{ site.time | date: "%Y" }} {{ site.title }}. Open source under MIT license.</p>
+          <p class="build-info">
+            Built with ❤️ using Jekyll
+            <br>
+            <small>Last updated: {{ site.time | date: "%B %d, %Y" }}</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+.site-footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: 3rem 0 1rem 0;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.footer-section h3 {
+  font-size: 1.3rem;
+}
+
+.footer-section h4 {
+  font-size: 1rem;
+}
+
+.footer-description {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--button-bg);
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.social-link:hover {
+  background-color: var(--button-hover);
+  border-color: var(--link-color);
+  color: var(--link-color);
+}
+
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--link-color);
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech-badge {
+  background-color: var(--bg-tertiary);
+  color: var(--text-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  border: 1px solid var(--border-color);
+}
+
+.footer-meta {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.footer-meta p {
+  margin: 0.5rem 0;
+  color: var(--text-muted);
+}
+
+.build-info {
+  border-top: 1px solid var(--border-muted);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.build-info small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .social-links {
+    flex-direction: column;
+  }
+  
+  .tech-stack {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+</style>

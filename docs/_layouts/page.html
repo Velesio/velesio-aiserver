@@ -1,0 +1,71 @@
+---
+layout: default
+---
+
+{%- include header.html -%}
+
+<div class="page-layout">
+  {%- include sidebar.html -%}
+  
+  <main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post">
+        <header class="post-header">
+          <h1 class="post-title">{{ page.title | escape }}</h1>
+          {%- if page.description -%}
+            <p class="post-description">{{ page.description }}</p>
+          {%- endif -%}
+        </header>
+
+        <div class="post-content">
+          {{ content }}
+        </div>
+
+        {% if page.nav_order and page.nav_order < 6 %}
+          <nav class="post-nav">
+            {% assign pages = site.pages | where_exp: "item", "item.nav_order" | sort: "nav_order" %}
+            {% assign current_index = page.nav_order | minus: 1 %}
+            {% assign prev_index = current_index | minus: 1 %}
+            {% assign next_index = current_index | plus: 1 %}
+            
+            <div class="nav-previous">
+              {% if prev_index >= 0 %}
+                {% assign prev_page = pages[prev_index] %}
+                <a href="{{ prev_page.url | relative_url }}" rel="prev">← {{ prev_page.title }}</a>
+              {% endif %}
+            </div>
+            
+            <div class="nav-next">
+              {% if next_index < pages.size %}
+                {% assign next_page = pages[next_index] %}
+                <a href="{{ next_page.url | relative_url }}" rel="next">{{ next_page.title }} →</a>
+              {% endif %}
+            </div>
+          </nav>
+        {% endif %}
+
+        <!-- Back to top button -->
+        <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+          </svg>
+        </button>
+      </article>
+    </div>
+  </main>
+</div>
+
+{%- include footer.html -%}
+
+<script>
+// Set dark theme as default immediately
+(function() {
+  const savedTheme = localStorage.getItem('theme');
+  const theme = savedTheme || 'dark'; // Default to dark
+  document.documentElement.setAttribute('data-theme', theme);
+  if (!savedTheme) {
+    localStorage.setItem('theme', 'dark');
+  }
+})();
+</script>
+<script src="{{ '/assets/js/main.js' | relative_url }}"></script>

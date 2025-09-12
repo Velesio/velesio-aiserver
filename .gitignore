@@ -2,3 +2,4 @@
 gpu/data
 nginx/logs/*
 nginx/ssl/*
+docs/vendor

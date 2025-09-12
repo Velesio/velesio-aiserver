@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>GPU Workers | Graycat AI Server</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="GPU Workers" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="GPU Workers" />
+<meta property="og:description" content="GPU Workers" />
+<link rel="canonical" href="http://0.0.0.0:4000/graycat-aiserver/components/gpu-workers/" />
+<meta property="og:url" content="http://0.0.0.0:4000/graycat-aiserver/components/gpu-workers/" />
+<meta property="og:site_name" content="Graycat AI Server" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-09-13T01:48:08+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="GPU Workers" />
+<meta name="twitter:site" content="@graycathq" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-09-13T01:48:08+02:00","datePublished":"2025-09-13T01:48:08+02:00","description":"GPU Workers","headline":"GPU Workers","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/graycat-aiserver/components/gpu-workers/"},"url":"http://0.0.0.0:4000/graycat-aiserver/components/gpu-workers/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/graycat-aiserver/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/graycat-aiserver/feed.xml" title="Graycat AI Server" /></head>
+<body><header class="site-header" role="banner">
+  <div class="header-wrapper">
+    <a class="site-title" rel="author" href="/graycat-aiserver/">
+      <span class="site-logo">🚀</span>
+      Graycat AI Server
+    </a>
+
+    <div class="header-actions">
+      <!-- Theme toggle -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 18c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6zm0-10c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zM12 4V2c0-.6-.4-1-1-1s-1 .4-1 1v2c0 .6.4 1 1 1s1-.4 1-1zM12 22v-2c0-.6-.4-1-1-1s-1 .4-1 1v2c0 .6.4 1 1 1s1-.4 1-1zM20 13h2c.6 0 1-.4 1-1s-.4-1-1-1h-2c-.6 0-1 .4-1 1s.4 1 1 1zM4 13H2c-.6 0-1-.4-1-1s.4-1 1-1h2c.6 0 1 .4 1 1s-.4 1-1 1z"/>
+        </svg>
+        <svg class="theme-icon moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+          <path d="M21 12.8c-.2 4.9-4.3 8.8-9.2 8.6C6.8 21.2 2.8 17.1 3 12.2 3.2 7.3 7.3 3.4 12.2 3.6c.5 0 1 .1 1.4.2-.4.4-.7.9-1 1.4-.9 1.6-.9 3.5 0 5.1.4.8 1 1.4 1.8 1.8 1.6.9 3.5.9 5.1 0 .5-.3 1-.6 1.4-1 .1.5.1.9.1 1.4z"/>
+        </svg>
+      </button>
+
+      <!-- GitHub link -->
+      <a class="github-link" href="https://github.com/GrayCatHQ/graycat-aiserver" target="_blank" rel="noopener" aria-label="View on GitHub">
+        <svg class="github-icon" width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+.site-header {
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.site-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site-logo {
+  font-size: 1.2rem;
+}
+
+.site-nav {
+  .page-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: var(--text-color);
+    }
+    
+    &.github-link {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      
+      .github-icon {
+        fill: currentColor;
+      }
+    }
+  }
+  
+  .nav-trigger {
+    display: none;
+  }
+  
+  .menu-icon {
+    display: none;
+  }
+  
+  .trigger {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .site-nav {
+    position: absolute;
+    top: 9px;
+    right: 15px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    text-align: right;
+    
+    label[for="nav-trigger"] {
+      display: block;
+      float: right;
+      width: 36px;
+      height: 36px;
+      z-index: 2;
+      cursor: pointer;
+    }
+    
+    .menu-icon {
+      display: block;
+      float: right;
+      width: 36px;
+      height: 26px;
+      line-height: 0;
+      padding-top: 10px;
+      text-align: center;
+      
+      > svg {
+        fill: var(--text-color);
+      }
+    }
+    
+    input ~ .trigger {
+      clear: both;
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+    }
+    
+    input:checked ~ .trigger {
+      display: flex;
+    }
+    
+    .page-link {
+      display: block;
+      padding: 5px 10px;
+      margin-left: 0;
+      margin-bottom: 5px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+</style><main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <header class="site-header" role="banner">
+  <div class="header-wrapper">
+    <a class="site-title" rel="author" href="/graycat-aiserver/">
+      <span class="site-logo">🚀</span>
+      Graycat AI Server
+    </a>
+
+    <div class="header-actions">
+      <!-- Theme toggle -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 18c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6zm0-10c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zM12 4V2c0-.6-.4-1-1-1s-1 .4-1 1v2c0 .6.4 1 1 1s1-.4 1-1zM12 22v-2c0-.6-.4-1-1-1s-1 .4-1 1v2c0 .6.4 1 1 1s1-.4 1-1zM20 13h2c.6 0 1-.4 1-1s-.4-1-1-1h-2c-.6 0-1 .4-1 1s.4 1 1 1zM4 13H2c-.6 0-1-.4-1-1s.4-1 1-1h2c.6 0 1 .4 1 1s-.4 1-1 1z"/>
+        </svg>
+        <svg class="theme-icon moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+          <path d="M21 12.8c-.2 4.9-4.3 8.8-9.2 8.6C6.8 21.2 2.8 17.1 3 12.2 3.2 7.3 7.3 3.4 12.2 3.6c.5 0 1 .1 1.4.2-.4.4-.7.9-1 1.4-.9 1.6-.9 3.5 0 5.1.4.8 1 1.4 1.8 1.8 1.6.9 3.5.9 5.1 0 .5-.3 1-.6 1.4-1 .1.5.1.9.1 1.4z"/>
+        </svg>
+      </button>
+
+      <!-- GitHub link -->
+      <a class="github-link" href="https://github.com/GrayCatHQ/graycat-aiserver" target="_blank" rel="noopener" aria-label="View on GitHub">
+        <svg class="github-icon" width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+.site-header {
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.site-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site-logo {
+  font-size: 1.2rem;
+}
+
+.site-nav {
+  .page-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: var(--text-color);
+    }
+    
+    &.github-link {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      
+      .github-icon {
+        fill: currentColor;
+      }
+    }
+  }
+  
+  .nav-trigger {
+    display: none;
+  }
+  
+  .menu-icon {
+    display: none;
+  }
+  
+  .trigger {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .site-nav {
+    position: absolute;
+    top: 9px;
+    right: 15px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    text-align: right;
+    
+    label[for="nav-trigger"] {
+      display: block;
+      float: right;
+      width: 36px;
+      height: 36px;
+      z-index: 2;
+      cursor: pointer;
+    }
+    
+    .menu-icon {
+      display: block;
+      float: right;
+      width: 36px;
+      height: 26px;
+      line-height: 0;
+      padding-top: 10px;
+      text-align: center;
+      
+      > svg {
+        fill: var(--text-color);
+      }
+    }
+    
+    input ~ .trigger {
+      clear: both;
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+    }
+    
+    input:checked ~ .trigger {
+      display: flex;
+    }
+    
+    .page-link {
+      display: block;
+      padding: 5px 10px;
+      margin-left: 0;
+      margin-bottom: 5px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+</style><div class="page-layout"><nav class="sidebar" id="sidebar">
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <h3>Documentation</h3>
+    </div>
+    
+    <ul class="sidebar-nav">
+      <li class="nav-item">
+        <a href="/graycat-aiserver/" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+          </svg>
+          Home
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/getting-started.html" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+          </svg>
+          Getting Started
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/architecture.html" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          Architecture
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/api-reference.html" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+          </svg>
+          API Reference
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/deployment.html" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm6 16H8a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h2v1a1 1 0 0 0 2 0V9h2v12a1 1 0 0 1-1 1z"/>
+          </svg>
+          Deployment
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/troubleshooting.html" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11 15h2v2h-2v-2zm0-8h2v6h-2V7zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+          </svg>
+          Troubleshooting
+        </a>
+      </li>
+      
+      <li class="nav-section">
+        <span class="section-title">Components</span>
+      </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/components/api-service/" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          API Service
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/components/gpu-workers/" class="nav-link active">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/>
+          </svg>
+          GPU Workers
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Sidebar overlay for mobile -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div><main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post">
+        <header class="post-header">
+          <h1 class="post-title">GPU Workers</h1></header>
+
+        <div class="post-content">
+          <h1 id="gpu-workers">GPU Workers</h1>
+
+<p>The GPU workers are specialized containers that handle AI inference tasks using NVIDIA GPUs.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p><strong>Location</strong>: <code class="language-plaintext highlighter-rouge">gpu/</code><br />
+<strong>Technology</strong>: Python + CUDA + Custom Binaries<br />
+<strong>Container</strong>: <code class="language-plaintext highlighter-rouge">llama_worker</code><br />
+<strong>Workers</strong>: LLM Worker (<code class="language-plaintext highlighter-rouge">llm.py</code>) + Stable Diffusion Worker (<code class="language-plaintext highlighter-rouge">sd.py</code>)</p>
+
+<p>The GPU workers pull jobs from Redis queue and execute AI inference using:</p>
+
+<ul>
+  <li><strong>LLM Worker</strong>: Custom <code class="language-plaintext highlighter-rouge">undreamai_server</code> (llama.cpp fork) for text generation</li>
+  <li><strong>SD Worker</strong>: Automatic1111 WebUI for image generation</li>
+</ul>
+
+<h2 id="architecture">Architecture</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td><td class="rouge-code"><pre>┌─────────────────────────────────────────┐
+│              GPU Worker                 │
+│                                         │
+│  ┌─────────────┐    ┌─────────────────┐ │
+│  │ Job Poller  │    │  Result Writer  │ │
+│  │  (Redis)    │    │    (Redis)      │ │
+│  └─────┬───────┘    └─────────▲───────┘ │
+│        │                      │         │
+│        ▼                      │         │
+│  ┌─────────────────────────────┴───────┐ │
+│  │         Job Processor              │ │
+│  │                                    │ │
+│  │  ┌─────────────┐ ┌───────────────┐ │ │
+│  │  │ LLM Engine  │ │  SD Engine    │ │ │
+│  │  │             │ │               │ │ │
+│  │  │undreamai_   │ │ Automatic1111 │ │ │
+│  │  │server       │ │   WebUI       │ │ │
+│  │  └─────────────┘ └───────────────┘ │ │
+│  └────────────────────────────────────┘ │
+│                                         │
+│  ┌─────────────────────────────────────┐ │
+│  │              GPU Memory             │ │
+│  │  ┌─────────────┐ ┌───────────────┐  │ │
+│  │  │ LLM Models  │ │  SD Models    │  │ │
+│  │  │ (.gguf)     │ │ (.safetensors)│  │ │
+│  │  └─────────────┘ └───────────────┘  │ │
+│  └─────────────────────────────────────┘ │
+└─────────────────────────────────────────┘
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="llm-worker-llmpy">LLM Worker (<code class="language-plaintext highlighter-rouge">llm.py</code>)</h2>
+
+<h3 id="core-technology">Core Technology</h3>
+
+<p><strong>Engine</strong>: <code class="language-plaintext highlighter-rouge">undreamai_server</code> - Custom llama.cpp fork optimized for undream.ai</p>
+
+<p><strong>Key Features</strong>:</p>
+<ul>
+  <li>GGUF model format support</li>
+  <li>GPU layer offloading (CUDA)</li>
+  <li>Streaming text generation</li>
+  <li>Context window management</li>
+  <li>Memory-efficient inference</li>
+</ul>
+
+<h3 id="implementation">Implementation</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">redis</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="k">class</span> <span class="nc">LLMWorker</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'redis'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">server_process</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">model_loaded</span> <span class="o">=</span> <span class="bp">False</span>
+        
+    <span class="k">def</span> <span class="nf">start_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Start the undreamai_server process"""</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s">'./data/llama/undreamai_server'</span><span class="p">,</span>
+            <span class="s">'--model'</span><span class="p">,</span> <span class="s">'./data/models/text/model.gguf'</span><span class="p">,</span>
+            <span class="s">'--ctx-size'</span><span class="p">,</span> <span class="s">'4096'</span><span class="p">,</span>
+            <span class="s">'--n-gpu-layers'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'GPU_LAYERS'</span><span class="p">,</span> <span class="mi">35</span><span class="p">)),</span>
+            <span class="s">'--host'</span><span class="p">,</span> <span class="s">'0.0.0.0'</span><span class="p">,</span>
+            <span class="s">'--port'</span><span class="p">,</span> <span class="s">'1337'</span>
+        <span class="p">]</span>
+        
+        <span class="bp">self</span><span class="p">.</span><span class="n">server_process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">Popen</span><span class="p">(</span>
+            <span class="n">cmd</span><span class="p">,</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Wait for server to start
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">wait_for_server</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">model_loaded</span> <span class="o">=</span> <span class="bp">True</span>
+        
+    <span class="k">def</span> <span class="nf">wait_for_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Wait for server to be ready"""</span>
+        <span class="kn">import</span> <span class="nn">requests</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">):</span>  <span class="c1"># 60 second timeout
+</span>            <span class="k">try</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:1337/health'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="k">return</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">"Server failed to start"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="job-processing">Job Processing</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">process_completion_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="s">"""Process text completion job"""</span>
+    
+    <span class="c1"># Extract parameters
+</span>    <span class="n">prompt</span> <span class="o">=</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'prompt'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+    <span class="n">max_tokens</span> <span class="o">=</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'max_tokens'</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+    <span class="n">temperature</span> <span class="o">=</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'temperature'</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span>
+    
+    <span class="c1"># Prepare request to undreamai_server
+</span>    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'prompt'</span><span class="p">:</span> <span class="n">prompt</span><span class="p">,</span>
+        <span class="s">'n_predict'</span><span class="p">:</span> <span class="n">max_tokens</span><span class="p">,</span>
+        <span class="s">'temperature'</span><span class="p">:</span> <span class="n">temperature</span><span class="p">,</span>
+        <span class="s">'top_k'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'top_k'</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+        <span class="s">'top_p'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'top_p'</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span>
+        <span class="s">'repeat_penalty'</span><span class="p">:</span> <span class="mf">1.1</span><span class="p">,</span>
+        <span class="s">'stream'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'stream'</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="p">}</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Send request to local server
+</span>        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s">'http://localhost:1337/completion'</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="mi">300</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">()</span>
+        
+        <span class="c1"># Format response
+</span>        <span class="k">return</span> <span class="p">{</span>
+            <span class="s">'text'</span><span class="p">:</span> <span class="n">result</span><span class="p">[</span><span class="s">'content'</span><span class="p">],</span>
+            <span class="s">'finish_reason'</span><span class="p">:</span> <span class="n">result</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'stop_reason'</span><span class="p">,</span> <span class="s">'stop'</span><span class="p">),</span>
+            <span class="s">'usage'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">'prompt_tokens'</span><span class="p">:</span> <span class="n">result</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'tokens_evaluated'</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="s">'completion_tokens'</span><span class="p">:</span> <span class="n">result</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'tokens_predicted'</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="s">'total_tokens'</span><span class="p">:</span> <span class="n">result</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'tokens_evaluated'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">result</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'tokens_predicted'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">'error'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="streaming-support">Streaming Support</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">process_streaming_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="s">"""Process streaming completion job"""</span>
+    
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'prompt'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'prompt'</span><span class="p">,</span> <span class="s">''</span><span class="p">),</span>
+        <span class="s">'n_predict'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'max_tokens'</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span>
+        <span class="s">'temperature'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'temperature'</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">),</span>
+        <span class="s">'stream'</span><span class="p">:</span> <span class="bp">True</span>
+    <span class="p">}</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s">'http://localhost:1337/completion'</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
+            <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="mi">300</span>
+        <span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">response</span><span class="p">.</span><span class="n">iter_lines</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="s">'content'</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                        <span class="k">yield</span> <span class="p">{</span>
+                            <span class="s">'choices'</span><span class="p">:</span> <span class="p">[{</span>
+                                <span class="s">'text'</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s">'content'</span><span class="p">],</span>
+                                <span class="s">'index'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                <span class="s">'finish_reason'</span><span class="p">:</span> <span class="bp">None</span>
+                            <span class="p">}]</span>
+                        <span class="p">}</span>
+                <span class="k">except</span> <span class="n">json</span><span class="p">.</span><span class="n">JSONDecodeError</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                    
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">{</span><span class="s">'error'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="model-management">Model Management</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="s">"""Load a specific model"""</span>
+    
+    <span class="c1"># Stop current server if running
+</span>    <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">server_process</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">server_process</span><span class="p">.</span><span class="n">terminate</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">server_process</span><span class="p">.</span><span class="n">wait</span><span class="p">()</span>
+    
+    <span class="c1"># Start with new model
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">start_server_with_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+    
+<span class="k">def</span> <span class="nf">get_model_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="s">"""Get information about loaded model"""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:1337/props'</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        
+        <span class="n">props</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s">'name'</span><span class="p">:</span> <span class="n">props</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'default_generation_settings'</span><span class="p">,</span> <span class="p">{}).</span><span class="n">get</span><span class="p">(</span><span class="s">'model'</span><span class="p">,</span> <span class="s">'unknown'</span><span class="p">),</span>
+            <span class="s">'context_length'</span><span class="p">:</span> <span class="n">props</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'default_generation_settings'</span><span class="p">,</span> <span class="p">{}).</span><span class="n">get</span><span class="p">(</span><span class="s">'n_ctx'</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="s">'vocab_size'</span><span class="p">:</span> <span class="n">props</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'vocab_size'</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="s">'total_params'</span><span class="p">:</span> <span class="n">props</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'n_params'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">'error'</span><span class="p">:</span> <span class="s">'Failed to get model info'</span><span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="stable-diffusion-worker-sdpy">Stable Diffusion Worker (<code class="language-plaintext highlighter-rouge">sd.py</code>)</h2>
+
+<h3 id="core-technology-1">Core Technology</h3>
+
+<p><strong>Engine</strong>: Automatic1111 WebUI<br />
+<strong>Framework</strong>: PyTorch + Diffusers<br />
+<strong>Acceleration</strong>: xFormers, Flash Attention</p>
+
+<h3 id="implementation-1">Implementation</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre></td><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="k">class</span> <span class="nc">SDWorker</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">redis_client</span> <span class="o">=</span> <span class="n">redis</span><span class="p">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'redis'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">webui_url</span> <span class="o">=</span> <span class="s">'http://localhost:7860'</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">initialized</span> <span class="o">=</span> <span class="bp">False</span>
+        
+    <span class="k">def</span> <span class="nf">start_webui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Start Automatic1111 WebUI"""</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s">'python'</span><span class="p">,</span> <span class="s">'webui.py'</span><span class="p">,</span>
+            <span class="s">'--api'</span><span class="p">,</span>
+            <span class="s">'--listen'</span><span class="p">,</span>
+            <span class="s">'--port'</span><span class="p">,</span> <span class="s">'7860'</span><span class="p">,</span>
+            <span class="s">'--xformers'</span><span class="p">,</span>
+            <span class="s">'--no-gradio-queue'</span>
+        <span class="p">]</span>
+        
+        <span class="bp">self</span><span class="p">.</span><span class="n">webui_process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">Popen</span><span class="p">(</span>
+            <span class="n">cmd</span><span class="p">,</span>
+            <span class="n">cwd</span><span class="o">=</span><span class="s">'./data/sd'</span><span class="p">,</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span>
+        <span class="p">)</span>
+        
+        <span class="bp">self</span><span class="p">.</span><span class="n">wait_for_webui</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">initialized</span> <span class="o">=</span> <span class="bp">True</span>
+        
+    <span class="k">def</span> <span class="nf">wait_for_webui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Wait for WebUI to be ready"""</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">120</span><span class="p">):</span>  <span class="c1"># 2 minute timeout
+</span>            <span class="k">try</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">webui_url</span><span class="si">}</span><span class="s">/sdapi/v1/progress'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="k">return</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">"WebUI failed to start"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="text-to-image-processing">Text-to-Image Processing</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">process_txt2img_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="s">"""Process text-to-image generation job"""</span>
+    
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'prompt'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'prompt'</span><span class="p">,</span> <span class="s">''</span><span class="p">),</span>
+        <span class="s">'negative_prompt'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'negative_prompt'</span><span class="p">,</span> <span class="s">''</span><span class="p">),</span>
+        <span class="s">'width'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'width'</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+        <span class="s">'height'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'height'</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+        <span class="s">'steps'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'steps'</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+        <span class="s">'cfg_scale'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'cfg_scale'</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">),</span>
+        <span class="s">'sampler_name'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'sampler_name'</span><span class="p">,</span> <span class="s">'Euler a'</span><span class="p">),</span>
+        <span class="s">'seed'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'seed'</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+        <span class="s">'batch_size'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'batch_size'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s">'n_iter'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'n_iter'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">webui_url</span><span class="si">}</span><span class="s">/sdapi/v1/txt2img'</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span>  <span class="c1"># 10 minute timeout for image generation
+</span>        <span class="p">)</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s">'images'</span><span class="p">:</span> <span class="n">result</span><span class="p">[</span><span class="s">'images'</span><span class="p">],</span>  <span class="c1"># Base64 encoded images
+</span>            <span class="s">'parameters'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">'prompt'</span><span class="p">:</span> <span class="n">payload</span><span class="p">[</span><span class="s">'prompt'</span><span class="p">],</span>
+                <span class="s">'steps'</span><span class="p">:</span> <span class="n">payload</span><span class="p">[</span><span class="s">'steps'</span><span class="p">],</span>
+                <span class="s">'seed'</span><span class="p">:</span> <span class="n">result</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'info'</span><span class="p">,</span> <span class="p">{}).</span><span class="n">get</span><span class="p">(</span><span class="s">'seed'</span><span class="p">,</span> <span class="n">payload</span><span class="p">[</span><span class="s">'seed'</span><span class="p">]),</span>
+                <span class="s">'width'</span><span class="p">:</span> <span class="n">payload</span><span class="p">[</span><span class="s">'width'</span><span class="p">],</span>
+                <span class="s">'height'</span><span class="p">:</span> <span class="n">payload</span><span class="p">[</span><span class="s">'height'</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="s">'info'</span><span class="p">:</span> <span class="n">result</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'info'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+        <span class="p">}</span>
+        
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">'error'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="image-to-image-processing">Image-to-Image Processing</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">process_img2img_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="s">"""Process image-to-image transformation job"""</span>
+    
+    <span class="c1"># Decode input images
+</span>    <span class="n">init_images</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">img_b64</span> <span class="ow">in</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'init_images'</span><span class="p">,</span> <span class="p">[]):</span>
+        <span class="n">img_data</span> <span class="o">=</span> <span class="n">base64</span><span class="p">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">img_b64</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="n">io</span><span class="p">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">img_data</span><span class="p">))</span>
+        <span class="n">init_images</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'init_images'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'init_images'</span><span class="p">,</span> <span class="p">[]),</span>
+        <span class="s">'prompt'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'prompt'</span><span class="p">,</span> <span class="s">''</span><span class="p">),</span>
+        <span class="s">'negative_prompt'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'negative_prompt'</span><span class="p">,</span> <span class="s">''</span><span class="p">),</span>
+        <span class="s">'denoising_strength'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'denoising_strength'</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">),</span>
+        <span class="s">'width'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'width'</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+        <span class="s">'height'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'height'</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+        <span class="s">'steps'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'steps'</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+        <span class="s">'cfg_scale'</span><span class="p">:</span> <span class="n">job_data</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'cfg_scale'</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">)</span>
+    <span class="p">}</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">webui_url</span><span class="si">}</span><span class="s">/sdapi/v1/img2img'</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">format_sd_response</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+        
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">'error'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="model-management-1">Model Management</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">list_models</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="s">"""List available Stable Diffusion models"""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">webui_url</span><span class="si">}</span><span class="s">/sdapi/v1/sd-models'</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        
+        <span class="n">models</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s">'models'</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s">'name'</span><span class="p">:</span> <span class="n">model</span><span class="p">[</span><span class="s">'title'</span><span class="p">],</span>
+                    <span class="s">'filename'</span><span class="p">:</span> <span class="n">model</span><span class="p">[</span><span class="s">'filename'</span><span class="p">],</span>
+                    <span class="s">'hash'</span><span class="p">:</span> <span class="n">model</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'hash'</span><span class="p">,</span> <span class="s">''</span><span class="p">),</span>
+                    <span class="s">'loaded'</span><span class="p">:</span> <span class="n">model</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'model_name'</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_current_model</span><span class="p">()</span>
+                <span class="p">}</span>
+                <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">'error'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}</span>
+
+<span class="k">def</span> <span class="nf">switch_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="s">"""Switch to a different SD model"""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s">'sd_model_checkpoint'</span><span class="p">:</span> <span class="n">model_name</span><span class="p">}</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">webui_url</span><span class="si">}</span><span class="s">/sdapi/v1/options'</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="n">payload</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="p">{</span><span class="s">'success'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">'model'</span><span class="p">:</span> <span class="n">model_name</span><span class="p">}</span>
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">'error'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="job-queue-integration">Job Queue Integration</h2>
+
+<h3 id="redis-job-polling">Redis Job Polling</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">main_worker_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s">"""Main worker loop - polls Redis for jobs"""</span>
+    
+    <span class="n">llm_worker</span> <span class="o">=</span> <span class="n">LLMWorker</span><span class="p">()</span>
+    <span class="n">sd_worker</span> <span class="o">=</span> <span class="n">SDWorker</span><span class="p">()</span>
+    
+    <span class="c1"># Initialize workers
+</span>    <span class="n">llm_worker</span><span class="p">.</span><span class="n">start_server</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'RUN_SD'</span><span class="p">,</span> <span class="s">'true'</span><span class="p">).</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'true'</span><span class="p">:</span>
+        <span class="n">sd_worker</span><span class="p">.</span><span class="n">start_webui</span><span class="p">()</span>
+    
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Poll Redis queue (blocking pop with timeout)
+</span>            <span class="n">job_data</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">redis_client</span><span class="p">.</span><span class="n">brpop</span><span class="p">(</span><span class="s">'llama_queue'</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">job_data</span><span class="p">:</span>
+                <span class="n">queue_name</span><span class="p">,</span> <span class="n">job_json</span> <span class="o">=</span> <span class="n">job_data</span>
+                <span class="n">job</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">job_json</span><span class="p">)</span>
+                
+                <span class="c1"># Process job based on type
+</span>                <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">process_job</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">llm_worker</span><span class="p">,</span> <span class="n">sd_worker</span><span class="p">)</span>
+                
+                <span class="c1"># Store result in Redis
+</span>                <span class="n">result_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"result:</span><span class="si">{</span><span class="n">job</span><span class="p">[</span><span class="s">'id'</span><span class="p">]</span><span class="si">}</span><span class="s">"</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">redis_client</span><span class="p">.</span><span class="n">setex</span><span class="p">(</span>
+                    <span class="n">result_key</span><span class="p">,</span>
+                    <span class="mi">3600</span><span class="p">,</span>  <span class="c1"># 1 hour TTL
+</span>                    <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+                <span class="p">)</span>
+                
+        <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Worker error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+            <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="job-processing-router">Job Processing Router</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">process_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">llm_worker</span><span class="p">:</span> <span class="n">LLMWorker</span><span class="p">,</span> <span class="n">sd_worker</span><span class="p">:</span> <span class="n">SDWorker</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="s">"""Route job to appropriate worker"""</span>
+    
+    <span class="n">job_type</span> <span class="o">=</span> <span class="n">job</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'type'</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+    <span class="n">job_data</span> <span class="o">=</span> <span class="n">job</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'data'</span><span class="p">,</span> <span class="p">{})</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">job_type</span> <span class="o">==</span> <span class="s">'completion'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">llm_worker</span><span class="p">.</span><span class="n">process_completion_job</span><span class="p">(</span><span class="n">job_data</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">job_type</span> <span class="o">==</span> <span class="s">'chat_completion'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">llm_worker</span><span class="p">.</span><span class="n">process_chat_completion_job</span><span class="p">(</span><span class="n">job_data</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">job_type</span> <span class="o">==</span> <span class="s">'txt2img'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sd_worker</span><span class="p">.</span><span class="n">process_txt2img_job</span><span class="p">(</span><span class="n">job_data</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">job_type</span> <span class="o">==</span> <span class="s">'img2img'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sd_worker</span><span class="p">.</span><span class="n">process_img2img_job</span><span class="p">(</span><span class="n">job_data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s">'error'</span><span class="p">:</span> <span class="sa">f</span><span class="s">'Unknown job type: </span><span class="si">{</span><span class="n">job_type</span><span class="si">}</span><span class="s">'</span><span class="p">}</span>
+            
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">'error'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="gpu-memory-management">GPU Memory Management</h2>
+
+<h3 id="dynamic-memory-allocation">Dynamic Memory Allocation</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">optimize_gpu_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s">"""Optimize GPU memory usage"""</span>
+    
+    <span class="c1"># Get available GPU memory
+</span>    <span class="kn">import</span> <span class="nn">pynvml</span>
+    <span class="n">pynvml</span><span class="p">.</span><span class="n">nvmlInit</span><span class="p">()</span>
+    <span class="n">handle</span> <span class="o">=</span> <span class="n">pynvml</span><span class="p">.</span><span class="n">nvmlDeviceGetHandleByIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">mem_info</span> <span class="o">=</span> <span class="n">pynvml</span><span class="p">.</span><span class="n">nvmlDeviceGetMemoryInfo</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+    
+    <span class="n">available_mb</span> <span class="o">=</span> <span class="n">mem_info</span><span class="p">.</span><span class="n">free</span> <span class="o">//</span> <span class="mi">1024</span> <span class="o">//</span> <span class="mi">1024</span>
+    
+    <span class="c1"># Adjust model parameters based on available memory
+</span>    <span class="k">if</span> <span class="n">available_mb</span> <span class="o">&lt;</span> <span class="mi">4000</span><span class="p">:</span>  <span class="c1"># Less than 4GB
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">gpu_layers</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">gpu_layers</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">context_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">context_size</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">available_mb</span> <span class="o">&lt;</span> <span class="mi">8000</span><span class="p">:</span>  <span class="c1"># Less than 8GB
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">gpu_layers</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">gpu_layers</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">context_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">context_size</span><span class="p">,</span> <span class="mi">4096</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="model-unloading">Model Unloading</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">unload_model_if_needed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s">"""Unload model to free GPU memory"""</span>
+    
+    <span class="c1"># Check if no jobs processed recently
+</span>    <span class="n">last_job_time</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">redis_client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'last_job_time'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">last_job_time</span><span class="p">:</span>
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">last_job_time</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">elapsed</span> <span class="o">&gt;</span> <span class="mi">300</span><span class="p">:</span>  <span class="c1"># 5 minutes idle
+</span>            <span class="bp">self</span><span class="p">.</span><span class="n">unload_models</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">unload_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s">"""Unload all models from GPU memory"""</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">llm_worker</span><span class="p">.</span><span class="n">server_process</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">llm_worker</span><span class="p">.</span><span class="n">server_process</span><span class="p">.</span><span class="n">terminate</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">llm_worker</span><span class="p">.</span><span class="n">model_loaded</span> <span class="o">=</span> <span class="bp">False</span>
+    
+    <span class="c1"># Clear GPU cache
+</span>    <span class="kn">import</span> <span class="nn">torch</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">():</span>
+        <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">empty_cache</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="performance-optimization">Performance Optimization</h2>
+
+<h3 id="batch-processing">Batch Processing</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">process_batch_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jobs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="s">"""Process multiple jobs in batch for efficiency"""</span>
+    
+    <span class="c1"># Group jobs by type
+</span>    <span class="n">txt2img_jobs</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">jobs</span> <span class="k">if</span> <span class="n">j</span><span class="p">[</span><span class="s">'type'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'txt2img'</span><span class="p">]</span>
+    <span class="n">completion_jobs</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">jobs</span> <span class="k">if</span> <span class="n">j</span><span class="p">[</span><span class="s">'type'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'completion'</span><span class="p">]</span>
+    
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Process image generation jobs in batch
+</span>    <span class="k">if</span> <span class="n">txt2img_jobs</span><span class="p">:</span>
+        <span class="n">batch_result</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">sd_worker</span><span class="p">.</span><span class="n">process_batch_txt2img</span><span class="p">(</span><span class="n">txt2img_jobs</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">batch_result</span><span class="p">)</span>
+    
+    <span class="c1"># Process text completion jobs sequentially (for now)
+</span>    <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">completion_jobs</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">llm_worker</span><span class="p">.</span><span class="n">process_completion_job</span><span class="p">(</span><span class="n">job</span><span class="p">[</span><span class="s">'data'</span><span class="p">])</span>
+        <span class="n">results</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">results</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="caching">Caching</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">cache_frequently_used_prompts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="s">"""Cache results for frequently used prompts"""</span>
+    
+    <span class="n">prompt_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">md5</span><span class="p">(</span><span class="n">prompt</span><span class="p">.</span><span class="n">encode</span><span class="p">()).</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"prompt_cache:</span><span class="si">{</span><span class="n">prompt_hash</span><span class="si">}</span><span class="s">"</span>
+    
+    <span class="c1"># Store in Redis with TTL
+</span>    <span class="bp">self</span><span class="p">.</span><span class="n">redis_client</span><span class="p">.</span><span class="n">setex</span><span class="p">(</span>
+        <span class="n">cache_key</span><span class="p">,</span>
+        <span class="mi">7200</span><span class="p">,</span>  <span class="c1"># 2 hours
+</span>        <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_cached_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="s">"""Get cached result for prompt"""</span>
+    
+    <span class="n">prompt_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">md5</span><span class="p">(</span><span class="n">prompt</span><span class="p">.</span><span class="n">encode</span><span class="p">()).</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"prompt_cache:</span><span class="si">{</span><span class="n">prompt_hash</span><span class="si">}</span><span class="s">"</span>
+    
+    <span class="n">cached</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">redis_client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">cache_key</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cached</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cached</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">None</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="environment-variables">Environment Variables</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">GPU_LAYERS</code></td>
+      <td><code class="language-plaintext highlighter-rouge">35</code></td>
+      <td>Number of model layers on GPU</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">CUDA_VISIBLE_DEVICES</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>GPU device ID</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MODEL_PATH</code></td>
+      <td><code class="language-plaintext highlighter-rouge">./data/models/text/model.gguf</code></td>
+      <td>LLM model path</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SD_MODEL_PATH</code></td>
+      <td><code class="language-plaintext highlighter-rouge">./data/models/image/</code></td>
+      <td>SD models directory</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">CONTEXT_SIZE</code></td>
+      <td><code class="language-plaintext highlighter-rouge">4096</code></td>
+      <td>LLM context window</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">RUN_SD</code></td>
+      <td><code class="language-plaintext highlighter-rouge">true</code></td>
+      <td>Enable Stable Diffusion</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">REDIS_URL</code></td>
+      <td><code class="language-plaintext highlighter-rouge">redis://redis:6379</code></td>
+      <td>Redis connection</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">WORKER_TIMEOUT</code></td>
+      <td><code class="language-plaintext highlighter-rouge">600</code></td>
+      <td>Job processing timeout</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="docker-configuration">Docker Configuration</h3>
+
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre></td><td class="rouge-code"><pre><span class="k">FROM</span><span class="s"> nvidia/cuda:11.8-devel-ubuntu20.04</span>
+
+<span class="c"># Install Python and dependencies</span>
+<span class="k">RUN </span>apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> <span class="se">\
+</span>    python3 python3-pip git wget curl
+
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+
+<span class="c"># Install Python requirements</span>
+<span class="k">COPY</span><span class="s"> requirements.txt .</span>
+<span class="k">RUN </span>pip3 <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+
+<span class="c"># Copy worker code</span>
+<span class="k">COPY</span><span class="s"> llm.py sd.py ./</span>
+<span class="k">COPY</span><span class="s"> data/ ./data/</span>
+
+<span class="c"># Set permissions</span>
+<span class="k">RUN </span><span class="nb">chmod</span> +x ./data/llama/undreamai_server
+
+<span class="c"># Non-root user</span>
+<span class="k">RUN </span>useradd <span class="nt">-m</span> <span class="nt">-u</span> 1000 worker
+<span class="k">USER</span><span class="s"> worker</span>
+
+<span class="c"># Health check</span>
+<span class="k">HEALTHCHECK</span><span class="s"> --interval=60s --timeout=30s --start-period=120s --retries=3 \</span>
+    CMD python3 -c "import requests; requests.get('http://localhost:1337/health')"
+
+# Start worker
+<span class="k">CMD</span><span class="s"> ["python3", "llm.py"]</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="monitoring">Monitoring</h2>
+
+<h3 id="worker-health-checks">Worker Health Checks</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">health_check</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="s">"""Comprehensive worker health check"""</span>
+    
+    <span class="n">health</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'timestamp'</span><span class="p">:</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">(),</span>
+        <span class="s">'gpu_available'</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">(),</span>
+        <span class="s">'models_loaded'</span><span class="p">:</span> <span class="p">{}</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># Check LLM worker
+</span>    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:1337/health'</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">health</span><span class="p">[</span><span class="s">'llm_worker'</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+        <span class="n">health</span><span class="p">[</span><span class="s">'models_loaded'</span><span class="p">][</span><span class="s">'llm'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">llm_worker</span><span class="p">.</span><span class="n">model_loaded</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">health</span><span class="p">[</span><span class="s">'llm_worker'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">health</span><span class="p">[</span><span class="s">'models_loaded'</span><span class="p">][</span><span class="s">'llm'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+    
+    <span class="c1"># Check SD worker
+</span>    <span class="k">if</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'RUN_SD'</span><span class="p">,</span> <span class="s">'true'</span><span class="p">).</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'true'</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://localhost:7860/sdapi/v1/progress'</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+            <span class="n">health</span><span class="p">[</span><span class="s">'sd_worker'</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+            <span class="n">health</span><span class="p">[</span><span class="s">'models_loaded'</span><span class="p">][</span><span class="s">'sd'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">sd_worker</span><span class="p">.</span><span class="n">initialized</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">health</span><span class="p">[</span><span class="s">'sd_worker'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">health</span><span class="p">[</span><span class="s">'models_loaded'</span><span class="p">][</span><span class="s">'sd'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+    
+    <span class="c1"># GPU memory info
+</span>    <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">():</span>
+        <span class="n">health</span><span class="p">[</span><span class="s">'gpu_memory'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">'allocated'</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">memory_allocated</span><span class="p">(),</span>
+            <span class="s">'cached'</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">memory_reserved</span><span class="p">(),</span>
+            <span class="s">'total'</span><span class="p">:</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">get_device_properties</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="n">total_memory</span>
+        <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">health</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="performance-metrics">Performance Metrics</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">log_performance_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+    <span class="s">"""Log performance metrics"""</span>
+    
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'job_type'</span><span class="p">:</span> <span class="n">job_type</span><span class="p">,</span>
+        <span class="s">'duration'</span><span class="p">:</span> <span class="n">duration</span><span class="p">,</span>
+        <span class="s">'success'</span><span class="p">:</span> <span class="n">success</span><span class="p">,</span>
+        <span class="s">'timestamp'</span><span class="p">:</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">(),</span>
+        <span class="s">'gpu_utilization'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_gpu_utilization</span><span class="p">()</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># Store in Redis for monitoring
+</span>    <span class="n">metrics_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"metrics:</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">())</span><span class="si">}</span><span class="s">"</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">redis_client</span><span class="p">.</span><span class="n">setex</span><span class="p">(</span><span class="n">metrics_key</span><span class="p">,</span> <span class="mi">86400</span><span class="p">,</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">metrics</span><span class="p">))</span>  <span class="c1"># 24 hour TTL
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="common-issues">Common Issues</h3>
+
+<ol>
+  <li><strong>Model Loading Failures</strong>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="c1"># Check model file exists and is readable
+</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">model_path</span> <span class="o">=</span> <span class="s">'./data/models/text/model.gguf'</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_path</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Model file not found: </span><span class="si">{</span><span class="n">model_path</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+<span class="k">elif</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">access</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">os</span><span class="p">.</span><span class="n">R_OK</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Model file not readable: </span><span class="si">{</span><span class="n">model_path</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li><strong>GPU Memory Issues</strong>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c1"># Monitor GPU memory usage
+</span><span class="kn">import</span> <span class="nn">pynvml</span>
+<span class="n">pynvml</span><span class="p">.</span><span class="n">nvmlInit</span><span class="p">()</span>
+<span class="n">handle</span> <span class="o">=</span> <span class="n">pynvml</span><span class="p">.</span><span class="n">nvmlDeviceGetHandleByIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mem_info</span> <span class="o">=</span> <span class="n">pynvml</span><span class="p">.</span><span class="n">nvmlDeviceGetMemoryInfo</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"GPU Memory: </span><span class="si">{</span><span class="n">mem_info</span><span class="p">.</span><span class="n">used</span><span class="o">/</span><span class="mi">1024</span><span class="o">**</span><span class="mi">3</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">GB used, </span><span class="si">{</span><span class="n">mem_info</span><span class="p">.</span><span class="n">free</span><span class="o">/</span><span class="mi">1024</span><span class="o">**</span><span class="mi">3</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">GB free"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li><strong>Worker Communication Issues</strong>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c1"># Test Redis connectivity
+</span><span class="k">try</span><span class="p">:</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">redis_client</span><span class="p">.</span><span class="n">ping</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Redis connection OK"</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Redis connection failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="debug-mode">Debug Mode</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="c1"># Enable verbose logging
+</span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="p">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="p">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="c1"># Add timing information
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="k">def</span> <span class="nf">timed_function</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">func</span><span class="p">.</span><span class="n">__name__</span><span class="si">}</span><span class="s"> took </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> seconds"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<ul>
+  <li><a href="redis-queue.html">Redis Queue</a> - Understand job queue management</li>
+  <li><a href="api-service.html">API Service</a> - Learn about API integration</li>
+  <li><a href="monitoring.html">Monitoring</a> - Set up GPU monitoring</li>
+</ul>
+
+        </div>
+
+        
+
+        <!-- Back to top button -->
+        <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+          </svg>
+        </button>
+      </article>
+    </div>
+  </main>
+</div><footer class="site-footer h-card">
+  <data class="u-url" href="/graycat-aiserver/"></data>
+
+  <div class="wrapper">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3 class="footer-heading">Graycat AI Server</h3>
+        <p class="footer-description">A microservice-based AI inference server with Redis queue-based worker architecture</p>
+        
+        <div class="social-links">
+          <a href="https://github.com/GrayCatHQ/graycat-aiserver" class="social-link" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+          
+          
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Documentation</h4>
+        <ul class="footer-links">
+          <li><a href="/graycat-aiserver/getting-started">Getting Started</a></li>
+          <li><a href="/graycat-aiserver/architecture">Architecture</a></li>
+          <li><a href="/graycat-aiserver/api-reference">API Reference</a></li>
+          <li><a href="/graycat-aiserver/deployment">Deployment</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul class="footer-links">
+          <li><a href="/graycat-aiserver/troubleshooting">Troubleshooting</a></li>
+          <li><a href="https://github.com/GrayCatHQ/graycat-aiserver/issues" target="_blank">Report Issues</a></li>
+          <li><a href="https://github.com/GrayCatHQ/graycat-aiserver/discussions" target="_blank">Discussions</a></li>
+          <li><a href="https://github.com/GrayCatHQ/graycat-aiserver/releases" target="_blank">Releases</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Built with</h4>
+        <div class="tech-stack">
+          <span class="tech-badge">FastAPI</span>
+          <span class="tech-badge">Docker</span>
+          <span class="tech-badge">Redis</span>
+          <span class="tech-badge">CUDA</span>
+          <span class="tech-badge">Jekyll</span>
+        </div>
+        
+        <div class="footer-meta">
+          <p>&copy; 2025 Graycat AI Server. Open source under MIT license.</p>
+          <p class="build-info">
+            Built with ❤️ using Jekyll
+            <br>
+            <small>Last updated: September 13, 2025</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+.site-footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: 3rem 0 1rem 0;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.footer-section h3 {
+  font-size: 1.3rem;
+}
+
+.footer-section h4 {
+  font-size: 1rem;
+}
+
+.footer-description {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--button-bg);
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.social-link:hover {
+  background-color: var(--button-hover);
+  border-color: var(--link-color);
+  color: var(--link-color);
+}
+
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--link-color);
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech-badge {
+  background-color: var(--bg-tertiary);
+  color: var(--text-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  border: 1px solid var(--border-color);
+}
+
+.footer-meta {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.footer-meta p {
+  margin: 0.5rem 0;
+  color: var(--text-muted);
+}
+
+.build-info {
+  border-top: 1px solid var(--border-muted);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.build-info small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .social-links {
+    flex-direction: column;
+  }
+  
+  .tech-stack {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+</style><script>
+// Set dark theme as default immediately
+(function() {
+  const savedTheme = localStorage.getItem('theme');
+  const theme = savedTheme || 'dark'; // Default to dark
+  document.documentElement.setAttribute('data-theme', theme);
+  if (!savedTheme) {
+    localStorage.setItem('theme', 'dark');
+  }
+})();
+</script>
+<script src="/graycat-aiserver/assets/js/main.js"></script>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/graycat-aiserver/"></data>
+
+  <div class="wrapper">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3 class="footer-heading">Graycat AI Server</h3>
+        <p class="footer-description">A microservice-based AI inference server with Redis queue-based worker architecture</p>
+        
+        <div class="social-links">
+          <a href="https://github.com/GrayCatHQ/graycat-aiserver" class="social-link" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+          
+          
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Documentation</h4>
+        <ul class="footer-links">
+          <li><a href="/graycat-aiserver/getting-started">Getting Started</a></li>
+          <li><a href="/graycat-aiserver/architecture">Architecture</a></li>
+          <li><a href="/graycat-aiserver/api-reference">API Reference</a></li>
+          <li><a href="/graycat-aiserver/deployment">Deployment</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul class="footer-links">
+          <li><a href="/graycat-aiserver/troubleshooting">Troubleshooting</a></li>
+          <li><a href="https://github.com/GrayCatHQ/graycat-aiserver/issues" target="_blank">Report Issues</a></li>
+          <li><a href="https://github.com/GrayCatHQ/graycat-aiserver/discussions" target="_blank">Discussions</a></li>
+          <li><a href="https://github.com/GrayCatHQ/graycat-aiserver/releases" target="_blank">Releases</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Built with</h4>
+        <div class="tech-stack">
+          <span class="tech-badge">FastAPI</span>
+          <span class="tech-badge">Docker</span>
+          <span class="tech-badge">Redis</span>
+          <span class="tech-badge">CUDA</span>
+          <span class="tech-badge">Jekyll</span>
+        </div>
+        
+        <div class="footer-meta">
+          <p>&copy; 2025 Graycat AI Server. Open source under MIT license.</p>
+          <p class="build-info">
+            Built with ❤️ using Jekyll
+            <br>
+            <small>Last updated: September 13, 2025</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+.site-footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: 3rem 0 1rem 0;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.footer-section h3 {
+  font-size: 1.3rem;
+}
+
+.footer-section h4 {
+  font-size: 1rem;
+}
+
+.footer-description {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--button-bg);
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.social-link:hover {
+  background-color: var(--button-hover);
+  border-color: var(--link-color);
+  color: var(--link-color);
+}
+
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--link-color);
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech-badge {
+  background-color: var(--bg-tertiary);
+  color: var(--text-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  border: 1px solid var(--border-color);
+}
+
+.footer-meta {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.footer-meta p {
+  margin: 0.5rem 0;
+  color: var(--text-muted);
+}
+
+.build-info {
+  border-top: 1px solid var(--border-muted);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.build-info small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .social-links {
+    flex-direction: column;
+  }
+  
+  .tech-stack {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+</style></body>
+
+</html>

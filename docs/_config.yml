@@ -4,10 +4,22 @@ description: A microservice-based AI inference server with Redis queue-based wor
 baseurl: "/graycat-aiserver" # the subpath of your site, e.g. /blog
 url: "https://graycathq.github.io" # the base hostname & protocol for your site
 
+# GitHub integration
+github_username: GrayCatHQ
+repository: graycat-aiserver
+
 # Build settings
 markdown: kramdown
 highlighter: rouge
 theme: minima
+
+# Dark mode styling
+minima:
+  skin: dark
+  
+# Custom styling
+sass:
+  sass_dir: _sass
 
 # Plugins
 plugins:
@@ -57,6 +69,11 @@ kramdown:
   syntax_highlighter_opts:
     block:
       line_numbers: true
+    css_class: 'highlight'
+    
+# Rouge syntax highlighting theme
+rouge:
+  theme: github-dark
 
 # SEO
 twitter:

@@ -1,0 +1,163 @@
+---
+layout: default
+---
+
+{%- include header.html -%}
+
+<div class="page-layout">
+  {%- include sidebar.html -%}
+  
+  <main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <div class="home">
+        <div class="hero-section">
+          <h1 class="hero-title">{{ page.title | default: site.title }}</h1>
+          <p class="hero-description">{{ site.description }}</p>
+        </div>
+
+        {{ content }}
+
+  {% if site.posts.size > 0 %}
+    <h2 class="post-list-heading">Latest Updates</h2>
+    <ul class="post-list">
+      {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+      {%- for post in site.posts -%}
+      <li>
+        <span class="post-meta">{{ post.date | date: date_format }}</span>
+        <h3>
+          <a class="post-link" href="{{ post.url | relative_url }}">
+            {{ post.title | escape }}
+          </a>
+        </h3>
+        {%- if site.show_excerpts -%}
+          {{ post.excerpt }}
+        {%- endif -%}
+      </li>
+      {%- endfor -%}
+    </ul>
+  {% endif %}
+
+  <!-- Quick navigation cards -->
+  <div class="quick-nav">
+    <h2>Quick Navigation</h2>
+    <div class="nav-cards">
+      <a href="{{ '/getting-started' | relative_url }}" class="nav-card">
+        <h3>🚀 Getting Started</h3>
+        <p>Set up your development environment and run your first API call</p>
+      </a>
+      
+      <a href="{{ '/architecture' | relative_url }}" class="nav-card">
+        <h3>🏗️ Architecture</h3>
+        <p>Understand the microservice design and component interactions</p>
+      </a>
+      
+      <a href="{{ '/api-reference' | relative_url }}" class="nav-card">
+        <h3>📚 API Reference</h3>
+        <p>Complete documentation for all endpoints and parameters</p>
+      </a>
+      
+      <a href="{{ '/deployment' | relative_url }}" class="nav-card">
+        <h3>🐳 Deployment</h3>
+        <p>Production deployment strategies and best practices</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+.hero-section {
+  text-align: center;
+  padding: 3rem 0;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border-radius: 12px;
+  margin-bottom: 3rem;
+  border: 1px solid var(--border-color);
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--link-color) 0%, var(--link-hover) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-description {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.quick-nav {
+  margin-top: 3rem;
+}
+
+.nav-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.nav-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.nav-card:hover {
+  background-color: var(--bg-tertiary);
+  border-color: var(--link-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.nav-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-color);
+  font-size: 1.1rem;
+}
+
+.nav-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .nav-cards {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+      </div>
+    </div>
+  </main>
+</div>
+
+{%- include footer.html -%}
+
+<script>
+// Set dark theme as default immediately
+(function() {
+  const savedTheme = localStorage.getItem('theme');
+  const theme = savedTheme || 'dark'; // Default to dark
+  document.documentElement.setAttribute('data-theme', theme);
+  if (!savedTheme) {
+    localStorage.setItem('theme', 'dark');
+  }
+})();
+</script>
+<script src="{{ '/assets/js/main.js' | relative_url }}"></script>
