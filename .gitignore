@@ -1,6 +1,4 @@
-**/models
 .env
-gpu/libundreamai*
-gpu/undreamai_server
-logs
-ssl
+gpu/data
+nginx/logs/*
+nginx/ssl/*

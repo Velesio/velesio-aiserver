@@ -1,2 +1,23 @@
-server_setup.sh
-models
+# Exclude the entire data directory except what we explicitly need
+data/
+!data/llama/libundreamai_linux-cuda-cu12.2.0.so
+!data/llama/undreamai_server
+
+# Exclude all model file types
+**/*.ckpt
+**/*.safetensors
+**/*.bin
+**/*.pt
+**/*.pth
+**/*.gguf
+
+# Exclude Python cache and development files
+__pycache__/
+*.pyc
+.git/
+.gitignore
+*.log
+
+# Exclude templates
+templates/
+*.log

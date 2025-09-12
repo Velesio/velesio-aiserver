@@ -1,4 +1,15 @@
 .env
 docker-compose.yaml
 server_setup.sh
-gpu/models
+gpu/data/
+**/*.ckpt
+**/*.safetensors
+**/*.bin
+**/*.pt
+**/*.pth
+**/*.gguf
+__pycache__/
+*.pyc
+.git/
+.gitignore
+*.log

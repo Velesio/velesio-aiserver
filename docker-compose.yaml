@@ -33,6 +33,7 @@ services:
     container_name: llama_worker
     ports: 
       - "1337:1337"
+      - "7860:7860"
     environment:
       - GPU_LAYERS=${GPU_LAYERS}
       - REDIS_HOST=${REDIS_HOST}
@@ -41,10 +42,11 @@ services:
       - REMOTE=${REMOTE}
       - MODEL_URL=${MODEL_URL}
       - PORT=${PORT}
+      - RUN_SD=${RUN_SD}
     # if you mount your model directory:
     restart: unless-stopped
     volumes:
-      - ./gpu/models:/app/models
+      - ./gpu/data:/app/data
     depends_on:
       - api
     deploy:
@@ -53,16 +55,16 @@ services:
           devices:
             - capabilities: [gpu]
 
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/ssl:/etc/nginx/ssl:ro
-      - ./nginx/logs/nginx:/var/log/nginx
-    restart: unless-stopped
-    depends_on:
-      - api
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./nginx/ssl:/etc/nginx/ssl:ro
+  #     - ./nginx/logs/nginx:/var/log/nginx
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - api
