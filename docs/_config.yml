@@ -1,0 +1,79 @@
+# Graycat AI Server Documentation
+title: Graycat AI Server
+description: A microservice-based AI inference server with Redis queue-based worker architecture
+baseurl: "/graycat-aiserver" # the subpath of your site, e.g. /blog
+url: "https://graycathq.github.io" # the base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Navigation
+header_pages:
+  - index.md
+  - getting-started.md
+  - architecture.md
+  - api-reference.md
+  - deployment.md
+  - troubleshooting.md
+
+# Collections for better organization
+collections:
+  components:
+    output: true
+    permalink: /:collection/:name/
+  guides:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "components"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "guides"
+    values:
+      layout: "page"
+
+# Code highlighting
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+
+# SEO
+twitter:
+  username: graycathq
+  card: summary
+
+social:
+  name: GrayCat
+  links:
+    - https://github.com/GrayCatHQ
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
