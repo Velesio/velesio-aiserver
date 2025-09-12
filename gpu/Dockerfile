@@ -9,8 +9,17 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-# Copy only necessary application files
+# 🎯 COPY REQUIREMENTS FIRST (for better caching)
 COPY requirements.txt /app/
+
+# 🎯 INSTALL PYTHON PACKAGES BEFORE COPYING CODE
+RUN pip install --no-cache-dir torch torchvision torchaudio xformers --index-url https://download.pytorch.org/whl/cu124 \
+    && pip install --no-cache-dir -r requirements.txt \
+    && rm -rf ~/.cache/pip \
+    && find /usr/local/lib/python3.10/dist-packages -name "*.pyc" -delete \
+    && find /usr/local/lib/python3.10/dist-packages -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+
+# 🎯 COPY APPLICATION CODE LAST
 COPY entrypoint.sh /app/
 COPY *.py /app/
 
@@ -19,13 +28,6 @@ COPY data/llama/libundreamai_linux-cuda-cu12.2.0.so /app/data/llama/
 COPY data/llama/undreamai_server /app/data/llama/
 
 RUN chmod +x entrypoint.sh
-
-# Install PyTorch and requirements in one layer, clean pip cache
-RUN pip install --no-cache-dir torch torchvision torchaudio xformers --index-url https://download.pytorch.org/whl/cu124 \
-    && pip install --no-cache-dir -r requirements.txt \
-    && rm -rf ~/.cache/pip \
-    && find /usr/local/lib/python3.10/dist-packages -name "*.pyc" -delete \
-    && find /usr/local/lib/python3.10/dist-packages -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 
 # Create directory structure for mounted volumes
 RUN mkdir -p /app/data/models/text /app/data/models/image /app/data/sd
