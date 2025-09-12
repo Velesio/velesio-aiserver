@@ -2,13 +2,14 @@ FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04
 
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies in one layer and clean up
 RUN apt-get update && apt-get install -y \
     python3 python3-pip python3-venv curl wget git \
     libgl1-mesa-glx libglib2.0-0 libsm6 libxext6 libxrender-dev libgomp1 \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
-# Copy only necessary files first (for better caching)
+# Copy only necessary application files
 COPY requirements.txt /app/
 COPY entrypoint.sh /app/
 COPY *.py /app/
@@ -19,9 +20,12 @@ COPY data/llama/undreamai_server /app/data/llama/
 
 RUN chmod +x entrypoint.sh
 
-# Install your requirements with CUDA support
-RUN pip install --no-cache-dir torch torchvision torchaudio xformers --index-url https://download.pytorch.org/whl/cu124
-RUN pip install --no-cache-dir -r requirements.txt
+# Install PyTorch and requirements in one layer, clean pip cache
+RUN pip install --no-cache-dir torch torchvision torchaudio xformers --index-url https://download.pytorch.org/whl/cu124 \
+    && pip install --no-cache-dir -r requirements.txt \
+    && rm -rf ~/.cache/pip \
+    && find /usr/local/lib/python3.10/dist-packages -name "*.pyc" -delete \
+    && find /usr/local/lib/python3.10/dist-packages -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 
 # Create directory structure for mounted volumes
 RUN mkdir -p /app/data/models/text /app/data/models/image /app/data/sd
