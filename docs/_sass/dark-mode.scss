@@ -64,6 +64,12 @@ $table-text-align: left !default;
 
 // ===== LAYOUT STYLES =====
 
+// Override the default page-content from minima theme
+.page-content {
+  padding: 0;
+  margin: 0;
+}
+
 // Sidebar layout styles
 .page-layout {
   display: flex;
@@ -195,10 +201,9 @@ body {
   }
 }
 
-// ===== SIDEBAR STYLES =====
-
+//sidebar
 .sidebar {
-  width: 260px;
+  width: 220px;
   background-color: var(--sidebar-bg);
   border-right: 1px solid var(--border-color);
   overflow-y: auto;
@@ -209,20 +214,7 @@ body {
 }
 
 .sidebar-content {
-  padding: 1.5rem 0;
-}
-
-.sidebar-header {
-  padding: 0 1.5rem 1rem;
-  border-bottom: 1px solid var(--border-color);
-  margin-bottom: 1rem;
-
-  h3 {
-    margin: 0;
-    color: var(--text-color);
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
+  padding: 0.5rem 0;
 }
 
 .sidebar-nav {
@@ -238,11 +230,12 @@ body {
 .nav-link {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1rem;
   color: var(--text-secondary);
   text-decoration: none;
   transition: all 0.2s ease;
   border-left: 3px solid transparent;
+  font-size: 0.9rem;
 
   &:hover {
     background-color: var(--bg-tertiary);
@@ -270,14 +263,14 @@ body {
 }
 
 .nav-section {
-  margin: 1.5rem 0 0.5rem;
+  margin: 1rem 0 0.3rem;
 }
 
 .section-title {
   display: block;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
   color: var(--text-muted);
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -301,16 +294,17 @@ body {
 
 // ===== MAIN CONTENT STYLES =====
 
-.page-content {
+.main-content {
   flex: 1;
-  padding: 2rem;
-  max-width: 100%;
+  padding: 1rem 1.5rem;
+  max-width: calc(100% - 220px);
   overflow-x: auto;
 }
 
 .wrapper {
-  max-width: 900px;
-  margin: 0 auto;
+  max-width: 1000px;
+  margin: 0;
+  padding: 0;
 }
 
 // Content styles
@@ -628,9 +622,13 @@ button, .btn {
 
 // ===== RESPONSIVE DESIGN =====
 
-@media (max-width: 1024px) {
-  .page-content {
-    padding: 1.5rem;
+@media (max-width: 1200px) {
+  .main-content {
+    padding: 1rem;
+  }
+  
+  .wrapper {
+    max-width: 100%;
   }
 }
 
@@ -642,19 +640,21 @@ button, .btn {
   .sidebar {
     position: fixed;
     top: 60px;
-    left: -260px;
+    left: -220px;
     z-index: 1000;
     transition: left 0.3s ease;
     box-shadow: 2px 0 8px var(--shadow-color);
+    width: 220px;
     
     &.open {
       left: 0;
     }
   }
   
-  .page-content {
+  .main-content {
     padding: 1rem;
     width: 100%;
+    max-width: 100%;
   }
   
   .site-header .header-wrapper {
@@ -673,6 +673,10 @@ button, .btn {
     width: 18px;
     height: 18px;
   }
+  
+  .page-layout {
+    display: block;
+  }
 }
 
 @media (max-width: 480px) {
@@ -684,7 +688,16 @@ button, .btn {
     font-size: 1.2rem;
   }
   
-  .page-content {
+  .main-content {
     padding: 0.75rem;
+  }
+  
+  .nav-link {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  .section-title {
+    padding: 0 0.75rem;
   }
 }

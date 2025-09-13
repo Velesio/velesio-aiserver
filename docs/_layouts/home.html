@@ -2,12 +2,10 @@
 layout: default
 ---
 
-{%- include header.html -%}
-
 <div class="page-layout">
   {%- include sidebar.html -%}
   
-  <main class="page-content" aria-label="Content">
+  <div class="main-content">
     <div class="wrapper">
       <div class="home">
         <div class="hero-section">
@@ -67,15 +65,12 @@ layout: default
 <style>
 .hero-section {
   text-align: center;
-  padding: 3rem 0;
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-  border-radius: 12px;
-  margin-bottom: 3rem;
-  border: 1px solid var(--border-color);
+  padding: 2rem 0;
+  margin-bottom: 2rem;
 }
 
 .hero-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
   background: linear-gradient(135deg, var(--link-color) 0%, var(--link-hover) 100%);
@@ -85,22 +80,19 @@ layout: default
 }
 
 .hero-description {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
   max-width: 600px;
   margin: 0 auto;
 }
 
 .quick-nav {
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 .nav-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
 
 .nav-card {
   background-color: var(--bg-secondary);
@@ -137,14 +129,33 @@ layout: default
     font-size: 2rem;
   }
   
+  .hero-section {
+    padding: 1.5rem 0;
+  }
+  
   .nav-cards {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .nav-card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
   }
 }
 </style>
       </div>
     </div>
-  </main>
+  </div>
 </div>
 
 {%- include footer.html -%}

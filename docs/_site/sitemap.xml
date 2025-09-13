@@ -2,11 +2,11 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://0.0.0.0:4000/graycat-aiserver/components/api-service/</loc>
-<lastmod>2025-09-13T01:48:08+02:00</lastmod>
+<lastmod>2025-09-13T14:14:10+02:00</lastmod>
 </url>
 <url>
 <loc>http://0.0.0.0:4000/graycat-aiserver/components/gpu-workers/</loc>
-<lastmod>2025-09-13T01:48:08+02:00</lastmod>
+<lastmod>2025-09-13T14:14:10+02:00</lastmod>
 </url>
 <url>
 <loc>http://0.0.0.0:4000/graycat-aiserver/api-reference.html</loc>
