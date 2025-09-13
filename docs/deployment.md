@@ -6,7 +6,40 @@ nav_order: 5
 
 # Deployment Guide
 
-This guide covers production deployment strategies for Graycat AI Server.
+This guide covers production deployment strategies for Graycat AI Server's independent components.
+
+## Component Deployment Options
+
+Graycat AI Server is built with **modular components** that can be deployed flexibly:
+
+### 🏢 All-in-One Deployment
+Deploy all components on a single server:
+```bash
+# Complete stack on one machine
+docker-compose up -d                    # API + GPU Workers + Redis
+cd monitoring && docker-compose up -d   # Optional monitoring
+```
+
+### 🌐 Distributed Deployment  
+Deploy components across multiple servers:
+```bash
+# Server 1: API + Redis
+docker-compose -f docker-compose.api.yml up -d
+
+# Server 2-N: GPU Workers (connect to remote Redis)
+docker-compose -f docker-compose.gpu.yml up -d
+
+# Monitoring Server: Centralized observability
+cd monitoring && docker-compose up -d
+```
+
+### 🎯 Component-Specific Deployment
+Deploy only the components you need:
+- **API-only**: For serverless GPU workers or external inference services
+- **GPU-only**: For dedicated inference workers connecting to remote APIs
+- **Monitoring-only**: For centralized observability across multiple deployments
+
+See individual component documentation: [API Service]({{ '/components/api-service' | relative_url }}), [GPU Workers]({{ '/components/gpu-workers' | relative_url }}), [Monitoring Stack]({{ '/components/monitoring-stack' | relative_url }})
 
 ## Production Architecture
 
@@ -365,6 +398,8 @@ services:
 ```
 
 ## Monitoring and Logging
+
+Graycat AI Server includes a comprehensive monitoring stack with Grafana dashboards, Prometheus metrics, and centralized logging. For complete setup instructions and usage details, see the [Monitoring Documentation]({{ '/components/monitoring' | relative_url }}).
 
 ### Production Monitoring Stack
 

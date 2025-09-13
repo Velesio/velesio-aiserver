@@ -62,6 +62,21 @@ Graycat AI Server follows a microservice architecture designed for scalability, 
 └─────────────────────────────────────────────────────────────────┘
 ```
 
+## Independent Components
+
+Graycat AI Server consists of **three independent, deployable components** that can run together or separately:
+
+| Component | Description | Documentation |
+|-----------|-------------|---------------|
+| 🌐 **[API Service]({{ '/components/api-service' | relative_url }})** | FastAPI gateway handling HTTP requests and job queuing | `api/` |
+| 🎮 **[GPU Workers]({{ '/components/gpu-workers' | relative_url }})** | AI inference engines for LLM and Stable Diffusion | `gpu/` |  
+| 📊 **[Monitoring Stack]({{ '/components/monitoring' | relative_url }})** | Observability with Grafana dashboards and metrics | `monitoring/` |
+
+Each component can be:
+- **Deployed together** for a complete, integrated solution
+- **Deployed separately** across multiple servers for scalability  
+- **Mixed and matched** based on your infrastructure requirements
+
 ## Core Components
 
 ### 1. API Gateway (FastAPI)
@@ -136,22 +151,44 @@ llama_queue:
 - Batch processing
 - Custom model loading
 
-### 4. Monitoring Stack
+### 4. Monitoring Stack (Optional Component)
+
+**Location**: `monitoring/`  
+**Deployment**: Independent, can run separately or alongside main application
+
+The monitoring stack is a **standalone component** that provides comprehensive observability across all system components. It can be deployed:
+
+- **Integrated**: Alongside the main application for unified monitoring
+- **Centralized**: On a dedicated monitoring server for multiple Graycat instances  
+- **Development**: Locally for debugging and performance analysis
 
 #### Prometheus
-- **Metrics Collection**: System, Redis, and custom application metrics
-- **Alerting**: Configurable alerts for system health
-- **Data Retention**: 15 days of metric history
+- **Metrics Collection**: System, Redis, GPU, and custom application metrics
+- **Alerting**: Configurable alerts for system health and performance  
+- **Data Retention**: Configurable retention (default: 200h of metric history)
+- **Remote Monitoring**: Can monitor multiple Graycat deployments from a central location
 
 #### Grafana
-- **Dashboards**: Pre-configured panels for all services
-- **Alerting**: Visual alerts with notification channels
-- **Data Sources**: Prometheus, Loki logs
+- **Pre-configured Dashboards**: Four auto-provisioned dashboards
+  - Redis performance and queue metrics
+  - System resources (CPU, memory, disk, network)
+  - NVIDIA GPU metrics (utilization, memory, temperature, power)
+  - Centralized log viewing and analysis
+- **Multi-Instance Support**: Monitor multiple API/GPU worker deployments
+- **Alerting**: Visual alerts with multiple notification channels
 
-#### Exporters
-- **Node Exporter**: System metrics (CPU, memory, disk)
-- **Redis Exporter**: Queue depth, connection count
-- **NVIDIA GPU Exporter**: GPU utilization, memory, temperature
+#### Exporters & Collectors (Auto-deployed)
+- **Node Exporter**: System metrics collection
+- **Redis Exporter**: Queue and performance metrics  
+- **NVIDIA GPU Exporter**: GPU utilization and health metrics
+- **Promtail**: Log aggregation from all services
+
+**Deployment Flexibility**: The monitoring stack can be deployed independently from the main application, making it suitable for:
+- Multi-environment monitoring (dev, staging, production)
+- Cross-datacenter observability  
+- Centralized monitoring of distributed Graycat deployments
+
+For detailed setup and deployment options, see the [Monitoring Stack Component]({{ '/components/monitoring-stack' | relative_url }}).
 
 ## Data Flow
 
@@ -253,6 +290,54 @@ llama_queue:
 - **Horizontal**: Add more GPU workers
 - **Vertical**: Increase GPU memory/compute
 - **Queue Depth**: Redis handles thousands of queued jobs
+
+## Deployment Patterns
+
+Graycat AI Server is designed with **component independence** in mind. Each component can be deployed separately or together based on your infrastructure needs:
+
+### 🔗 Monolithic Deployment
+Deploy all components on a single server:
+```bash
+docker-compose up -d  # API + GPU Workers + Redis
+cd monitoring && docker-compose up -d  # Optional monitoring
+```
+
+### 🔲 Distributed Deployment
+Deploy components across multiple servers:
+
+**Server 1 (API + Redis)**:
+```bash
+# api-only docker-compose.yml
+services:
+  api:
+    # ... API configuration
+  redis:
+    # ... Redis configuration
+```
+
+**Server 2-N (GPU Workers)**:
+```bash
+# gpu-worker docker-compose.yml
+services:
+  gpu_worker:
+    environment:
+      - REMOTE=true
+      - REDIS_HOST=server1:6379
+```
+
+**Monitoring Server (Optional)**:
+```bash
+# Central monitoring for all deployments
+cd monitoring
+# Configure prometheus.yml with remote targets
+docker-compose up -d
+```
+
+### 🎯 Hybrid Deployment
+Mix local and remote components:
+- API + Redis locally
+- GPU workers on dedicated GPU servers
+- Centralized monitoring for multiple environments
 
 ## Technology Stack
 

@@ -252,6 +252,16 @@
           GPU Workers
         </a>
       </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/components/monitoring/" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5 7h-13v-2h13v2z"/>
+            <path d="M11 2v2H7V2h4zm0 20v-2H7v2h4zm2-20v2h4V2h-4zm0 20v-2h4v2h-4z"/>
+          </svg>
+          Monitoring Stack
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -266,7 +276,51 @@
         <div class="post-content">
           <h1 id="deployment-guide">Deployment Guide</h1>
 
-<p>This guide covers production deployment strategies for Graycat AI Server.</p>
+<p>This guide covers production deployment strategies for Graycat AI Server’s independent components.</p>
+
+<h2 id="component-deployment-options">Component Deployment Options</h2>
+
+<p>Graycat AI Server is built with <strong>modular components</strong> that can be deployed flexibly:</p>
+
+<h3 id="-all-in-one-deployment">🏢 All-in-One Deployment</h3>
+<p>Deploy all components on a single server:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="c"># Complete stack on one machine</span>
+docker-compose up <span class="nt">-d</span>                    <span class="c"># API + GPU Workers + Redis</span>
+<span class="nb">cd </span>monitoring <span class="o">&amp;&amp;</span> docker-compose up <span class="nt">-d</span>   <span class="c"># Optional monitoring</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="-distributed-deployment">🌐 Distributed Deployment</h3>
+<p>Deploy components across multiple servers:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="c"># Server 1: API + Redis</span>
+docker-compose <span class="nt">-f</span> docker-compose.api.yml up <span class="nt">-d</span>
+
+<span class="c"># Server 2-N: GPU Workers (connect to remote Redis)</span>
+docker-compose <span class="nt">-f</span> docker-compose.gpu.yml up <span class="nt">-d</span>
+
+<span class="c"># Monitoring Server: Centralized observability</span>
+<span class="nb">cd </span>monitoring <span class="o">&amp;&amp;</span> docker-compose up <span class="nt">-d</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="-component-specific-deployment">🎯 Component-Specific Deployment</h3>
+<p>Deploy only the components you need:</p>
+<ul>
+  <li><strong>API-only</strong>: For serverless GPU workers or external inference services</li>
+  <li><strong>GPU-only</strong>: For dedicated inference workers connecting to remote APIs</li>
+  <li><strong>Monitoring-only</strong>: For centralized observability across multiple deployments</li>
+</ul>
+
+<p>See individual component documentation: <a href="/graycat-aiserver/components/api-service">API Service</a>, <a href="/graycat-aiserver/components/gpu-workers">GPU Workers</a>, <a href="/graycat-aiserver/components/monitoring-stack">Monitoring Stack</a></p>
 
 <h2 id="production-architecture">Production Architecture</h2>
 
@@ -867,6 +921,8 @@ ufw deny 8000   <span class="c"># API (behind nginx)</span>
 
 <h2 id="monitoring-and-logging">Monitoring and Logging</h2>
 
+<p>Graycat AI Server includes a comprehensive monitoring stack with Grafana dashboards, Prometheus metrics, and centralized logging. For complete setup instructions and usage details, see the <a href="/graycat-aiserver/components/monitoring">Monitoring Documentation</a>.</p>
+
 <h3 id="production-monitoring-stack">Production Monitoring Stack</h3>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
@@ -1274,7 +1330,7 @@ aws s3 <span class="nb">sync</span> ./gpu/data/models s3://your-bucket/models <s
             <div class="nav-next">
               
                 
-                <a href="/graycat-aiserver/troubleshooting.html" rel="next">Troubleshooting →</a>
+                <a href="/graycat-aiserver/components.html" rel="next">Components →</a>
               
             </div>
           </nav>
@@ -1329,6 +1385,7 @@ aws s3 <span class="nb">sync</span> ./gpu/data/models s3://your-bucket/models <s
         <ul class="footer-links">
           <li><a href="/graycat-aiserver/getting-started">Getting Started</a></li>
           <li><a href="/graycat-aiserver/architecture">Architecture</a></li>
+          <li><a href="/graycat-aiserver/components">Components</a></li>
           <li><a href="/graycat-aiserver/api-reference">API Reference</a></li>
           <li><a href="/graycat-aiserver/deployment">Deployment</a></li>
         </ul>

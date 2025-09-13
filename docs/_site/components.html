@@ -3,21 +3,21 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Home | Graycat AI Server</title>
+<title>Components | Graycat AI Server</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Home" />
+<meta property="og:title" content="Components" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A microservice-based AI inference server with Redis queue-based worker architecture" />
 <meta property="og:description" content="A microservice-based AI inference server with Redis queue-based worker architecture" />
-<link rel="canonical" href="http://0.0.0.0:4000/graycat-aiserver/" />
-<meta property="og:url" content="http://0.0.0.0:4000/graycat-aiserver/" />
+<link rel="canonical" href="http://0.0.0.0:4000/graycat-aiserver/components.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/graycat-aiserver/components.html" />
 <meta property="og:site_name" content="Graycat AI Server" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Home" />
+<meta property="twitter:title" content="Components" />
 <meta name="twitter:site" content="@graycathq" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","description":"A microservice-based AI inference server with Redis queue-based worker architecture","headline":"Home","name":"GrayCat","sameAs":["https://github.com/GrayCatHQ"],"url":"http://0.0.0.0:4000/graycat-aiserver/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"A microservice-based AI inference server with Redis queue-based worker architecture","headline":"Components","url":"http://0.0.0.0:4000/graycat-aiserver/components.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/graycat-aiserver/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/graycat-aiserver/feed.xml" title="Graycat AI Server" /></head>
 <body><header class="site-header" role="banner">
@@ -178,7 +178,7 @@
   <div class="sidebar-content">
     <ul class="sidebar-nav">
       <li class="nav-item">
-        <a href="/graycat-aiserver/" class="nav-link active">
+        <a href="/graycat-aiserver/" class="nav-link ">
           <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
           </svg>
@@ -269,30 +269,108 @@
 <!-- Sidebar overlay for mobile -->
 <div class="sidebar-overlay" id="sidebar-overlay"></div><div class="main-content">
     <div class="wrapper">
-      <div class="home">
-        <div class="hero-section">
-          <h1 class="hero-title">Home</h1>
-          <p class="hero-description">A microservice-based AI inference server with Redis queue-based worker architecture</p>
-        </div>
+      <article class="post">
+        <header class="post-header">
+          <h1 class="post-title">Components</h1></header>
 
-        <h1 id="graycat-ai-server">Graycat AI Server</h1>
+        <div class="post-content">
+          <h1 id="components">Components</h1>
 
-<p>A high-performance, microservice-based AI inference server designed for scalable LLM and Stable Diffusion workloads.</p>
+<p>Graycat AI Server is built with a <strong>modular, component-based architecture</strong> where each component can be deployed independently or together based on your infrastructure needs.</p>
 
-<h2 id="overview">Overview</h2>
+<h2 id="available-components">Available Components</h2>
 
-<p>Graycat AI Server is a production-ready AI inference platform that provides:</p>
+<div class="component-grid">
+  <div class="component-card">
+    <div class="component-header">
+      <h3>🌐 API Service</h3>
+      <span class="component-location">api/</span>
+    </div>
+    <p class="component-description">
+      FastAPI-based web server that handles HTTP requests, authentication, and job queuing to GPU workers.
+    </p>
+    <div class="component-features">
+      <span class="feature-tag">FastAPI</span>
+      <span class="feature-tag">Authentication</span>
+      <span class="feature-tag">Job Queuing</span>
+    </div>
+    <a href="/graycat-aiserver/components/api-service" class="component-link">View Documentation →</a>
+  </div>
 
+  <div class="component-card">
+    <div class="component-header">
+      <h3>🎮 GPU Workers</h3>
+      <span class="component-location">gpu/</span>
+    </div>
+    <p class="component-description">
+      Specialized containers that handle AI inference tasks using NVIDIA GPUs for both LLM and Stable Diffusion workloads.
+    </p>
+    <div class="component-features">
+      <span class="feature-tag">CUDA</span>
+      <span class="feature-tag">LLM Inference</span>
+      <span class="feature-tag">Stable Diffusion</span>
+    </div>
+    <a href="/graycat-aiserver/components/gpu-workers" class="component-link">View Documentation →</a>
+  </div>
+
+  <div class="component-card">
+    <div class="component-header">
+      <h3>📊 Monitoring Stack</h3>
+      <span class="component-location">monitoring/</span>
+    </div>
+    <p class="component-description">
+      Comprehensive observability solution with Grafana dashboards, Prometheus metrics, and centralized logging.
+    </p>
+    <div class="component-features">
+      <span class="feature-tag">Grafana</span>
+      <span class="feature-tag">Prometheus</span>
+      <span class="feature-tag">Observability</span>
+    </div>
+    <a href="/graycat-aiserver/components/monitoring" class="component-link">View Documentation →</a>
+  </div>
+</div>
+
+<h2 id="deployment-flexibility">Deployment Flexibility</h2>
+
+<p>Each component can be deployed in multiple ways:</p>
+
+<h3 id="-all-in-one-deployment">🏢 <strong>All-in-One Deployment</strong></h3>
+<p>Deploy all components on a single server for a complete, integrated solution:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>docker-compose up <span class="nt">-d</span>                    <span class="c"># API + GPU Workers + Redis</span>
+<span class="nb">cd </span>monitoring <span class="o">&amp;&amp;</span> docker-compose up <span class="nt">-d</span>   <span class="c"># Optional monitoring</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="-distributed-deployment">🌐 <strong>Distributed Deployment</strong></h3>
+<p>Deploy components across multiple servers for scalability:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="c"># Server 1: API + Redis</span>
+docker-compose <span class="nt">-f</span> docker-compose.api.yml up <span class="nt">-d</span>
+
+<span class="c"># Server 2-N: GPU Workers</span>
+docker-compose <span class="nt">-f</span> docker-compose.gpu.yml up <span class="nt">-d</span>
+
+<span class="c"># Monitoring Server: Centralized observability</span>
+<span class="nb">cd </span>monitoring <span class="o">&amp;&amp;</span> docker-compose up <span class="nt">-d</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="-component-specific-deployment">🎯 <strong>Component-Specific Deployment</strong></h3>
+<p>Deploy only the components you need:</p>
 <ul>
-  <li><strong>LLM Text Generation</strong> via custom llama.cpp integration</li>
-  <li><strong>Stable Diffusion Image Generation</strong> with WebUI support</li>
-  <li><strong>Redis Queue Architecture</strong> for scalable job processing</li>
-  <li><strong>Docker-based Deployment</strong> with GPU acceleration</li>
-  <li><strong>Built-in Monitoring</strong> with Grafana and Prometheus</li>
-  <li><strong>Unity Integration</strong> ready endpoints</li>
+  <li><strong>API-only</strong>: For serverless GPU workers or external inference services</li>
+  <li><strong>GPU-only</strong>: For dedicated inference workers connecting to remote APIs</li>
+  <li><strong>Monitoring-only</strong>: For centralized observability across multiple deployments</li>
 </ul>
 
-<h2 id="architecture">Architecture</h2>
+<h2 id="component-communication">Component Communication</h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -304,271 +382,134 @@
 8
 9
 </pre></td><td class="rouge-code"><pre>┌─────────────┐    ┌─────────┐    ┌─────────────┐
-│    API      │────│  Redis  │────│ GPU Workers │
+│ API Service │────│  Redis  │────│ GPU Workers │
 │  (FastAPI)  │    │ Queue   │    │ (LLM + SD)  │
 └─────────────┘    └─────────┘    └─────────────┘
        │                                  │
        │           ┌─────────────┐        │
        └───────────│ Monitoring  │────────┘
-                   │(Grafana+Prom)│
+                   │   Stack     │
                    └─────────────┘
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<h2 id="key-features">Key Features</h2>
-
-<h3 id="-high-performance">🚀 <strong>High Performance</strong></h3>
 <ul>
-  <li>Custom llama.cpp binary (<code class="language-plaintext highlighter-rouge">undreamai_server</code>) for optimized inference</li>
-  <li>GPU acceleration with CUDA support</li>
-  <li>Asynchronous job processing via Redis Queue</li>
+  <li><strong>API Service</strong> receives HTTP requests and queues jobs</li>
+  <li><strong>Redis</strong> serves as the message broker between API and workers</li>
+  <li><strong>GPU Workers</strong> pull jobs from the queue and process AI inference</li>
+  <li><strong>Monitoring Stack</strong> observes all components and provides metrics/alerts</li>
 </ul>
 
-<h3 id="-easy-setup">🔧 <strong>Easy Setup</strong></h3>
+<p>Each component is designed to be:</p>
 <ul>
-  <li>Docker Compose deployment</li>
-  <li>Automatic model downloading</li>
-  <li>Pre-configured monitoring stack</li>
+  <li><strong>Independently deployable</strong></li>
+  <li><strong>Horizontally scalable</strong></li>
+  <li><strong>Self-contained</strong> with minimal dependencies</li>
+  <li><strong>Observable</strong> through the monitoring stack</li>
 </ul>
-
-<h3 id="-unity-ready">🎯 <strong>Unity Ready</strong></h3>
-<ul>
-  <li>Compatible with “LLM for Unity” asset</li>
-  <li>Base64 image encoding for seamless integration</li>
-  <li>Standardized API endpoints</li>
-</ul>
-
-<h3 id="-production-monitoring">📊 <strong>Production Monitoring</strong></h3>
-<ul>
-  <li>Real-time metrics with Prometheus</li>
-  <li>Visual dashboards in Grafana</li>
-  <li>Redis queue monitoring</li>
-  <li>GPU utilization tracking</li>
-</ul>
-
-<h2 id="quick-start">Quick Start</h2>
-
-<ol>
-  <li><strong>Clone and Configure</strong>
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre>git clone https://github.com/GrayCatHQ/graycat-aiserver.git
-<span class="nb">cd </span>graycat-aiserver
-<span class="nb">cp</span> .env.example .env
-</pre></td></tr></tbody></table></code></pre></div>    </div>
-  </li>
-  <li><strong>Set API Tokens</strong>
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="c"># Edit .env file</span>
-<span class="nv">API_TOKENS</span><span class="o">=</span>your-secret-token-here
-</pre></td></tr></tbody></table></code></pre></div>    </div>
-  </li>
-  <li><strong>Deploy</strong>
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>docker-compose up <span class="nt">-d</span> <span class="nt">--build</span>
-</pre></td></tr></tbody></table></code></pre></div>    </div>
-  </li>
-  <li><strong>Test API</strong>
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre>curl <span class="nt">-X</span> POST http://localhost:8000/completion <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: Bearer your-secret-token-here"</span> <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-  <span class="nt">-d</span> <span class="s1">'{"prompt": "Hello, world!", "max_tokens": 50}'</span>
-</pre></td></tr></tbody></table></code></pre></div>    </div>
-  </li>
-</ol>
-
-<h2 id="services">Services</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>Service</th>
-      <th>Port</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>API</td>
-      <td>8000</td>
-      <td>FastAPI web server</td>
-    </tr>
-    <tr>
-      <td>Redis</td>
-      <td>6379</td>
-      <td>Message queue</td>
-    </tr>
-    <tr>
-      <td>LLM Worker</td>
-      <td>1337</td>
-      <td>Direct LLM access (when REMOTE=false)</td>
-    </tr>
-    <tr>
-      <td>Stable Diffusion</td>
-      <td>7860</td>
-      <td>WebUI interface (when RUN_SD=true)</td>
-    </tr>
-    <tr>
-      <td>Grafana</td>
-      <td>3000</td>
-      <td>Monitoring dashboard</td>
-    </tr>
-    <tr>
-      <td>Prometheus</td>
-      <td>9090</td>
-      <td>Metrics collection</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="next-steps">Next Steps</h2>
-
-<ul>
-  <li><a href="getting-started.html">Getting Started Guide</a> - Detailed setup instructions</li>
-  <li><a href="architecture.html">Architecture Overview</a> - Deep dive into system design</li>
-  <li><a href="api-reference.html">API Reference</a> - Complete endpoint documentation</li>
-  <li><a href="deployment.html">Deployment Guide</a> - Production deployment strategies</li>
-  <li><a href="troubleshooting.html">Troubleshooting</a> - Common issues and solutions</li>
-</ul>
-
-<hr />
-
-<p><strong>Need help?</strong> Check our <a href="troubleshooting.html">troubleshooting guide</a> or open an issue on <a href="https://github.com/GrayCatHQ/graycat-aiserver">GitHub</a>.</p>
-
-
-  
-
-  <!-- Quick navigation cards -->
-  <div class="quick-nav">
-    <h2>Quick Navigation</h2>
-    <div class="nav-cards">
-      <a href="/graycat-aiserver/getting-started" class="nav-card">
-        <h3>🚀 Getting Started</h3>
-        <p>Set up your development environment and run your first API call</p>
-      </a>
-      
-      <a href="/graycat-aiserver/architecture" class="nav-card">
-        <h3>🏗️ Architecture</h3>
-        <p>Understand the microservice design and component interactions</p>
-      </a>
-      
-      <a href="/graycat-aiserver/components" class="nav-card">
-        <h3>🧩 Components</h3>
-        <p>Independent deployable components: API, GPU Workers, and Monitoring</p>
-      </a>
-      
-      <a href="/graycat-aiserver/api-reference" class="nav-card">
-        <h3>� API Reference</h3>
-        <p>Complete documentation for all endpoints and parameters</p>
-      </a>
-      
-      <a href="/graycat-aiserver/deployment" class="nav-card">
-        <h3>� Deployment</h3>
-        <p>Production deployment strategies and best practices</p>
-      </a>
-    </div>
-  </div>
-</div>
 
 <style>
-.hero-section {
-  text-align: center;
-  padding: 2rem 0;
-  margin-bottom: 2rem;
-}
-
-.hero-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, var(--link-color) 0%, var(--link-hover) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-description {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.quick-nav {
-  margin-top: 2rem;
-}
-
-.nav-cards {
+.component-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
 }
 
-.nav-card {
+.component-card {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 1.5rem;
-  text-decoration: none;
   transition: all 0.3s ease;
-  display: block;
 }
 
-.nav-card:hover {
-  background-color: var(--bg-tertiary);
+.component-card:hover {
   border-color: var(--link-color);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.nav-card h3 {
-  margin: 0 0 0.5rem 0;
-  color: var(--text-color);
-  font-size: 1.1rem;
+.component-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
-.nav-card p {
+.component-header h3 {
   margin: 0;
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.component-location {
+  background-color: var(--bg-tertiary);
+  color: var(--text-muted);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+.component-description {
   color: var(--text-secondary);
-  font-size: 0.9rem;
-  line-height: 1.4;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.component-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.feature-tag {
+  background-color: var(--bg-tertiary);
+  color: var(--text-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  border: 1px solid var(--border-color);
+}
+
+.component-link {
+  color: var(--link-color);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.component-link:hover {
+  color: var(--link-hover);
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .hero-section {
-    padding: 1.5rem 0;
-  }
-  
-  .nav-cards {
+  .component-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
   
-  .nav-card {
+  .component-card {
     padding: 1rem;
   }
 }
-
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: 1.75rem;
-  }
-  
-  .hero-description {
-    font-size: 1rem;
-  }
-}
 </style>
-      </div>
+
+
+        </div>
+
+        
+
+        <!-- Back to top button -->
+        <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+          </svg>
+        </button>
+      </article>
     </div>
   </div>
 </div>

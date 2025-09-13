@@ -2,6 +2,7 @@
 layout: page
 title: GPU Workers
 parent: Components
+nav_order: 2
 ---
 
 # GPU Workers

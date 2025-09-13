@@ -252,6 +252,16 @@
           GPU Workers
         </a>
       </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/components/monitoring/" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5 7h-13v-2h13v2z"/>
+            <path d="M11 2v2H7V2h4zm0 20v-2H7v2h4zm2-20v2h4V2h-4zm0 20v-2h4v2h-4z"/>
+          </svg>
+          Monitoring Stack
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -370,6 +380,44 @@
 └─────────────────────────────────────────────────────────────────┘
 </pre></td></tr></tbody></table></code></pre></div></div>
 
+<h2 id="independent-components">Independent Components</h2>
+
+<p>Graycat AI Server consists of <strong>three independent, deployable components</strong> that can run together or separately:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Description</th>
+      <th>Documentation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>🌐 <strong><a href="/graycat-aiserver/components/api-service">API Service</a></strong></td>
+      <td>FastAPI gateway handling HTTP requests and job queuing</td>
+      <td><code class="language-plaintext highlighter-rouge">api/</code></td>
+    </tr>
+    <tr>
+      <td>🎮 <strong><a href="/graycat-aiserver/components/gpu-workers">GPU Workers</a></strong></td>
+      <td>AI inference engines for LLM and Stable Diffusion</td>
+      <td><code class="language-plaintext highlighter-rouge">gpu/</code></td>
+    </tr>
+    <tr>
+      <td>📊 <strong><a href="/graycat-aiserver/components/monitoring">Monitoring Stack</a></strong></td>
+      <td>Observability with Grafana dashboards and metrics</td>
+      <td><code class="language-plaintext highlighter-rouge">monitoring/</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Each component can be:</p>
+<ul>
+  <li><strong>Deployed together</strong> for a complete, integrated solution</li>
+  <li><strong>Deployed separately</strong> across multiple servers for scalability</li>
+  <li><strong>Mixed and matched</strong> based on your infrastructure requirements</li>
+</ul>
+
 <h2 id="core-components">Core Components</h2>
 
 <h3 id="1-api-gateway-fastapi">1. API Gateway (FastAPI)</h3>
@@ -462,28 +510,57 @@
   <li>Custom model loading</li>
 </ul>
 
-<h3 id="4-monitoring-stack">4. Monitoring Stack</h3>
+<h3 id="4-monitoring-stack-optional-component">4. Monitoring Stack (Optional Component)</h3>
+
+<p><strong>Location</strong>: <code class="language-plaintext highlighter-rouge">monitoring/</code><br />
+<strong>Deployment</strong>: Independent, can run separately or alongside main application</p>
+
+<p>The monitoring stack is a <strong>standalone component</strong> that provides comprehensive observability across all system components. It can be deployed:</p>
+
+<ul>
+  <li><strong>Integrated</strong>: Alongside the main application for unified monitoring</li>
+  <li><strong>Centralized</strong>: On a dedicated monitoring server for multiple Graycat instances</li>
+  <li><strong>Development</strong>: Locally for debugging and performance analysis</li>
+</ul>
 
 <h4 id="prometheus">Prometheus</h4>
 <ul>
-  <li><strong>Metrics Collection</strong>: System, Redis, and custom application metrics</li>
-  <li><strong>Alerting</strong>: Configurable alerts for system health</li>
-  <li><strong>Data Retention</strong>: 15 days of metric history</li>
+  <li><strong>Metrics Collection</strong>: System, Redis, GPU, and custom application metrics</li>
+  <li><strong>Alerting</strong>: Configurable alerts for system health and performance</li>
+  <li><strong>Data Retention</strong>: Configurable retention (default: 200h of metric history)</li>
+  <li><strong>Remote Monitoring</strong>: Can monitor multiple Graycat deployments from a central location</li>
 </ul>
 
 <h4 id="grafana">Grafana</h4>
 <ul>
-  <li><strong>Dashboards</strong>: Pre-configured panels for all services</li>
-  <li><strong>Alerting</strong>: Visual alerts with notification channels</li>
-  <li><strong>Data Sources</strong>: Prometheus, Loki logs</li>
+  <li><strong>Pre-configured Dashboards</strong>: Four auto-provisioned dashboards
+    <ul>
+      <li>Redis performance and queue metrics</li>
+      <li>System resources (CPU, memory, disk, network)</li>
+      <li>NVIDIA GPU metrics (utilization, memory, temperature, power)</li>
+      <li>Centralized log viewing and analysis</li>
+    </ul>
+  </li>
+  <li><strong>Multi-Instance Support</strong>: Monitor multiple API/GPU worker deployments</li>
+  <li><strong>Alerting</strong>: Visual alerts with multiple notification channels</li>
 </ul>
 
-<h4 id="exporters">Exporters</h4>
+<h4 id="exporters--collectors-auto-deployed">Exporters &amp; Collectors (Auto-deployed)</h4>
 <ul>
-  <li><strong>Node Exporter</strong>: System metrics (CPU, memory, disk)</li>
-  <li><strong>Redis Exporter</strong>: Queue depth, connection count</li>
-  <li><strong>NVIDIA GPU Exporter</strong>: GPU utilization, memory, temperature</li>
+  <li><strong>Node Exporter</strong>: System metrics collection</li>
+  <li><strong>Redis Exporter</strong>: Queue and performance metrics</li>
+  <li><strong>NVIDIA GPU Exporter</strong>: GPU utilization and health metrics</li>
+  <li><strong>Promtail</strong>: Log aggregation from all services</li>
 </ul>
+
+<p><strong>Deployment Flexibility</strong>: The monitoring stack can be deployed independently from the main application, making it suitable for:</p>
+<ul>
+  <li>Multi-environment monitoring (dev, staging, production)</li>
+  <li>Cross-datacenter observability</li>
+  <li>Centralized monitoring of distributed Graycat deployments</li>
+</ul>
+
+<p>For detailed setup and deployment options, see the <a href="/graycat-aiserver/components/monitoring-stack">Monitoring Stack Component</a>.</p>
 
 <h2 id="data-flow">Data Flow</h2>
 
@@ -629,6 +706,70 @@ Authorization: Bearer &lt;token&gt;
   <li><strong>Queue Depth</strong>: Redis handles thousands of queued jobs</li>
 </ul>
 
+<h2 id="deployment-patterns">Deployment Patterns</h2>
+
+<p>Graycat AI Server is designed with <strong>component independence</strong> in mind. Each component can be deployed separately or together based on your infrastructure needs:</p>
+
+<h3 id="-monolithic-deployment">🔗 Monolithic Deployment</h3>
+<p>Deploy all components on a single server:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>docker-compose up <span class="nt">-d</span>  <span class="c"># API + GPU Workers + Redis</span>
+<span class="nb">cd </span>monitoring <span class="o">&amp;&amp;</span> docker-compose up <span class="nt">-d</span>  <span class="c"># Optional monitoring</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="-distributed-deployment">🔲 Distributed Deployment</h3>
+<p>Deploy components across multiple servers:</p>
+
+<p><strong>Server 1 (API + Redis)</strong>:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c"># api-only docker-compose.yml</span>
+services:
+  api:
+    <span class="c"># ... API configuration</span>
+  redis:
+    <span class="c"># ... Redis configuration</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>Server 2-N (GPU Workers)</strong>:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="c"># gpu-worker docker-compose.yml</span>
+services:
+  gpu_worker:
+    environment:
+      - <span class="nv">REMOTE</span><span class="o">=</span><span class="nb">true</span>
+      - <span class="nv">REDIS_HOST</span><span class="o">=</span>server1:6379
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>Monitoring Server (Optional)</strong>:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c"># Central monitoring for all deployments</span>
+<span class="nb">cd </span>monitoring
+<span class="c"># Configure prometheus.yml with remote targets</span>
+docker-compose up <span class="nt">-d</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="-hybrid-deployment">🎯 Hybrid Deployment</h3>
+<p>Mix local and remote components:</p>
+<ul>
+  <li>API + Redis locally</li>
+  <li>GPU workers on dedicated GPU servers</li>
+  <li>Centralized monitoring for multiple environments</li>
+</ul>
+
 <h2 id="technology-stack">Technology Stack</h2>
 
 <table>
@@ -760,6 +901,7 @@ Authorization: Bearer &lt;token&gt;
         <ul class="footer-links">
           <li><a href="/graycat-aiserver/getting-started">Getting Started</a></li>
           <li><a href="/graycat-aiserver/architecture">Architecture</a></li>
+          <li><a href="/graycat-aiserver/components">Components</a></li>
           <li><a href="/graycat-aiserver/api-reference">API Reference</a></li>
           <li><a href="/graycat-aiserver/deployment">Deployment</a></li>
         </ul>
