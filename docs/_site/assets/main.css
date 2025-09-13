@@ -423,3 +423,40 @@ button:hover, .btn:hover { background-color: var(--button-hover); }
 .highlight .vg { color: #ffa657; }
 .highlight .vi { color: #ffa657; }
 .highlight .il { color: #79c0ff; }
+
+.site-footer { background-color: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 3rem 0 1rem 0; margin-top: 3rem; }
+
+.footer-content { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+
+.footer-section h3, .footer-section h4 { color: var(--text-color); margin-bottom: 1rem; font-weight: 600; }
+
+.footer-section h3 { font-size: 1.3rem; }
+
+.footer-section h4 { font-size: 1rem; }
+
+.footer-description { color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6; }
+
+.social-links { display: flex; gap: 1rem; }
+
+.social-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background-color: var(--button-bg); color: var(--text-color); text-decoration: none; border-radius: 6px; border: 1px solid var(--border-color); transition: all 0.2s ease; font-size: 0.9rem; }
+.social-link:hover { background-color: var(--button-hover); border-color: var(--link-color); color: var(--link-color); }
+
+.footer-links { list-style: none; margin: 0; padding: 0; }
+.footer-links li { margin-bottom: 0.5rem; }
+.footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease; }
+.footer-links a:hover { color: var(--link-color); }
+
+.tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+
+.tech-badge { background-color: var(--bg-tertiary); color: var(--text-color); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; border: 1px solid var(--border-color); }
+
+.footer-meta { color: var(--text-muted); font-size: 0.9rem; }
+.footer-meta p { margin: 0.5rem 0; color: var(--text-muted); }
+
+.build-info { border-top: 1px solid var(--border-muted); padding-top: 1rem; margin-top: 1rem; }
+.build-info small { color: var(--text-muted); font-size: 0.8rem; }
+
+@media (max-width: 768px) { .footer-content { grid-template-columns: 1fr; gap: 2rem; }
+  .social-links { flex-direction: column; }
+  .tech-stack { justify-content: flex-start; } }
+@media (max-width: 1024px) { .footer-content { grid-template-columns: 1fr 1fr; } }

@@ -93,6 +93,8 @@ layout: default
 .nav-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
 
 .nav-card {
   background-color: var(--bg-secondary);
@@ -157,8 +159,6 @@ layout: default
     </div>
   </div>
 </div>
-
-{%- include footer.html -%}
 
 <script>
 // Set dark theme as default immediately
