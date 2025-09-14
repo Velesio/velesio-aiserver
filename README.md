@@ -28,8 +28,8 @@ High-performance, microservice-based AI inference server with Unity integration 
 ### RunPod Template
 Deploy instantly on RunPod GPU cloud:
 - 🔗 **[One-Click Deploy of GPU component](https://console.runpod.io/deploy?template=3rsr5dzv50&ref=muhg2w55)**
-- Set `REMOTE=false` for standalone inference endpoint (port 1337)
-- Set `REMOTE=true` to connect to your Redis queue remotely
+- Set `REMOTE=false` for standalone inference endpoint (make sure to expose llamacpp and SD ports)
+- Set `REMOTE=true` to connect to remote Redis queue from API component
 
 ### Local Setup
 ```bash
