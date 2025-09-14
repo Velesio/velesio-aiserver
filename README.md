@@ -43,22 +43,28 @@ Docker compose plugin
 git clone https://github.com/GrayCatHQ/graycat-aiserver.git
 cd graycat-aiserver
 
-# 2. Setup models and binaries
-cd gpu && ./server_setup.sh && cd ..
-
-# 3. Configure environment
+# 2. Configure environment
 cp .env.example .env  # Edit tokens and model URLs
 
-# 4. Launch!
+# 3. Launch!
 docker-compose up -d
 
-# 5. If you are locally developing you can use the --build flag, and include the undreamai_server binaries in the /gpu dir
+# 4. If you are locally developing you can use the --build flag, and include the undreamai_server binaries in the /gpu dir with the server_setup.sh script
 docker-compose up -d --build
 ```
 
 Your API will be available at `http://localhost:8000` 🎉
 
 > 📖 **Need more details?** Check out the **[Getting Started Guide](docs/getting-started.md)** for comprehensive setup instructions.
+
+## 🎮 Unity Integrations
+
+Built specifically for Unity developers:
+
+- **[LLM for Unity](https://assetstore.unity.com/packages/tools/ai-ml-integration/llm-for-unity-273604)** - Recommended Unity asset
+- Compatible `/completion` endpoint for seamless integration
+- Base64 image encoding for Stable Diffusion support
+
 
 ## 🏗️ Architecture
 
@@ -93,22 +99,6 @@ Distributed microservice design for maximum flexibility:
 | `GET /health` | Health check (no auth) | [API Reference](docs/api-reference.md#health) |
 
 Authentication: `Authorization: Bearer your-token-here`
-
-## 🎮 Unity Integration
-
-Built specifically for Unity developers:
-
-- **[LLM for Unity](https://assetstore.unity.com/packages/tools/ai-ml-integration/llm-for-unity-273604)** - Recommended Unity asset
-- Compatible `/completion` endpoint for seamless integration
-- Base64 image encoding for Stable Diffusion support
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
