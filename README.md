@@ -1,97 +1,115 @@
-# 🚀 Graycat AI Server 🚀
+# 🚀 Graycat AI Server
 
-Plug and play AI Inference with a focus on compatibility with Unity.
----
+High-performance, microservice-based AI inference server with Unity integration support.
+
+[![Deploy on RunPod](https://img.shields.io/badge/Deploy%20on-RunPod-blue?style=for-the-badge)](https://console.runpod.io/deploy?template=3rsr5dzv50&ref=muhg2w55)
 
 ## ✨ Features
 
-*   **Ease of Use:** Microservice architecture allows for flexible methods of deployment for any user case.
-*   **Unity Ready:** Seamless integration with a selection of Unity Assets.
-*   **Scalability:** Built with Docker and a worker-queue architecture to handle any load from anywhere.
-*   **Hosting:** Token-based authentication and Nginx Reverse proxy setup.
-*   **Observability:** Grafana monitoring stack to keep an eye on everything.
+- **🎯 Unity Ready:** Seamless integration with Unity Assets like "LLM for Unity"
+- **⚡ High Performance:** Custom llama.cpp binary with GPU acceleration
+- **📈 Scalable:** Redis queue-based worker architecture
+- **🐳 Easy Deploy:** Docker Compose setup with auto-downloading models
+- **📊 Monitoring:** Built-in Grafana dashboards and observability
 
----
-## Runpod Quickstart for GPU module hosting [Template Link](https://console.runpod.io/deploy?template=3rsr5dzv50&ref=muhg2w55)
-*   **REMOTE: false** Hosts the LLAMACPP endpoint on the exposed port (1337 by default).
-*   **REMOTE: true** Connects to remote API Server's redis queue (port 6379 by default). In that case you do not need to expose any ports. It is Reccomended to have a Firewall on your API Server's end and only allow the GPU worker IPs on the Redis port.
+## 📚 Documentation
 
-## 🔌 Environment Variables
+📖 **[Complete Documentation](https://docs.graycat.ai)** - Full guides, API reference, and examples
 
-| ENV              | Service(s) | Description                                                                                                 | Default/Example                                                              |
-| :--------------- | :--------- | :---------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------- |
-| `API_TOKENS`     | `api`      | Comma-separated list of valid bearer tokens for authenticating API requests.                                | `your-secret-token-here`                                                     |
-| `MODEL_URL`      | `gpu`      | The URL to download the GGUF model from if not already present in `gpu/models`.                               | `https://huggingface.co/.../qwen2.5-3b-instruct-q8_0.gguf`                   |
-| `REDIS_HOST`     | `api`, `gpu` | The hostname of the Redis server.                                                                           | `redis`                                                                      |
-| `REDIS_PASS`     | `redis`, `api`, `gpu` | The password for the Redis server.                                                                          | `your_secure_password`                                                       |
-| `LLAMA_SERVER_URL` | `gpu`      | The URL of the llama.cpp server endpoint. Used by the worker to know where to send inference requests.      | `http://localhost:1337`                                                      |
-| `GPU_LAYERS`     | `gpu`      | The number of model layers to offload to the GPU. Set to `0` for CPU-only.                                  | `30`                                                                         |
-| `PORT`           | `gpu`      | The port the internal `undreamai_server` will listen on.                                                    | `1337`                                                                       |
-| `REMOTE`         | `gpu`      | If `true`, the GPU worker connects to a remote Redis queue. If `false`, it hosts its own endpoint.            | `true`                                                                       |
+- 🚀 **[Getting Started](docs/getting-started.md)** - Installation and basic setup
+- 🏗️ **[Architecture](docs/architecture.md)** - System design and components  
+- 🚢 **[Deployment](docs/deployment.md)** - Production deployment strategies
+- 🔌 **[API Reference](docs/api-reference.md)** - Complete endpoint documentation
+- 🛠️ **[Components](docs/components.md)** - Individual service configuration
+- 🔧 **[Troubleshooting](docs/troubleshooting.md)** - Common issues and solutions
 
----
+## ⚡ Quick Start
 
-## 🏁 Self Hosted Setup Instructions
+### RunPod Template
+Deploy instantly on RunPod GPU cloud:
+- 🔗 **[One-Click Deploy](https://console.runpod.io/deploy?template=3rsr5dzv50&ref=muhg2w55)**
+- Set `REMOTE=false` for standalone inference endpoint (port 1337)
+- Set `REMOTE=true` to connect to your Redis queue remotely
 
-Get your server running with just a few commands.
-
-**Prerequisites:**
-*   NVIDIA GPU with CUDA support.
-*   Docker & Docker Compose.
-
-**1. Initial Setup**
-
-First, grab the `undreamai_server` binaries and make sure you have a model in `/gpu/models`. The `MODEL_URL` in `server_setup.sh` will fetch one for you if the directory is empty.
-
+### Local Setup
 ```bash
-cd gpu
-./server_setup.sh
-```
+# 0. Environment:
+Linux
+NVIDIA GPU with cuda 12.2+ drivers installed
+NVIDIA Container Toolkit
+Docker compose plugin
 
-**2. Configure Your Environment**
+# 1. Get the code
+git clone https://github.com/GrayCatHQ/graycat-aiserver.git
+cd graycat-aiserver
 
-Create a `.env` file in the root directory and add your env vars.
+# 2. Setup models and binaries
+cd gpu && ./server_setup.sh && cd ..
 
-**3. Launch!**
+# 3. Configure environment
+cp .env.example .env  # Edit tokens and model URLs
 
-Build the images and start all services in detached mode. You can comment out or remove specific services depending on what you want to run.
+# 4. Launch!
+docker-compose up -d
 
-```bash
+# 5. If you are locally developing you can use the --build flag, and include the undreamai_server binaries in the /gpu dir
 docker-compose up -d --build
 ```
 
----
+Your API will be available at `http://localhost:8000` 🎉
 
-## ⚙️ Under the Hood
+> 📖 **Need more details?** Check out the **[Getting Started Guide](docs/getting-started.md)** for comprehensive setup instructions.
 
-This project uses a distributed architecture to keep things fast and scalable.
+## 🏗️ Architecture
 
--   **GPU Worker (`gpu/`)**: The core inference engine. It's a custom `llama.cpp` server that connects to Redis.
--   **API Server (`api/`)**: A FastAPI service that handles incoming requests, authenticates them, and pushes jobs to the Redis queue.
--   **Redis**: The message broker that decouples the API from the GPU workers.
--   **Nginx**: A reverse proxy for securely exposing your API to the world.
--   **Monitoring (`monitoring/`)**: A pre-configured Grafana stack with dashboards for Redis and node performance.
+Distributed microservice design for maximum flexibility:
 
----
+```
+┌─────────────┐    ┌─────────┐    ┌─────────────┐
+│    API      │────│  Redis  │────│ GPU Workers │
+│  (FastAPI)  │    │ Queue   │    │ (LLM + SD)  │
+└─────────────┘    └─────────┘    └─────────────┘
+       │                                  │
+       │           ┌─────────────┐        │
+       └───────────│ Monitoring  │────────┘
+                   │(Grafana+Prom)│
+                   └─────────────┘
+```
+
+- **API Service:** FastAPI with token auth and job queuing
+- **GPU Workers:** Custom llama.cpp + Stable Diffusion inference engines  
+- **Redis Queue:** Decoupled job processing for scalability
+- **Monitoring:** Pre-configured Grafana dashboards
+
+> 📖 **Learn more:** [Architecture Documentation](docs/architecture.md)
 
 ## 🔌 API Endpoints
 
-Authentication is done via a Bearer token in the `Authorization` header.
+| Endpoint | Purpose | Documentation |
+|----------|---------|---------------|
+| `POST /completion` | Unity-compatible text generation | [API Reference](docs/api-reference.md#completion) |
+| `POST /generate` | Advanced text generation | [API Reference](docs/api-reference.md#generate) |
+| `POST /image` | Stable Diffusion image generation | [API Reference](docs/api-reference.md#image) |
+| `GET /health` | Health check (no auth) | [API Reference](docs/api-reference.md#health) |
 
-| Method | Endpoint       | Description                                |
-| :----- | :------------- | :----------------------------------------- |
-| `GET`  | `/docs`        | Interactive API documentation.             |
-| `POST` | `/generate`    | Queue a text generation job.               |
-| `POST` | `/completion`  | Unity-compatible completion endpoint.      |
-| `POST` | `/template`    | Get the current chat template.             |
-| `POST` | `/tokenize`    | Tokenize a string without generating.      |
-| `GET`  | `/health`      | Health check (no auth required).           |
-
----
+Authentication: `Authorization: Bearer your-token-here`
 
 ## 🎮 Unity Integration
 
-This server is designed to work with Unity assets out-of-the-box.
+Built specifically for Unity developers:
 
--   [**LLM for Unity**](https://assetstore.unity.com/packages/tools/ai-ml-integration/llm-for-unity-273604): The recommended asset for connecting your Unity projects to this server.
--   [**Stable Diffusion Unity Integration**](https://github.com/dobrado76/Stable-Diffusion-Unity-Integration/discussions): For discussions on integrating other AI models.
+- **[LLM for Unity](https://assetstore.unity.com/packages/tools/ai-ml-integration/llm-for-unity-273604)** - Recommended Unity asset
+- Compatible `/completion` endpoint for seamless integration
+- Base64 image encoding for Stable Diffusion support
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+**Questions?** Check the [Documentation](docs/) or open an issue!

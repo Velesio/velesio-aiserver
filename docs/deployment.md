@@ -75,7 +75,47 @@ Internet
 
 ## Deployment Options
 
-### 1. Single Server Deployment
+### 1. RunPod GPU Cloud Deployment
+
+**Best for**: Instant GPU access, pay-per-use, no infrastructure management
+
+**One-Click Template**: [Deploy to RunPod](https://console.runpod.io/deploy?template=3rsr5dzv50&ref=muhg2w55)
+
+**Configuration Options**:
+
+#### Standalone Mode (`REMOTE=false`)
+- Hosts the inference endpoint directly on port 1337
+- Ideal for simple setups or direct API access
+- No Redis connection required
+- Access your endpoint at `https://your-pod-id-1337.proxy.runpod.net`
+
+#### Distributed Mode (`REMOTE=true`)
+- Connects to your remote Redis queue
+- Best for distributed deployments
+- Requires Redis server accessible from RunPod
+- Set `REDIS_HOST` to your Redis server IP/domain
+- **Security**: Ensure your Redis server firewall only allows RunPod worker IPs
+
+**Required Environment Variables**:
+```bash
+# For standalone mode
+REMOTE=false
+API_TOKENS=your-secret-token
+
+# For distributed mode  
+REMOTE=true
+REDIS_HOST=your-redis-server.com
+REDIS_PASS=your-secure-password
+API_TOKENS=your-secret-token
+```
+
+**Template Features**:
+- Pre-configured GPU acceleration
+- Automatic model downloading
+- 24/7 availability option
+- Hourly billing
+
+### 2. Single Server Deployment
 
 **Best for**: Development, small teams, low-traffic applications
 
