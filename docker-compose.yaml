@@ -17,9 +17,9 @@ services:
 
   api:
     image: ghcr.io/graycathq/graycat-api:latest
-    # build:
-    #   context: ./api
-    #   dockerfile: Dockerfile
+    build:
+      context: ./api
+      dockerfile: Dockerfile
     container_name: graycat-api
     depends_on:
       - redis
@@ -37,9 +37,9 @@ services:
 
   gpu:
     image: ghcr.io/graycathq/graycat-gpu:latest  
-    # build:
-    #   context: ./gpu
-    #   dockerfile: Dockerfile
+    build:
+      context: ./gpu
+      dockerfile: Dockerfile
     container_name: graycat-gpu
     ports: 
       - "1337:1337"
