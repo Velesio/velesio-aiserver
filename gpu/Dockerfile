@@ -23,9 +23,9 @@ RUN pip install --no-cache-dir torch torchvision torchaudio xformers --index-url
 COPY entrypoint.sh /app/
 COPY *.py /app/
 
-# Copy only the llama binary (exclude models and SD)
-COPY data/llama/libundreamai_linux-cuda-cu12.2.0.so /app/data/llama/
-COPY data/llama/undreamai_server /app/data/llama/
+# Copy llama binaries
+COPY libundreamai_linux-cuda-cu12.2.0.so /app/
+COPY undreamai_server /app/
 
 RUN chmod +x entrypoint.sh
 

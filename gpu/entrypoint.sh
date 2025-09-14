@@ -7,7 +7,6 @@ mkdir -p /app/data/models/image/models/VAE
 mkdir -p /app/data/models/image/models/Lora
 mkdir -p /app/data/models/image/models/embeddings
 mkdir -p /app/data/sd
-mkdir -p /app/data/llama
 
 if [ ! -f /app/data/models/text/model.gguf ]; then
     wget -O /app/data/models/text/model.gguf "$MODEL_URL"
@@ -145,7 +144,7 @@ EOF
 fi
 
 # Start with minimal arguments and multiple slots for context management
-./data/llama/undreamai_server \
+./undreamai_server \
     --model /app/data/models/text/model.gguf \
     --host 0.0.0.0 \
     --port "$PORT" \
