@@ -46,7 +46,7 @@ docker-compose up -d --build
 ### GPU Worker Debugging
 - Port 1337: LLaMA inference endpoint (when `REMOTE=false`)
 - Port 7860: Stable Diffusion WebUI (when `RUN_SD=true`)
-- Check worker logs: `docker logs llama_worker`
+- Check worker logs: `docker logs graycat-gpu`
 - Redis queue inspection: Connect to Redis on port 6379
 
 ### Model Management

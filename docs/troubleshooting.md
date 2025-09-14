@@ -153,20 +153,20 @@ docker-compose exec redis redis-cli ping
 docker-compose exec redis redis-cli LLEN llama_queue
 
 # Check worker logs
-docker-compose logs llama_worker
+docker-compose logs graycat-gpu
 ```
 
 **Solutions**:
 
 1. **Restart Workers**:
    ```bash
-   docker-compose restart llama_worker
+   docker-compose restart graycat-gpu
    ```
 
 2. **Check Worker Configuration**:
    ```bash
    # Verify worker environment
-   docker-compose exec llama_worker env | grep REDIS
+   docker-compose exec graycat-gpu env | grep REDIS
    ```
 
 3. **Clear Stuck Jobs**:
@@ -299,7 +299,7 @@ docker-compose logs llama_worker
 1. **Check SD Dependencies**:
    ```bash
    # Verify CUDA version compatibility
-   docker-compose exec llama_worker nvidia-smi
+   docker-compose exec graycat-gpu nvidia-smi
    ```
 
 2. **Disable SD if Not Needed**:
@@ -311,7 +311,7 @@ docker-compose logs llama_worker
 3. **Check SD Model Loading**:
    ```bash
    # SD worker logs
-   docker-compose logs llama_worker | grep -i "stable"
+   docker-compose logs graycat-gpu | grep -i "stable"
    ```
 
 ## Network Issues
@@ -384,7 +384,7 @@ docker-compose logs llama_worker
 3. **Implement Memory Cleanup**:
    ```bash
    # Clear model cache periodically
-   docker-compose exec llama_worker pkill -f undreamai_server
+   docker-compose exec graycat-gpu pkill -f undreamai_server
    ```
 
 ### Queue Backup
@@ -398,7 +398,7 @@ docker-compose logs llama_worker
 1. **Scale Workers**:
    ```bash
    # Add more worker containers
-   docker-compose up -d --scale llama_worker=3
+   docker-compose up -d --scale graycat-gpu=3
    ```
 
 2. **Implement Rate Limiting**:

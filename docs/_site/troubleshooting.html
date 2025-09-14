@@ -487,7 +487,7 @@ docker-compose <span class="nb">exec </span>redis redis-cli ping
 docker-compose <span class="nb">exec </span>redis redis-cli LLEN llama_queue
 
 <span class="c"># Check worker logs</span>
-docker-compose logs llama_worker
+docker-compose logs graycat-gpu
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p><strong>Solutions</strong>:</p>
@@ -495,14 +495,14 @@ docker-compose logs llama_worker
 <ol>
   <li><strong>Restart Workers</strong>:
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>docker-compose restart llama_worker
+</pre></td><td class="rouge-code"><pre>docker-compose restart graycat-gpu
 </pre></td></tr></tbody></table></code></pre></div>    </div>
   </li>
   <li><strong>Check Worker Configuration</strong>:
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="rouge-code"><pre><span class="c"># Verify worker environment</span>
-docker-compose <span class="nb">exec </span>llama_worker <span class="nb">env</span> | <span class="nb">grep </span>REDIS
+docker-compose <span class="nb">exec </span>graycat-gpu <span class="nb">env</span> | <span class="nb">grep </span>REDIS
 </pre></td></tr></tbody></table></code></pre></div>    </div>
   </li>
   <li><strong>Clear Stuck Jobs</strong>:
@@ -671,7 +671,7 @@ netstat <span class="nt">-tlnp</span> | <span class="nb">grep </span>8000
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="rouge-code"><pre><span class="c"># Verify CUDA version compatibility</span>
-docker-compose <span class="nb">exec </span>llama_worker nvidia-smi
+docker-compose <span class="nb">exec </span>graycat-gpu nvidia-smi
 </pre></td></tr></tbody></table></code></pre></div>    </div>
   </li>
   <li><strong>Disable SD if Not Needed</strong>:
@@ -685,7 +685,7 @@ docker-compose <span class="nb">exec </span>llama_worker nvidia-smi
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="rouge-code"><pre><span class="c"># SD worker logs</span>
-docker-compose logs llama_worker | <span class="nb">grep</span> <span class="nt">-i</span> <span class="s2">"stable"</span>
+docker-compose logs graycat-gpu | <span class="nb">grep</span> <span class="nt">-i</span> <span class="s2">"stable"</span>
 </pre></td></tr></tbody></table></code></pre></div>    </div>
   </li>
 </ol>
@@ -782,7 +782,7 @@ free <span class="nt">-h</span>
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="rouge-code"><pre><span class="c"># Clear model cache periodically</span>
-docker-compose <span class="nb">exec </span>llama_worker pkill <span class="nt">-f</span> undreamai_server
+docker-compose <span class="nb">exec </span>graycat-gpu pkill <span class="nt">-f</span> undreamai_server
 </pre></td></tr></tbody></table></code></pre></div>    </div>
   </li>
 </ol>
@@ -802,7 +802,7 @@ docker-compose <span class="nb">exec </span>llama_worker pkill <span class="nt">
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="rouge-code"><pre><span class="c"># Add more worker containers</span>
-docker-compose up <span class="nt">-d</span> <span class="nt">--scale</span> <span class="nv">llama_worker</span><span class="o">=</span>3
+docker-compose up <span class="nt">-d</span> <span class="nt">--scale</span> <span class="nv">graycat-gpu</span><span class="o">=</span>3
 </pre></td></tr></tbody></table></code></pre></div>    </div>
   </li>
   <li><strong>Implement Rate Limiting</strong>:

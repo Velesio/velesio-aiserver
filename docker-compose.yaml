@@ -31,7 +31,7 @@ services:
       - "8000:8000"
     restart: unless-stopped
     labels:
-      container_name: "llama_api"
+      container_name: "graycat-api"
       service_name: "graycat"
       pod_name: "api-pod"
 
@@ -65,7 +65,7 @@ services:
           devices:
             - capabilities: [gpu]
     labels:
-      container_name: "llama_worker"
+      container_name: "graycat-gpu"
       service_name: "graycat"
       pod_name: "gpu-worker-pod"
 

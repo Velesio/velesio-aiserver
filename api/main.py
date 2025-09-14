@@ -27,7 +27,7 @@ app = FastAPI(
 redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
 REDIS_HOST = os.getenv("REDIS_HOST", "redis")
 REDIS_PASS = os.getenv("REDIS_PASS", "")
-A1111_URL = os.getenv("A1111_URL", "http://llama_worker:7860")  # Internal container URL
+A1111_URL = os.getenv("A1111_URL", "http://graycat-gpu:7860")  # Internal container URL
 if not os.getenv("REDIS_URL"):
     redis_url = f"redis://:{REDIS_PASS}@{REDIS_HOST}:6379"
 redis_pass = os.getenv("REDIS_PASS", None)

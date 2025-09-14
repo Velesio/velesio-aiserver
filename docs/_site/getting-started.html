@@ -571,7 +571,7 @@ docker-compose up <span class="nt">-d</span>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="rouge-code"><pre>docker-compose ps
-<span class="c"># Should show: api, redis, llama_worker all running</span>
+<span class="c"># Should show: api, redis, graycat-gpu all running</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>✅ <strong>API responds to health check</strong></p>
@@ -584,7 +584,7 @@ docker-compose up <span class="nt">-d</span>
 <p>✅ <strong>Models loaded successfully</strong></p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
-</pre></td><td class="rouge-code"><pre>docker-compose logs llama_worker | <span class="nb">grep</span> <span class="nt">-i</span> <span class="s2">"model"</span>
+</pre></td><td class="rouge-code"><pre>docker-compose logs graycat-gpu | <span class="nb">grep</span> <span class="nt">-i</span> <span class="s2">"model"</span>
 <span class="c"># Should show model loading messages</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 

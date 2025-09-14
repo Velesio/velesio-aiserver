@@ -180,7 +180,7 @@ docker-compose up -d
 ✅ **Docker containers running**
 ```bash
 docker-compose ps
-# Should show: api, redis, llama_worker all running
+# Should show: api, redis, graycat-gpu all running
 ```
 
 ✅ **API responds to health check**
@@ -191,7 +191,7 @@ curl http://localhost:8000/health
 
 ✅ **Models loaded successfully**
 ```bash
-docker-compose logs llama_worker | grep -i "model"
+docker-compose logs graycat-gpu | grep -i "model"
 # Should show model loading messages
 ```
 
