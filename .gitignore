@@ -3,3 +3,5 @@ gpu/data
 nginx/logs/*
 nginx/ssl/*
 docs/vendor
+gpu/undreamai_server
+gpu/libundreamai_linux-cuda-cu12.2.0.so
