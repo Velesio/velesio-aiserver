@@ -14,6 +14,9 @@ scrape_configs:
     docker_sd_configs:
       - host: unix:///var/run/docker.sock
         refresh_interval: 5s
+        filters:
+          - name: status
+            values: [running]
     relabel_configs:
       - source_labels: ['__meta_docker_container_name']
         regex: '/(.*)'
@@ -24,6 +27,24 @@ scrape_configs:
         target_label: 'compose_service'
       - source_labels: ['__meta_docker_container_label_com_docker_compose_project']
         target_label: 'compose_project'
+      # If no compose service label, use container name  
+      - source_labels: ['compose_service']
+        regex: '^$'
+        replacement: '${1}'
+        target_label: 'compose_service'
+      # Special handling for known service containers
+      - source_labels: ['container']
+        regex: 'redis'
+        replacement: 'redis'
+        target_label: 'compose_service'
+      - source_labels: ['container']
+        regex: 'graycat-api'
+        replacement: 'api'
+        target_label: 'compose_service'
+      - source_labels: ['container']
+        regex: 'graycat-gpu'
+        replacement: 'gpu'
+        target_label: 'compose_service'
 
   # Docker containers via log files (fallback method)
   - job_name: docker_logs

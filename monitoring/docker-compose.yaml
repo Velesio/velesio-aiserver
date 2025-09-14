@@ -61,11 +61,12 @@ services:
     ports:
       - "9121:9121"
     environment:
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PASS=${REDIS_PASS}
+      - REDIS_ADDR=redis://redis:6379
+      - REDIS_PASSWORD=secure_redis_pass
     restart: unless-stopped
     networks:
       - monitoring
+      - graycat-aiserver_default
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
@@ -114,6 +115,7 @@ services:
     restart: unless-stopped
     networks:
       - monitoring
+      - graycat-aiserver_default
 volumes:
   prometheus_data:
   grafana_data:
@@ -122,3 +124,5 @@ volumes:
 networks:
   monitoring:
     driver: bridge
+  graycat-aiserver_default:
+    external: true
