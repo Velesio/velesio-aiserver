@@ -17,10 +17,10 @@ services:
 
   api:
     image: ghcr.io/graycathq/graycat-api:latest
-    # build:
-    #   context: ./api
-    #   dockerfile: Dockerfile
-    container_name: llama_api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: graycat-api
     depends_on:
       - redis
     environment:
@@ -37,10 +37,10 @@ services:
 
   gpu:
     image: ghcr.io/graycathq/graycat-gpu:latest  
-    # build:
-    #   context: ./gpu
-    #   dockerfile: Dockerfile
-    container_name: llama_worker
+    build:
+      context: ./gpu
+      dockerfile: Dockerfile
+    container_name: graycat-gpu
     ports: 
       - "1337:1337"
       - "7860:7860"

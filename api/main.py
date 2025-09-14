@@ -251,6 +251,8 @@ async def stream_completion_response(task_id: str):
     start_time = time.time()
     chunks_sent = False
     last_chunk_count = 0
+    total_tokens_sent = 0
+    last_progress_log = 0
     
     while time.time() - start_time < timeout:
         try:
@@ -264,19 +266,24 @@ async def stream_completion_response(task_id: str):
                 new_chunks = await redis_client.lrange(stream_key, last_chunk_count, current_chunk_count - 1)
                 
                 if new_chunks:
-                    logger.info(f"Got {len(new_chunks)} new streaming chunks for task {task_id}")
                     # Process each new streaming chunk immediately
                     for chunk_data in new_chunks:
                         try:
                             chunk = json.loads(chunk_data)
                             chunk_json = json.dumps(chunk)
-                            logger.info(f"Yielding stream chunk: data: {chunk_json}")
                             yield f"data: {chunk_json}\n\n"
                             chunks_sent = True
+                            total_tokens_sent += 1
                             # Very small delay to ensure proper streaming
                             await asyncio.sleep(0.001)
                         except json.JSONDecodeError:
                             logger.error(f"Invalid JSON in stream chunk: {chunk_data}")
+                    
+                    # Log progress every 50 tokens or every 10 seconds
+                    current_time = time.time()
+                    if (total_tokens_sent - last_progress_log >= 50) or (current_time - start_time > last_progress_log + 10):
+                        logger.info(f"Task {task_id}: streaming progress - {total_tokens_sent} tokens sent, {current_time - start_time:.1f}s elapsed")
+                        last_progress_log = total_tokens_sent
                     
                     last_chunk_count = current_chunk_count
             
@@ -286,12 +293,12 @@ async def stream_completion_response(task_id: str):
             
             if result_data:
                 result = json.loads(result_data)
-                logger.info(f"Got final result for task {task_id}: streaming finished")
+                elapsed_time = time.time() - start_time
+                logger.info(f"Task {task_id} completed: {total_tokens_sent} tokens, {elapsed_time:.1f}s duration")
                 
                 if result.get("error"):
                     error_response = {"error": result["error"]}
                     error_json = json.dumps(error_response)
-                    logger.info(f"Yielding error: data: {error_json}")
                     yield f"data: {error_json}\n\n"
                 else:
                     # Send final stop signal if we sent chunks
@@ -305,12 +312,10 @@ async def stream_completion_response(task_id: str):
                             "stop": True
                         }
                         final_json = json.dumps(final_chunk)
-                        logger.info(f"Yielding final stop chunk: data: {final_json}")
                         yield f"data: {final_json}\n\n"
                     elif not chunks_sent:
                         # No streaming chunks were sent, send the complete result
                         response_json = json.dumps(response_data)
-                        logger.info(f"Yielding complete response: data: {response_json}")
                         yield f"data: {response_json}\n\n"
                 
                 # Clean up
@@ -324,15 +329,13 @@ async def stream_completion_response(task_id: str):
             logger.error(f"Error in stream for task {task_id}: {e}")
             error_response = {"error": f"Streaming error: {str(e)}"}
             error_json = json.dumps(error_response)
-            logger.info(f"Yielding exception error: data: {error_json}")
             yield f"data: {error_json}\n\n"
             return
     
     # Timeout reached
-    logger.error(f"Timeout reached for task {task_id}")
+    logger.error(f"Timeout reached for task {task_id} after {time.time() - start_time:.1f}s")
     timeout_response = {"error": "Request timeout"}
     timeout_json = json.dumps(timeout_response)
-    logger.info(f"Yielding timeout error: data: {timeout_json}")
     yield f"data: {timeout_json}\n\n"
 
 @app.post("/completion")

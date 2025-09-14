@@ -61,9 +61,8 @@ Your API will be available at `http://localhost:8000` 🎉
 
 Built specifically for Unity developers:
 
-- **[LLM for Unity](https://assetstore.unity.com/packages/tools/ai-ml-integration/llm-for-unity-273604)** - Recommended Unity asset
-- Compatible `/completion` endpoint for seamless integration
-- Base64 image encoding for Stable Diffusion support
+- **[LLM for Unity](https://assetstore.unity.com/packages/tools/ai-ml-integration/llm-for-unity-273604)** - Text Generation
+- **[SD Integration For Untiy](https://github.com/dobrado76/Stable-Diffusion-Unity-Integration)** - Image Generation
 
 
 ## 🏗️ Architecture
@@ -89,17 +88,12 @@ Distributed microservice design for maximum flexibility:
 
 > 📖 **Learn more:** [Architecture Documentation](docs/architecture.md)
 
-## 🔌 API Endpoints
-
-| Endpoint | Purpose | Documentation |
-|----------|---------|---------------|
-| `POST /completion` | Unity-compatible text generation | [API Reference](docs/api-reference.md#completion) |
-| `POST /generate` | Advanced text generation | [API Reference](docs/api-reference.md#generate) |
-| `POST /image` | Stable Diffusion image generation | [API Reference](docs/api-reference.md#image) |
-| `GET /health` | Health check (no auth) | [API Reference](docs/api-reference.md#health) |
-
-Authentication: `Authorization: Bearer your-token-here`
-
 ---
+
+## 🔌 Open Source References
+[UndreamAI UnityAsset and Server](https://github.com/undreamai)
+[dobrado76 SD Integration for Unity](https://github.com/dobrado76/Stable-Diffusion-Unity-Integration)
+[Automatic1111 SD Web server](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
+[LLAMACPP](https://github.com/ggml-org/llama.cpp)
 
 **Questions?** Check the [Documentation](docs/) or open an issue!
