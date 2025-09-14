@@ -16,9 +16,10 @@ services:
       pod_name: "redis-pod"
 
   api:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
+    image: ghcr.io/graycathq/graycat-api:latest
+    # build:
+    #   context: ./api
+    #   dockerfile: Dockerfile
     container_name: llama_api
     depends_on:
       - redis
@@ -35,9 +36,10 @@ services:
       pod_name: "api-pod"
 
   gpu:
-    build:
-      context: ./gpu
-      dockerfile: Dockerfile
+    image: ghcr.io/graycathq/graycat-gpu:latest  
+    # build:
+    #   context: ./gpu
+    #   dockerfile: Dockerfile
     container_name: llama_worker
     ports: 
       - "1337:1337"
