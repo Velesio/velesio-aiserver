@@ -14,7 +14,7 @@ High-performance, microservice-based AI inference server with Unity integration 
 
 ## 📚 Documentation
 
-📖 **[Complete Documentation](https://docs.graycat.ai)** - Full guides, API reference, and examples
+📖 **[Complete Documentation](https://graycathq.github.io/graycat-aiserver/)** - Full guides, API reference, and examples
 
 - 🚀 **[Getting Started](docs/getting-started.md)** - Installation and basic setup
 - 🏗️ **[Architecture](docs/architecture.md)** - System design and components  

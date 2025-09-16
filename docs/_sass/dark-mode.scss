@@ -354,39 +354,67 @@ a {
   }
 }
 
-// Code blocks
-code, pre {
-  background-color: var(--code-bg);
-  border: 1px solid var(--code-border);
-  color: var(--text-color);
-  border-radius: 6px;
+// Code blocks - completely unshittified, single box style
+code, pre, .highlight, .highlighter-rouge {
+  background-color: var(--code-bg) !important;
+  color: var(--text-color) !important;
+  border-radius: 8px !important;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-pre {
-  padding: 16px;
-  overflow: auto;
-  line-height: 1.45;
+// All code blocks get same consistent styling - no nested boxes
+pre, .highlight, .highlighter-rouge .highlight, div.highlight {
+  padding: 16px !important;
+  overflow: auto !important;
+  line-height: 1.45 !important;
+  border-left: 4px solid var(--link-color) !important;
+  margin: 1rem 0 !important;
+  background-color: var(--code-bg) !important;
+  border-radius: 8px !important;
   
   code {
-    background-color: transparent;
-    border: none;
-    padding: 0;
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    font-size: inherit !important;
+  }
+  
+  // Kill any wrapper divs
+  div {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 }
 
-code {
-  padding: 0.2em 0.4em;
-  font-size: 85%;
+// Kill the outer wrapper that creates nested boxes
+.highlighter-rouge {
+  background-color: transparent !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
 }
 
-// Inline code
-p code, li code, td code {
-  background-color: var(--code-bg);
-  color: var(--text-color);
-  border: 1px solid var(--code-border);
-  border-radius: 3px;
-  padding: 0.2em 0.4em;
-  font-size: 85%;
+code {
+  padding: 0.2em 0.4em !important;
+  font-size: 85% !important;
+  background-color: var(--bg-tertiary) !important;
+  border: none !important;
+}
+
+// Inline code - force override
+p code, li code, td code, h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--text-color) !important;
+  border-radius: 4px !important;
+  padding: 0.2em 0.4em !important;
+  font-size: 85% !important;
+  border: none !important;
 }
 
 // Tables

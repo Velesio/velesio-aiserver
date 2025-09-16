@@ -5,3 +5,46 @@
 @import "dark-mode";
 @import "syntax-highlighting";
 @import "footer";
+
+// Simple, clean code block styling - no more nested hell
+div[class*="highlighter-rouge"] {
+  background: var(--code-bg) !important;
+  border: none !important;
+  border-left: 4px solid var(--link-color) !important;
+  border-radius: 8px !important;
+  margin: 1rem 0 !important;
+  padding: 16px !important;
+  overflow: auto !important;
+  
+  // Kill all inner styling
+  * {
+    background: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+  }
+  
+  .highlight, pre, code, table, tbody, tr, td {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .rouge-gutter {
+    padding-right: 8px !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .rouge-code {
+    padding-left: 8px !important;
+  }
+}
+
+// Inline code
+code.highlighter-rouge {
+  background: var(--bg-tertiary) !important;
+  border: none !important;
+  padding: 0.2em 0.4em !important;
+  border-radius: 4px !important;
+  margin: 0 !important;
+}

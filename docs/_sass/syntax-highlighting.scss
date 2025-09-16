@@ -1,18 +1,21 @@
-// Enhanced syntax highlighting for dark mode
-.highlight {
-  background-color: var(--code-bg);
-  border-radius: 6px;
-  padding: 1rem;
-  overflow-x: auto;
-  border: 1px solid var(--code-border);
+// Enhanced syntax highlighting for dark mode - single consistent style
+.highlight, .highlighter-rouge .highlight, div.highlight {
+  background-color: var(--code-bg) !important;
+  border-radius: 8px !important;
+  padding: 1rem !important;
+  overflow-x: auto !important;
+  border-left: 4px solid var(--link-color) !important;
+  margin: 1rem 0 !important;
+  border: none !important;
+  box-shadow: none !important;
   
   // Line numbers
   .lineno {
-    color: var(--text-muted);
+    color: var(--text-muted) !important;
     user-select: none;
-    border-right: 1px solid var(--border-muted);
-    padding-right: 0.5rem;
-    margin-right: 0.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding-right: 0.5rem !important;
+    margin-right: 0.5rem !important;
   }
   
   // GitHub Dark syntax colors
