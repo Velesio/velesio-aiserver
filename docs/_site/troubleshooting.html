@@ -262,6 +262,28 @@
           Monitoring Stack
         </a>
       </li>
+      
+      <li class="nav-section">
+        <span class="section-title">Unity Integrations</span>
+      </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/unity-integrations/llm-integration/" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 6h-1v8c0 .55-.45 1-1 1H6v1c0 1.1.9 2 2 2h10l4 4V8c0-1.1-.9-2-2-2zm-3 5V4c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v13l4-4h11c1.1 0 2-.9 2-2z"/>
+          </svg>
+          LLM for Unity Integration
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/unity-integrations/stable-diffusion-integration/" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 17l3.5-4.5 2.5 3.01L14.5 11l4.5 6H5z"/>
+          </svg>
+          Stable Diffusion for Unity
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -802,7 +824,7 @@ docker-compose <span class="nb">exec </span>graycat-gpu pkill <span class="nt">-
     <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 </pre></td><td class="rouge-code"><pre><span class="c"># Add more worker containers</span>
-docker-compose up <span class="nt">-d</span> <span class="nt">--scale</span> <span class="nv">graycat-gpu</span><span class="o">=</span>3
+docker-compose up <span class="nt">-d</span> <span class="nt">--scale</span> graycat-gpu<span class="o">=</span>3
 </pre></td></tr></tbody></table></code></pre></div>    </div>
   </li>
   <li><strong>Implement Rate Limiting</strong>:
@@ -1157,7 +1179,7 @@ docker <span class="nb">cp</span> <span class="si">$(</span>docker-compose ps <s
           <p class="build-info">
             Built with ❤️ using Jekyll
             <br>
-            <small>Last updated: September 14, 2025</small>
+            <small>Last updated: September 16, 2025</small>
           </p>
         </div>
       </div>

@@ -262,6 +262,28 @@
           Monitoring Stack
         </a>
       </li>
+      
+      <li class="nav-section">
+        <span class="section-title">Unity Integrations</span>
+      </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/unity-integrations/llm-integration/" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 6h-1v8c0 .55-.45 1-1 1H6v1c0 1.1.9 2 2 2h10l4 4V8c0-1.1-.9-2-2-2zm-3 5V4c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v13l4-4h11c1.1 0 2-.9 2-2z"/>
+          </svg>
+          LLM for Unity Integration
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a href="/graycat-aiserver/unity-integrations/stable-diffusion-integration/" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 17l3.5-4.5 2.5 3.01L14.5 11l4.5 6H5z"/>
+          </svg>
+          Stable Diffusion for Unity
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -380,7 +402,61 @@ docker-compose <span class="nt">-f</span> docker-compose.gpu.yml up <span class=
 
 <h2 id="deployment-options">Deployment Options</h2>
 
-<h3 id="1-single-server-deployment">1. Single Server Deployment</h3>
+<h3 id="1-runpod-gpu-cloud-deployment">1. RunPod GPU Cloud Deployment</h3>
+
+<p><strong>Best for</strong>: Instant GPU access, pay-per-use, no infrastructure management</p>
+
+<p><strong>One-Click Template</strong>: <a href="https://console.runpod.io/deploy?template=3rsr5dzv50&amp;ref=muhg2w55">Deploy to RunPod</a></p>
+
+<p><strong>Configuration Options</strong>:</p>
+
+<h4 id="standalone-mode-remotefalse">Standalone Mode (<code class="language-plaintext highlighter-rouge">REMOTE=false</code>)</h4>
+<ul>
+  <li>Hosts the inference endpoint directly on port 1337</li>
+  <li>Ideal for simple setups or direct API access</li>
+  <li>No Redis connection required</li>
+  <li>Access your endpoint at <code class="language-plaintext highlighter-rouge">https://your-pod-id-1337.proxy.runpod.net</code></li>
+</ul>
+
+<h4 id="distributed-mode-remotetrue">Distributed Mode (<code class="language-plaintext highlighter-rouge">REMOTE=true</code>)</h4>
+<ul>
+  <li>Connects to your remote Redis queue</li>
+  <li>Best for distributed deployments</li>
+  <li>Requires Redis server accessible from RunPod</li>
+  <li>Set <code class="language-plaintext highlighter-rouge">REDIS_HOST</code> to your Redis server IP/domain</li>
+  <li><strong>Security</strong>: Ensure your Redis server firewall only allows RunPod worker IPs</li>
+</ul>
+
+<p><strong>Required Environment Variables</strong>:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="c"># For standalone mode</span>
+<span class="nv">REMOTE</span><span class="o">=</span><span class="nb">false
+</span><span class="nv">API_TOKENS</span><span class="o">=</span>your-secret-token
+
+<span class="c"># For distributed mode  </span>
+<span class="nv">REMOTE</span><span class="o">=</span><span class="nb">true
+</span><span class="nv">REDIS_HOST</span><span class="o">=</span>your-redis-server.com
+<span class="nv">REDIS_PASS</span><span class="o">=</span>your-secure-password
+<span class="nv">API_TOKENS</span><span class="o">=</span>your-secret-token
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>Template Features</strong>:</p>
+<ul>
+  <li>Pre-configured GPU acceleration</li>
+  <li>Automatic model downloading</li>
+  <li>24/7 availability option</li>
+  <li>Hourly billing</li>
+</ul>
+
+<h3 id="2-single-server-deployment">2. Single Server Deployment</h3>
 
 <p><strong>Best for</strong>: Development, small teams, low-traffic applications</p>
 
@@ -1314,27 +1390,6 @@ aws s3 <span class="nb">sync</span> ./gpu/data/models s3://your-bucket/models <s
         </div>
 
         
-          <nav class="post-nav">
-            
-            
-            
-            
-            
-            <div class="nav-previous">
-              
-                
-                <a href="/graycat-aiserver/api-reference.html" rel="prev">← API Reference</a>
-              
-            </div>
-            
-            <div class="nav-next">
-              
-                
-                <a href="/graycat-aiserver/components.html" rel="next">Components →</a>
-              
-            </div>
-          </nav>
-        
 
         <!-- Back to top button -->
         <button class="back-to-top" id="back-to-top" aria-label="Back to top">
@@ -1416,7 +1471,7 @@ aws s3 <span class="nb">sync</span> ./gpu/data/models s3://your-bucket/models <s
           <p class="build-info">
             Built with ❤️ using Jekyll
             <br>
-            <small>Last updated: September 14, 2025</small>
+            <small>Last updated: September 16, 2025</small>
           </p>
         </div>
       </div>

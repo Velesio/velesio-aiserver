@@ -3,21 +3,21 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Components | Graycat AI Server</title>
+<title>Unity Integrations | Graycat AI Server</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Components" />
+<meta property="og:title" content="Unity Integrations" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A microservice-based AI inference server with Redis queue-based worker architecture" />
 <meta property="og:description" content="A microservice-based AI inference server with Redis queue-based worker architecture" />
-<link rel="canonical" href="http://0.0.0.0:4000/graycat-aiserver/components.html" />
-<meta property="og:url" content="http://0.0.0.0:4000/graycat-aiserver/components.html" />
+<link rel="canonical" href="http://0.0.0.0:4000/graycat-aiserver/unity-integrations.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/graycat-aiserver/unity-integrations.html" />
 <meta property="og:site_name" content="Graycat AI Server" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Components" />
+<meta property="twitter:title" content="Unity Integrations" />
 <meta name="twitter:site" content="@graycathq" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"A microservice-based AI inference server with Redis queue-based worker architecture","headline":"Components","url":"http://0.0.0.0:4000/graycat-aiserver/components.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"A microservice-based AI inference server with Redis queue-based worker architecture","headline":"Unity Integrations","url":"http://0.0.0.0:4000/graycat-aiserver/unity-integrations.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/graycat-aiserver/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/graycat-aiserver/feed.xml" title="Graycat AI Server" /></head>
 <body><header class="site-header" role="banner">
@@ -293,233 +293,34 @@
     <div class="wrapper">
       <article class="post">
         <header class="post-header">
-          <h1 class="post-title">Components</h1></header>
+          <h1 class="post-title">Unity Integrations</h1></header>
 
         <div class="post-content">
-          <h1 id="components">Components</h1>
+          <h1 id="unity-integrations">Unity Integrations</h1>
 
-<p>Graycat AI Server is built with a <strong>modular, component-based architecture</strong> where each component can be deployed independently or together based on your infrastructure needs.</p>
+<p>Graycat AI Server provides seamless integration capabilities for Unity game development, enabling developers to incorporate AI-powered features directly into their Unity projects.</p>
 
-<h2 id="available-components">Available Components</h2>
+<h2 id="available-integrations">Available Integrations</h2>
 
-<div class="component-grid">
-  <div class="component-card">
-    <div class="component-header">
-      <h3>🌐 API Service</h3>
-      <span class="component-location">api/</span>
-    </div>
-    <p class="component-description">
-      FastAPI-based web server that handles HTTP requests, authentication, and job queuing to GPU workers.
-    </p>
-    <div class="component-features">
-      <span class="feature-tag">FastAPI</span>
-      <span class="feature-tag">Authentication</span>
-      <span class="feature-tag">Job Queuing</span>
-    </div>
-    <a href="/graycat-aiserver/components/api-service" class="component-link">View Documentation →</a>
-  </div>
-
-  <div class="component-card">
-    <div class="component-header">
-      <h3>🎮 GPU Workers</h3>
-      <span class="component-location">gpu/</span>
-    </div>
-    <p class="component-description">
-      Specialized containers that handle AI inference tasks using NVIDIA GPUs for both LLM and Stable Diffusion workloads.
-    </p>
-    <div class="component-features">
-      <span class="feature-tag">CUDA</span>
-      <span class="feature-tag">LLM Inference</span>
-      <span class="feature-tag">Stable Diffusion</span>
-    </div>
-    <a href="/graycat-aiserver/components/gpu-workers" class="component-link">View Documentation →</a>
-  </div>
-
-  <div class="component-card">
-    <div class="component-header">
-      <h3>📊 Monitoring Stack</h3>
-      <span class="component-location">monitoring/</span>
-    </div>
-    <p class="component-description">
-      Comprehensive observability solution with Grafana dashboards, Prometheus metrics, and centralized logging.
-    </p>
-    <div class="component-features">
-      <span class="feature-tag">Grafana</span>
-      <span class="feature-tag">Prometheus</span>
-      <span class="feature-tag">Observability</span>
-    </div>
-    <a href="/graycat-aiserver/components/monitoring" class="component-link">View Documentation →</a>
-  </div>
-</div>
-
-<h2 id="deployment-flexibility">Deployment Flexibility</h2>
-
-<p>Each component can be deployed in multiple ways:</p>
-
-<h3 id="-all-in-one-deployment">🏢 <strong>All-in-One Deployment</strong></h3>
-<p>Deploy all components on a single server for a complete, integrated solution:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre>docker-compose up <span class="nt">-d</span>                    <span class="c"># API + GPU Workers + Redis</span>
-<span class="nb">cd </span>monitoring <span class="o">&amp;&amp;</span> docker-compose up <span class="nt">-d</span>   <span class="c"># Optional monitoring</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<h3 id="-distributed-deployment">🌐 <strong>Distributed Deployment</strong></h3>
-<p>Deploy components across multiple servers for scalability:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-</pre></td><td class="rouge-code"><pre><span class="c"># Server 1: API + Redis</span>
-docker-compose <span class="nt">-f</span> docker-compose.api.yml up <span class="nt">-d</span>
-
-<span class="c"># Server 2-N: GPU Workers</span>
-docker-compose <span class="nt">-f</span> docker-compose.gpu.yml up <span class="nt">-d</span>
-
-<span class="c"># Monitoring Server: Centralized observability</span>
-<span class="nb">cd </span>monitoring <span class="o">&amp;&amp;</span> docker-compose up <span class="nt">-d</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<h3 id="-component-specific-deployment">🎯 <strong>Component-Specific Deployment</strong></h3>
-<p>Deploy only the components you need:</p>
-<ul>
-  <li><strong>API-only</strong>: For serverless GPU workers or external inference services</li>
-  <li><strong>GPU-only</strong>: For dedicated inference workers connecting to remote APIs</li>
-  <li><strong>Monitoring-only</strong>: For centralized observability across multiple deployments</li>
-</ul>
-
-<h2 id="component-communication">Component Communication</h2>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="rouge-code"><pre>┌─────────────┐    ┌─────────┐    ┌─────────────┐
-│ API Service │────│  Redis  │────│ GPU Workers │
-│  (FastAPI)  │    │ Queue   │    │ (LLM + SD)  │
-└─────────────┘    └─────────┘    └─────────────┘
-       │                                  │
-       │           ┌─────────────┐        │
-       └───────────│ Monitoring  │────────┘
-                   │   Stack     │
-                   └─────────────┘
-</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Our Unity integrations are designed to make AI implementation in games as simple as possible. Each integration provides:</p>
 
 <ul>
-  <li><strong>API Service</strong> receives HTTP requests and queues jobs</li>
-  <li><strong>Redis</strong> serves as the message broker between API and workers</li>
-  <li><strong>GPU Workers</strong> pull jobs from the queue and process AI inference</li>
-  <li><strong>Monitoring Stack</strong> observes all components and provides metrics/alerts</li>
+  <li><strong>Easy Setup</strong>: Simple drag-and-drop prefabs and minimal configuration</li>
+  <li><strong>Performance Optimized</strong>: Efficient networking and caching for real-time gameplay</li>
+  <li><strong>Production Ready</strong>: Battle-tested components used in shipped games</li>
+  <li><strong>Full Documentation</strong>: Complete guides with code examples and best practices</li>
 </ul>
 
-<p>Each component is designed to be:</p>
-<ul>
-  <li><strong>Independently deployable</strong></li>
-  <li><strong>Horizontally scalable</strong></li>
-  <li><strong>Self-contained</strong> with minimal dependencies</li>
-  <li><strong>Observable</strong> through the monitoring stack</li>
-</ul>
+<h2 id="getting-started">Getting Started</h2>
 
-<style>
-.component-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin: 2rem 0;
-}
+<ol>
+  <li><strong>Download</strong> the Unity packages from our releases</li>
+  <li><strong>Import</strong> the package into your Unity project</li>
+  <li><strong>Configure</strong> the server endpoint in the integration settings</li>
+  <li><strong>Start building</strong> AI-powered features in your game</li>
+</ol>
 
-.component-card {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.component-card:hover {
-  border-color: var(--link-color);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.component-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.component-header h3 {
-  margin: 0;
-  color: var(--text-color);
-  font-size: 1.2rem;
-}
-
-.component-location {
-  background-color: var(--bg-tertiary);
-  color: var(--text-muted);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  font-family: monospace;
-}
-
-.component-description {
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
-  line-height: 1.5;
-}
-
-.component-features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.feature-tag {
-  background-color: var(--bg-tertiary);
-  color: var(--text-color);
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  border: 1px solid var(--border-color);
-}
-
-.component-link {
-  color: var(--link-color);
-  text-decoration: none;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.component-link:hover {
-  color: var(--link-hover);
-}
-
-@media (max-width: 768px) {
-  .component-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  .component-card {
-    padding: 1rem;
-  }
-}
-</style>
-
+<p>Each integration includes example scenes, documentation, and sample code to get you started quickly.</p>
 
         </div>
 
@@ -533,14 +334,14 @@ docker-compose <span class="nt">-f</span> docker-compose.gpu.yml up <span class=
             <div class="nav-previous">
               
                 
-                <a href="/graycat-aiserver/architecture.html" rel="prev">← Architecture</a>
+                <a href="/graycat-aiserver/components.html" rel="prev">← Components</a>
               
             </div>
             
             <div class="nav-next">
               
                 
-                <a href="/graycat-aiserver/unity-integrations.html" rel="next">Unity Integrations →</a>
+                <a href="/graycat-aiserver/api-reference.html" rel="next">API Reference →</a>
               
             </div>
           </nav>
