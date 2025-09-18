@@ -38,11 +38,11 @@ scrape_configs:
         replacement: 'redis'
         target_label: 'compose_service'
       - source_labels: ['container']
-        regex: 'graycat-api'
+        regex: 'neovratz-api'
         replacement: 'api'
         target_label: 'compose_service'
       - source_labels: ['container']
-        regex: 'graycat-gpu'
+        regex: 'neovratz-gpu'
         replacement: 'gpu'
         target_label: 'compose_service'
 

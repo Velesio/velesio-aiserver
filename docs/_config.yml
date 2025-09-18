@@ -1,12 +1,12 @@
-# Graycat AI Server Documentation
-title: Graycat AI Server
+# neovratz AI Server Documentation
+title: neovratz AI Server
 description: A microservice-based AI inference server with Redis queue-based worker architecture
-baseurl: "/graycat-aiserver" # the subpath of your site, e.g. /blog
-url: "https://graycathq.github.io" # the base hostname & protocol for your site
+baseurl: "/neovratz-aiserver" # the subpath of your site, e.g. /blog
+url: "https://neovratzhq.github.io" # the base hostname & protocol for your site
 
 # GitHub integration
-github_username: GrayCatHQ
-repository: graycat-aiserver
+github_username: neovratzHQ
+repository: neovratz-aiserver
 
 # Build settings
 markdown: kramdown
@@ -87,13 +87,13 @@ rouge:
 
 # SEO
 twitter:
-  username: graycathq
+  username: neovratzhq
   card: summary
 
 social:
-  name: GrayCat
+  name: neovratz
   links:
-    - https://github.com/GrayCatHQ
+    - https://github.com/neovratzHQ
 
 # Exclude from processing
 exclude:

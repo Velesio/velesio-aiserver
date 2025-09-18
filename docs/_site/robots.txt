@@ -1,1 +1,1 @@
-Sitemap: http://0.0.0.0:4000/graycat-aiserver/sitemap.xml
+Sitemap: http://0.0.0.0:4000/Neovratz-aiserver/sitemap.xml

@@ -6,11 +6,11 @@ nav_order: 7
 
 # Deployment Guide
 
-This guide covers production deployment strategies for Graycat AI Server's independent components.
+This guide covers production deployment strategies for neovratz AI Server's independent components.
 
 ## Component Deployment Options
 
-Graycat AI Server is built with **modular components** that can be deployed flexibly:
+neovratz AI Server is built with **modular components** that can be deployed flexibly:
 
 ### 🏢 All-in-One Deployment
 Deploy all components on a single server:
@@ -128,8 +128,8 @@ API_TOKENS=your-secret-token
 **Setup**:
 ```bash
 # 1. Clone repository
-git clone https://github.com/GrayCatHQ/graycat-aiserver.git
-cd graycat-aiserver
+git clone https://github.com/neovratzHQ/neovratz-aiserver.git
+cd neovratz-aiserver
 
 # 2. Configure production environment
 cp .env.example .env.production
@@ -163,7 +163,7 @@ docker-compose -f docker-compose.prod.yml up -d --build
 **Example ECS Task Definition**:
 ```json
 {
-  "family": "graycat-api",
+  "family": "neovratz-api",
   "requiresCompatibilities": ["FARGATE"],
   "networkMode": "awsvpc",
   "cpu": "1024",
@@ -171,7 +171,7 @@ docker-compose -f docker-compose.prod.yml up -d --build
   "containerDefinitions": [
     {
       "name": "api",
-      "image": "graycathq/graycat-api:latest",
+      "image": "neovratzhq/neovratz-api:latest",
       "portMappings": [
         {
           "containerPort": 8000,
@@ -439,7 +439,7 @@ services:
 
 ## Monitoring and Logging
 
-Graycat AI Server includes a comprehensive monitoring stack with Grafana dashboards, Prometheus metrics, and centralized logging. For complete setup instructions and usage details, see the [Monitoring Documentation]({{ '/components/monitoring' | relative_url }}).
+neovratz AI Server includes a comprehensive monitoring stack with Grafana dashboards, Prometheus metrics, and centralized logging. For complete setup instructions and usage details, see the [Monitoring Documentation]({{ '/components/monitoring' | relative_url }}).
 
 ### Production Monitoring Stack
 
@@ -512,8 +512,8 @@ async def completion(request: CompletionRequest):
 
 **Log Rotation**:
 ```bash
-# /etc/logrotate.d/graycat
-/var/log/graycat/*.log {
+# /etc/logrotate.d/neovratz
+/var/log/neovratz/*.log {
     daily
     missingok
     rotate 30
@@ -522,7 +522,7 @@ async def completion(request: CompletionRequest):
     notifempty
     create 644 root root
     postrotate
-        docker kill -s USR1 $(docker ps -q --filter name=graycat)
+        docker kill -s USR1 $(docker ps -q --filter name=neovratz)
     endscript
 }
 ```
@@ -554,12 +554,12 @@ CUDA_VISIBLE_DEVICES=0,1 docker-compose up gpu_worker
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: graycat-api-hpa
+  name: neovratz-api-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: graycat-api
+    name: neovratz-api
   minReplicas: 2
   maxReplicas: 10
   metrics:
@@ -667,7 +667,7 @@ redis_pool = redis.ConnectionPool(
 ```yaml
 # alerts.yml
 groups:
-- name: graycat
+- name: neovratz
   rules:
   - alert: HighQueueDepth
     expr: redis_queue_depth > 10

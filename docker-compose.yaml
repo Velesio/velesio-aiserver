@@ -12,15 +12,15 @@ services:
     restart: unless-stopped
     labels:
       container_name: "redis"
-      service_name: "graycat"
+      service_name: "neovratz"
       pod_name: "redis-pod"
 
   api:
-    image: ghcr.io/graycathq/graycat-api:latest
+    image: ghcr.io/neovratzhq/neovratz-api:latest
     build:
       context: ./api
       dockerfile: Dockerfile
-    container_name: graycat-api
+    container_name: neovratz-api
     depends_on:
       - redis
     environment:
@@ -31,16 +31,16 @@ services:
       - "8000:8000"
     restart: unless-stopped
     labels:
-      container_name: "graycat-api"
-      service_name: "graycat"
+      container_name: "neovratz-api"
+      service_name: "neovratz"
       pod_name: "api-pod"
 
   gpu:
-    image: ghcr.io/graycathq/graycat-gpu:latest  
+    image: ghcr.io/neovratzhq/neovratz-gpu:latest  
     build:
       context: ./gpu
       dockerfile: Dockerfile
-    container_name: graycat-gpu
+    container_name: neovratz-gpu
     ports: 
       - "1337:1337"
       - "7860:7860"
@@ -65,8 +65,8 @@ services:
           devices:
             - capabilities: [gpu]
     labels:
-      container_name: "graycat-gpu"
-      service_name: "graycat"
+      container_name: "neovratz-gpu"
+      service_name: "neovratz"
       pod_name: "gpu-worker-pod"
 
   # nginx:

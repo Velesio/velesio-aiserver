@@ -13,7 +13,7 @@ The GPU workers are specialized containers that handle AI inference tasks using 
 
 **Location**: `gpu/`  
 **Technology**: Python + CUDA + Custom Binaries  
-**Container**: `graycat-gpu`  
+**Container**: `neovratz-gpu`  
 **Workers**: LLM Worker (`llm.py`) + Stable Diffusion Worker (`sd.py`)
 
 The GPU workers pull jobs from Redis queue and execute AI inference using:

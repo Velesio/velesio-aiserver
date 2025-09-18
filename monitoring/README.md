@@ -1,6 +1,6 @@
 # Monitoring Stack
 
-This monitoring setup provides comprehensive observability for the graycat-aiserver with pre-configured dashboards.
+This monitoring setup provides comprehensive observability for the neovratz-aiserver with pre-configured dashboards.
 
 ## Components
 
@@ -20,7 +20,7 @@ The following dashboards are automatically provisioned on startup:
 
 ## Quick Start
 
-1. Make sure your main Redis instance is running (the one used by graycat-aiserver)
+1. Make sure your main Redis instance is running (the one used by neovratz-aiserver)
 
 2. Set the Redis password environment variable to match your main Redis instance:
 ```bash

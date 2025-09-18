@@ -4,13 +4,13 @@ title: Home
 nav_order: 1
 ---
 
-# Graycat AI Server
+# neovratz AI Server
 
 A high-performance, microservice-based AI inference server designed for scalable LLM and Stable Diffusion workloads.
 
 ## Overview
 
-Graycat AI Server is a production-ready AI inference platform that provides:
+neovratz AI Server is a production-ready AI inference platform that provides:
 
 - **LLM Text Generation** via custom llama.cpp integration
 - **Stable Diffusion Image Generation** with WebUI support
@@ -60,8 +60,8 @@ Graycat AI Server is a production-ready AI inference platform that provides:
 
 1. **Clone and Configure**
    ```bash
-   git clone https://github.com/GrayCatHQ/graycat-aiserver.git
-   cd graycat-aiserver
+   git clone https://github.com/neovratzHQ/neovratz-aiserver.git
+   cd neovratz-aiserver
    cp .env.example .env
    ```
 
@@ -105,4 +105,4 @@ Graycat AI Server is a production-ready AI inference platform that provides:
 
 ---
 
-**Need help?** Check our [troubleshooting guide](troubleshooting.html) or open an issue on [GitHub](https://github.com/GrayCatHQ/graycat-aiserver).
+**Need help?** Check our [troubleshooting guide](troubleshooting.html) or open an issue on [GitHub](https://github.com/neovratzHQ/neovratz-aiserver).

@@ -6,7 +6,7 @@ nav_order: 2
 
 # Getting Started
 
-This guide will help you set up and run Graycat AI Server locally for development or testing.
+This guide will help you set up and run neovratz AI Server locally for development or testing.
 
 ## Prerequisites
 
@@ -29,8 +29,8 @@ docker run --rm --gpus all nvidia/cuda:11.8-base-ubuntu20.04 nvidia-smi
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/GrayCatHQ/graycat-aiserver.git
-cd graycat-aiserver
+git clone https://github.com/neovratzHQ/neovratz-aiserver.git
+cd neovratz-aiserver
 ```
 
 ### 2. Environment Configuration
@@ -180,7 +180,7 @@ docker-compose up -d
 ✅ **Docker containers running**
 ```bash
 docker-compose ps
-# Should show: api, redis, graycat-gpu all running
+# Should show: api, redis, neovratz-gpu all running
 ```
 
 ✅ **API responds to health check**
@@ -191,7 +191,7 @@ curl http://localhost:8000/health
 
 ✅ **Models loaded successfully**
 ```bash
-docker-compose logs graycat-gpu | grep -i "model"
+docker-compose logs neovratz-gpu | grep -i "model"
 # Should show model loading messages
 ```
 

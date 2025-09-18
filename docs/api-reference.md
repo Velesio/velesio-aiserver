@@ -6,7 +6,7 @@ nav_order: 6
 
 # API Reference
 
-Complete documentation for all Graycat AI Server endpoints.
+Complete documentation for all neovratz AI Server endpoints.
 
 ## Authentication
 
@@ -430,7 +430,7 @@ public class AIChat : MonoBehaviour
 ```python
 import requests
 
-class GraycatClient:
+class neovratzClient:
     def __init__(self, base_url, api_token):
         self.base_url = base_url
         self.headers = {"Authorization": f"Bearer {api_token}"}
@@ -444,13 +444,13 @@ class GraycatClient:
         return response.json()
 
 # Usage
-client = GraycatClient("http://localhost:8000", "your-token")
+client = neovratzClient("http://localhost:8000", "your-token")
 result = client.complete("Explain AI:", max_tokens=100)
 ```
 
 ### JavaScript/Node.js
 ```javascript
-class GraycatClient {
+class neovratzClient {
     constructor(baseUrl, apiToken) {
         this.baseUrl = baseUrl;
         this.headers = {
@@ -470,7 +470,7 @@ class GraycatClient {
 }
 
 // Usage
-const client = new GraycatClient('http://localhost:8000', 'your-token');
+const client = new neovratzClient('http://localhost:8000', 'your-token');
 const result = await client.complete('Hello AI!');
 ```
 

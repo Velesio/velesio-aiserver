@@ -1,4 +1,4 @@
-# 🚀 Graycat AI Server
+# 🚀 neovratz AI Server
 
 High-performance, microservice-based AI inference server with Unity integration support.
 
@@ -14,7 +14,7 @@ High-performance, microservice-based AI inference server with Unity integration 
 
 ## 📚 Documentation
 
-📖 **[Complete Documentation](https://graycathq.github.io/graycat-aiserver/)** - Full guides, API reference, and examples
+📖 **[Complete Documentation](https://neovratzhq.github.io/neovratz-aiserver/)** - Full guides, API reference, and examples
 
 - 🚀 **[Getting Started](docs/getting-started.md)** - Installation and basic setup
 - 🏗️ **[Architecture](docs/architecture.md)** - System design and components  
@@ -40,8 +40,8 @@ NVIDIA Container Toolkit
 Docker compose plugin
 
 # 1. Get the code
-git clone https://github.com/GrayCatHQ/graycat-aiserver.git
-cd graycat-aiserver
+git clone https://github.com/neovratzHQ/neovratz-aiserver.git
+cd neovratz-aiserver
 
 # 2. Configure environment
 cp .env.example .env  # Edit tokens and model URLs

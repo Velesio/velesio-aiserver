@@ -6,7 +6,7 @@ nav_order: 3
 
 # Architecture Overview
 
-Graycat AI Server follows a microservice architecture designed for scalability, reliability, and maintainability.
+neovratz AI Server follows a microservice architecture designed for scalability, reliability, and maintainability.
 
 ## System Architecture
 
@@ -64,7 +64,7 @@ Graycat AI Server follows a microservice architecture designed for scalability, 
 
 ## Independent Components
 
-Graycat AI Server consists of **three independent, deployable components** that can run together or separately:
+neovratz AI Server consists of **three independent, deployable components** that can run together or separately:
 
 | Component | Description | Documentation |
 |-----------|-------------|---------------|
@@ -159,14 +159,14 @@ llama_queue:
 The monitoring stack is a **standalone component** that provides comprehensive observability across all system components. It can be deployed:
 
 - **Integrated**: Alongside the main application for unified monitoring
-- **Centralized**: On a dedicated monitoring server for multiple Graycat instances  
+- **Centralized**: On a dedicated monitoring server for multiple neovratz instances  
 - **Development**: Locally for debugging and performance analysis
 
 #### Prometheus
 - **Metrics Collection**: System, Redis, GPU, and custom application metrics
 - **Alerting**: Configurable alerts for system health and performance  
 - **Data Retention**: Configurable retention (default: 200h of metric history)
-- **Remote Monitoring**: Can monitor multiple Graycat deployments from a central location
+- **Remote Monitoring**: Can monitor multiple neovratz deployments from a central location
 
 #### Grafana
 - **Pre-configured Dashboards**: Four auto-provisioned dashboards
@@ -186,7 +186,7 @@ The monitoring stack is a **standalone component** that provides comprehensive o
 **Deployment Flexibility**: The monitoring stack can be deployed independently from the main application, making it suitable for:
 - Multi-environment monitoring (dev, staging, production)
 - Cross-datacenter observability  
-- Centralized monitoring of distributed Graycat deployments
+- Centralized monitoring of distributed neovratz deployments
 
 For detailed setup and deployment options, see the [Monitoring Stack Component]({{ '/components/monitoring-stack' | relative_url }}).
 
@@ -293,7 +293,7 @@ For detailed setup and deployment options, see the [Monitoring Stack Component](
 
 ## Deployment Patterns
 
-Graycat AI Server is designed with **component independence** in mind. Each component can be deployed separately or together based on your infrastructure needs:
+neovratz AI Server is designed with **component independence** in mind. Each component can be deployed separately or together based on your infrastructure needs:
 
 ### 🔗 Monolithic Deployment
 Deploy all components on a single server:

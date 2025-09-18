@@ -309,7 +309,7 @@
           "refId": "A"
         }
       ],
-      "title": "All Graycat Services Logs",
+      "title": "All neovratz Services Logs",
       "type": "logs"
     }
   ],
@@ -318,7 +318,7 @@
   "tags": [
     "docker",
     "logs",
-    "graycat"
+    "neovratz"
   ],
   "templating": {
     "list": [
@@ -356,7 +356,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Graycat Docker Logs",
-  "uid": "graycat-logs",
+  "title": "neovratz Docker Logs",
+  "uid": "neovratz-logs",
   "version": 1
 }

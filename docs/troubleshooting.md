@@ -6,7 +6,7 @@ nav_order: 8
 
 # Troubleshooting Guide
 
-Common issues and their solutions when running Graycat AI Server.
+Common issues and their solutions when running neovratz AI Server.
 
 ## Quick Diagnostics
 
@@ -153,20 +153,20 @@ docker-compose exec redis redis-cli ping
 docker-compose exec redis redis-cli LLEN llama_queue
 
 # Check worker logs
-docker-compose logs graycat-gpu
+docker-compose logs neovratz-gpu
 ```
 
 **Solutions**:
 
 1. **Restart Workers**:
    ```bash
-   docker-compose restart graycat-gpu
+   docker-compose restart neovratz-gpu
    ```
 
 2. **Check Worker Configuration**:
    ```bash
    # Verify worker environment
-   docker-compose exec graycat-gpu env | grep REDIS
+   docker-compose exec neovratz-gpu env | grep REDIS
    ```
 
 3. **Clear Stuck Jobs**:
@@ -299,7 +299,7 @@ docker-compose logs graycat-gpu
 1. **Check SD Dependencies**:
    ```bash
    # Verify CUDA version compatibility
-   docker-compose exec graycat-gpu nvidia-smi
+   docker-compose exec neovratz-gpu nvidia-smi
    ```
 
 2. **Disable SD if Not Needed**:
@@ -311,7 +311,7 @@ docker-compose logs graycat-gpu
 3. **Check SD Model Loading**:
    ```bash
    # SD worker logs
-   docker-compose logs graycat-gpu | grep -i "stable"
+   docker-compose logs neovratz-gpu | grep -i "stable"
    ```
 
 ## Network Issues
@@ -332,7 +332,7 @@ docker-compose logs graycat-gpu
 2. **Verify Docker Port Binding**:
    ```bash
    # Should show 0.0.0.0:8000
-   docker port graycat-api
+   docker port neovratz-api
    ```
 
 3. **Test from Different Network**:
@@ -384,7 +384,7 @@ docker-compose logs graycat-gpu
 3. **Implement Memory Cleanup**:
    ```bash
    # Clear model cache periodically
-   docker-compose exec graycat-gpu pkill -f undreamai_server
+   docker-compose exec neovratz-gpu pkill -f undreamai_server
    ```
 
 ### Queue Backup
@@ -398,7 +398,7 @@ docker-compose logs graycat-gpu
 1. **Scale Workers**:
    ```bash
    # Add more worker containers
-   docker-compose up -d --scale graycat-gpu=3
+   docker-compose up -d --scale neovratz-gpu=3
    ```
 
 2. **Implement Rate Limiting**:
@@ -432,7 +432,7 @@ Create `scripts/health-check.sh`:
 ```bash
 #!/bin/bash
 
-echo "=== Graycat AI Server Health Check ==="
+echo "=== neovratz AI Server Health Check ==="
 
 # Check Docker
 if ! docker --version >/dev/null 2>&1; then
@@ -513,14 +513,14 @@ When seeking help, provide:
 
 ### Community Support
 
-- **GitHub Issues**: https://github.com/GrayCatHQ/graycat-aiserver/issues
+- **GitHub Issues**: https://github.com/neovratzHQ/neovratz-aiserver/issues
 - **Documentation**: This documentation site
 - **Discord**: Join our community Discord server
 
 ### Enterprise Support
 
 For production deployments and enterprise support:
-- Email: support@graycathq.com
+- Email: support@neovratzhq.com
 - Priority support available for enterprise customers
 
 ## Preventive Measures
@@ -575,4 +575,4 @@ tar -czf /backups/models-$(date +%Y%m%d).tar.gz gpu/data/models/
 
 ---
 
-Still having issues? Check our [GitHub Issues](https://github.com/GrayCatHQ/graycat-aiserver/issues) or contact support.
+Still having issues? Check our [GitHub Issues](https://github.com/neovratzHQ/neovratz-aiserver/issues) or contact support.

@@ -14,7 +14,7 @@ The API service is a FastAPI-based web server that handles HTTP requests and man
 **Location**: `api/`  
 **Technology**: FastAPI + Uvicorn  
 **Port**: 8000  
-**Container**: `graycat-api`
+**Container**: `neovratz-api`
 
 The API service serves as the gateway between client applications and the AI inference workers, providing:
 
@@ -64,7 +64,7 @@ from pydantic import BaseModel
 import redis.asyncio as redis
 
 app = FastAPI(
-    title="Graycat AI Server",
+    title="neovratz AI Server",
     description="Microservice-based AI inference server",
     version="1.0.0"
 )
@@ -570,7 +570,7 @@ async def test_redis_integration():
 # docker-compose.prod.yml
 services:
   api:
-    image: graycathq/graycat-api:latest
+    image: neovratzhq/neovratz-api:latest
     restart: unless-stopped
     environment:
       - API_TOKENS=${API_TOKENS}

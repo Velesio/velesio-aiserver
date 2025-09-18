@@ -7,14 +7,14 @@ nav_order: 1
 
 # LLM for Unity Integration
 
-A Unity package that connects [LLMUnity](https://github.com/undreamai/LLMUnity) to Graycat AI Server for seamless LLM integration.
+A Unity package that connects [LLMUnity](https://github.com/undreamai/LLMUnity) to neovratz AI Server for seamless LLM integration.
 
 ## Technical Overview
 
-This integration provides a bridge between Unity and Graycat AI Server's `/completion` endpoint:
+This integration provides a bridge between Unity and neovratz AI Server's `/completion` endpoint:
 
 ```
-Unity Game → LLMUnity Package → HTTP POST → Graycat AI Server → LLM Response
+Unity Game → LLMUnity Package → HTTP POST → neovratz AI Server → LLM Response
 ```
 
 ### API Integration
@@ -44,14 +44,14 @@ Unity Game → LLMUnity Package → HTTP POST → Graycat AI Server → LLM Resp
 
 ### Unity Implementation
 
-The integration configures LLMUnity to use Graycat AI Server as a remote endpoint instead of running local models:
+The integration configures LLMUnity to use neovratz AI Server as a remote endpoint instead of running local models:
 
 ```csharp
-// Configure LLMUnity to use Graycat AI Server
+// Configure LLMUnity to use neovratz AI Server
 var llmConfig = new LLMConfiguration
 {
     remote = true,
-    host = "your-graycat-server.com",
+    host = "your-neovratz-server.com",
     port = 8000,
     endpoint = "/completion",
     apiKey = "your-api-token"

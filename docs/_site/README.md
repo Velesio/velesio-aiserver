@@ -1,6 +1,6 @@
-# Graycat AI Server Documentation
+# neovratz AI Server Documentation
 
-This repository contains the documentation for Graycat AI Server, automatically built and deployed using GitHub Pages.
+This repository contains the documentation for neovratz AI Server, automatically built and deployed using GitHub Pages.
 
 ## Local Development
 
@@ -66,7 +66,7 @@ Documentation is automatically deployed to GitHub Pages when:
 - Changes are made to files in the `docs/` directory
 - The deployment workflow is manually triggered
 
-The site is available at: `https://graycathq.github.io/graycat-aiserver`
+The site is available at: `https://neovratzhq.github.io/neovratz-aiserver`
 
 ## Structure
 
