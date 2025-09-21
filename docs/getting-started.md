@@ -48,7 +48,7 @@ GPU_LAYERS=37
 MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf
 SD_MODEL_URL=https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16
 LORA_URL=https://civitai.com/api/download/models/110115?type=Model&format=SafeTensor
-VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors -O vae-ft-mse-840000-ema-pruned.safetensors
+VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors
 ```
 
 ### 3. Model Setup (Optional)
@@ -83,7 +83,7 @@ Test your installation with a simple API call:
 
 ```bash
 curl -X POST http://localhost:8000/completion \
-  -H "Authorization: Bearer your-secret-token-here" \
+  -H "Authorization: Bearer secure_token" \
   -H "Content-Type: application/json" \
   -d '{
     "prompt": "Explain quantum computing in simple terms:",
@@ -116,29 +116,11 @@ Once running, you can access:
 | Service | URL | Credentials |
 |---------|-----|-------------|
 | API Documentation | http://localhost:8000/docs | Bearer token required |
+| LLamaCPP / UndreamAI Server | http://localhost:1337 | None |
 | Stable Diffusion WebUI | http://localhost:7860 | None |
 | Grafana Dashboard | http://localhost:3000 | admin/admin |
 | Prometheus Metrics | http://localhost:9090 | None |
 | Redis | localhost:6379 | None |
-
-## Development Mode
-
-For development, you can run services individually:
-
-### API Service Only
-```bash
-cd api
-pip install -r requirements.txt
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-### GPU Worker Only
-```bash
-cd gpu
-pip install -r requirements.txt
-python llm.py  # For LLM worker
-python sd.py   # For Stable Diffusion worker
-```
 
 ## Configuration Options
 
