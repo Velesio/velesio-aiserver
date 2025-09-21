@@ -53,6 +53,7 @@ services:
       - MODEL_URL=${MODEL_URL}
       - PORT=${PORT}
       - RUN_SD=${RUN_SD}
+      - STARTUP_COMMAND=${STARTUP_COMMAND}
     # if you mount your model directory:
     restart: unless-stopped
     volumes:

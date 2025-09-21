@@ -143,13 +143,8 @@ EOF
     cd /app
 fi
 
-# Start with minimal arguments and multiple slots for context management
-./undreamai_server \
-    --model /app/data/models/text/model.gguf \
-    --host 0.0.0.0 \
-    --port "$PORT" \
-    --gpu-layers "$GPU_LAYERS" \
-    --template chatml &
+# Start with startup command from environment variable
+eval "$STARTUP_COMMAND" &
 
 # Wait for server to start
 sleep 5

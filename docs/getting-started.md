@@ -4,10 +4,6 @@ title: Getting Started
 nav_order: 2
 ---
 
-# Getting Started
-
-This guide will help you set up and run Velesio AI Server locally for development or testing.
-
 ## Prerequisites
 
 Before you begin, ensure you have:
@@ -16,13 +12,6 @@ Before you begin, ensure you have:
 - **NVIDIA GPU** with CUDA support (for GPU acceleration)
 - **NVIDIA Docker runtime** configured
 - At least **8GB RAM** and **4GB GPU memory**
-
-### Verify GPU Setup
-
-```bash
-# Check NVIDIA Docker runtime
-docker run --rm --gpus all nvidia/cuda:11.8-base-ubuntu20.04 nvidia-smi
-```
 
 ## Installation
 
@@ -44,20 +33,22 @@ cp .env.example .env
 Edit the `.env` file with your settings:
 
 ```bash
-# Required: Set your API tokens (comma-separated for multiple tokens)
-API_TOKENS=your-secret-token-here,another-token
 
-# Optional: Model URLs (will auto-download if not present)
-MODEL_URL=https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
-SD_MODEL_URL=https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt
+#Connectivity
+PORT=1337
+REMOTE=true
+RUN_SD=true
+REDIS_PASS=secure_redis_pass
+API_TOKENS=secure_token,secure_token2
+REDIS_HOST=redis
+LLAMA_SERVER_URL=http://localhost:1337
+GPU_LAYERS=37
 
-# GPU Configuration
-GPU_LAYERS=35  # Number of model layers to run on GPU
-CUDA_VISIBLE_DEVICES=0  # GPU device ID
-
-# Service Configuration
-REMOTE=false  # Set to true for distributed setup
-RUN_SD=true   # Enable Stable Diffusion
+#Models
+MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf
+SD_MODEL_URL=https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16
+LORA_URL=https://civitai.com/api/download/models/110115?type=Model&format=SafeTensor
+VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors -O vae-ft-mse-840000-ema-pruned.safetensors
 ```
 
 ### 3. Model Setup (Optional)
