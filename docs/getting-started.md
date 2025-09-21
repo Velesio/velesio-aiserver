@@ -33,42 +33,44 @@ cp .env.example .env
 Edit the `.env` file with your settings:
 
 ```bash
+# LLAMACPP Server Startup Command
+STARTUP_COMMAND=./undreamai_server --model /app/data/models/text/model.gguf --host 0.0.0.0 --port 1337 --gpu-layers 37 --template chatml
 
 #Connectivity
-PORT=1337
-REMOTE=true
-RUN_SD=true
+REMOTE=true # false does not connect llamacpp server to api
+REDIS_HOST=redis
 REDIS_PASS=secure_redis_pass
 API_TOKENS=secure_token,secure_token2
-REDIS_HOST=redis
 LLAMA_SERVER_URL=http://localhost:1337
-GPU_LAYERS=37
 
 #Models
+RUN_SD=true
 MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf
 SD_MODEL_URL=https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16
 LORA_URL=https://civitai.com/api/download/models/110115?type=Model&format=SafeTensor
 VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors
 ```
 
-### 3. Model Setup (Optional)
+### 3. (Optional) Self Hosted Setup Configuration
 
-The system will automatically download models on first run, but you can pre-download them:
 
+The server binaries are included in the public images, but if you are rebuilding the image you should include them, you can do so with.
 ```bash
 # Setup LLM binary and models
 cd gpu && ./data/llama/server_setup.sh
 ```
-
-Manually place models in:
-- **Text models**: `gpu/data/models/text/model.gguf`
-- **Image models**: `gpu/data/models/image/models/Stable-diffusion/`
+The system will automatically download model from MODEL_RULs on first run, you can also optionally place models in:
+- **LLamacpp models**: `gpu/data/models/text/model.gguf`
+- **SD models**: `gpu/data/models/image/models/`
 
 ### 4. Build and Run
 
 ```bash
-# Build and start all services
-docker-compose up -d --build
+# Start all services
+docker-compose up -d
+
+# Rebuild images
+docker-compose up --build -d 
 
 # Check service status
 docker-compose ps
@@ -122,31 +124,6 @@ Once running, you can access:
 | Prometheus Metrics | http://localhost:9090 | None |
 | Redis | localhost:6379 | None |
 
-## Configuration Options
-
-### Environment Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `API_TOKENS` | Required | Comma-separated API tokens |
-| `REMOTE` | `false` | Remote Redis connection mode |
-| `RUN_SD` | `true` | Enable Stable Diffusion |
-| `GPU_LAYERS` | `35` | GPU layers for LLM |
-| `MODEL_URL` | None | Auto-download LLM model |
-| `SD_MODEL_URL` | None | Auto-download SD model |
-
-### Docker Compose Profiles
-
-```bash
-# Run only core services (API + GPU + Redis)
-docker-compose --profile core up -d
-
-# Run with monitoring
-docker-compose --profile monitoring up -d
-
-# Run everything
-docker-compose up -d
-```
 
 ## Verification Checklist
 
@@ -164,7 +141,7 @@ curl http://localhost:8000/health
 
 ✅ **Models loaded successfully**
 ```bash
-docker-compose logs Velesio-gpu | grep -i "model"
+docker-compose logs velesio-gpu | grep -i "model"
 # Should show model loading messages
 ```
 
