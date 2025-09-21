@@ -1,12 +1,12 @@
-# velesio AI Server Documentation
-title: velesio AI Server
+# Velesio AI Server Documentation
+title: Velesio AI Server
 description: A microservice-based AI inference server with Redis queue-based worker architecture
-baseurl: "/velesio-aiserver" # the subpath of your site, e.g. /blog
-url: "https://velesiohq.github.io" # the base hostname & protocol for your site
+baseurl: "/Velesio-aiserver" # the subpath of your site, e.g. /blog
+url: "https://Velesio.github.io" # the base hostname & protocol for your site
 
 # GitHub integration
-github_username: velesioHQ
-repository: velesio-aiserver
+github_username: Velesio
+repository: Velesio-aiserver
 
 # Build settings
 markdown: kramdown
@@ -87,13 +87,13 @@ rouge:
 
 # SEO
 twitter:
-  username: velesiohq
+  username: Velesio
   card: summary
 
 social:
-  name: velesio
+  name: Velesio
   links:
-    - https://github.com/velesioHQ
+    - https://github.com/Velesio
 
 # Exclude from processing
 exclude:

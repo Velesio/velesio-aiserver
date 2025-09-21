@@ -6,7 +6,7 @@ nav_order: 8
 
 # Troubleshooting Guide
 
-Common issues and their solutions when running velesio AI Server.
+Common issues and their solutions when running Velesio AI Server.
 
 ## Quick Diagnostics
 
@@ -153,20 +153,20 @@ docker-compose exec redis redis-cli ping
 docker-compose exec redis redis-cli LLEN llama_queue
 
 # Check worker logs
-docker-compose logs velesio-gpu
+docker-compose logs Velesio-gpu
 ```
 
 **Solutions**:
 
 1. **Restart Workers**:
    ```bash
-   docker-compose restart velesio-gpu
+   docker-compose restart Velesio-gpu
    ```
 
 2. **Check Worker Configuration**:
    ```bash
    # Verify worker environment
-   docker-compose exec velesio-gpu env | grep REDIS
+   docker-compose exec Velesio-gpu env | grep REDIS
    ```
 
 3. **Clear Stuck Jobs**:
@@ -299,7 +299,7 @@ docker-compose logs velesio-gpu
 1. **Check SD Dependencies**:
    ```bash
    # Verify CUDA version compatibility
-   docker-compose exec velesio-gpu nvidia-smi
+   docker-compose exec Velesio-gpu nvidia-smi
    ```
 
 2. **Disable SD if Not Needed**:
@@ -311,7 +311,7 @@ docker-compose logs velesio-gpu
 3. **Check SD Model Loading**:
    ```bash
    # SD worker logs
-   docker-compose logs velesio-gpu | grep -i "stable"
+   docker-compose logs Velesio-gpu | grep -i "stable"
    ```
 
 ## Network Issues
@@ -332,7 +332,7 @@ docker-compose logs velesio-gpu
 2. **Verify Docker Port Binding**:
    ```bash
    # Should show 0.0.0.0:8000
-   docker port velesio-api
+   docker port Velesio-api
    ```
 
 3. **Test from Different Network**:
@@ -384,7 +384,7 @@ docker-compose logs velesio-gpu
 3. **Implement Memory Cleanup**:
    ```bash
    # Clear model cache periodically
-   docker-compose exec velesio-gpu pkill -f undreamai_server
+   docker-compose exec Velesio-gpu pkill -f undreamai_server
    ```
 
 ### Queue Backup
@@ -398,7 +398,7 @@ docker-compose logs velesio-gpu
 1. **Scale Workers**:
    ```bash
    # Add more worker containers
-   docker-compose up -d --scale velesio-gpu=3
+   docker-compose up -d --scale Velesio-gpu=3
    ```
 
 2. **Implement Rate Limiting**:
@@ -432,7 +432,7 @@ Create `scripts/health-check.sh`:
 ```bash
 #!/bin/bash
 
-echo "=== velesio AI Server Health Check ==="
+echo "=== Velesio AI Server Health Check ==="
 
 # Check Docker
 if ! docker --version >/dev/null 2>&1; then
@@ -513,14 +513,14 @@ When seeking help, provide:
 
 ### Community Support
 
-- **GitHub Issues**: https://github.com/velesioHQ/velesio-aiserver/issues
+- **GitHub Issues**: https://github.com/Velesio/Velesio-aiserver/issues
 - **Documentation**: This documentation site
 - **Discord**: Join our community Discord server
 
 ### Enterprise Support
 
 For production deployments and enterprise support:
-- Email: support@velesiohq.com
+- Email: support@Velesio.com
 - Priority support available for enterprise customers
 
 ## Preventive Measures
@@ -575,4 +575,4 @@ tar -czf /backups/models-$(date +%Y%m%d).tar.gz gpu/data/models/
 
 ---
 
-Still having issues? Check our [GitHub Issues](https://github.com/velesioHQ/velesio-aiserver/issues) or contact support.
+Still having issues? Check our [GitHub Issues](https://github.com/Velesio/Velesio-aiserver/issues) or contact support.

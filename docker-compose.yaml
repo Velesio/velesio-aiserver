@@ -16,7 +16,7 @@ services:
       pod_name: "redis-pod"
 
   api:
-    image: ghcr.io/velesiohq/velesio-api:latest
+    image: ghcr.io/velesio/velesio-api:latest
     build:
       context: ./api
       dockerfile: Dockerfile
@@ -36,7 +36,7 @@ services:
       pod_name: "api-pod"
 
   gpu:
-    image: ghcr.io/velesiohq/velesio-gpu:latest  
+    image: ghcr.io/velesio/velesio-gpu:latest  
     build:
       context: ./gpu
       dockerfile: Dockerfile

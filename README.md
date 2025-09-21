@@ -14,7 +14,7 @@ High-performance, microservice-based AI inference server with Unity integration 
 
 ## 📚 Documentation
 
-📖 **[Complete Documentation](https://velesiohq.github.io/velesio-aiserver/)** - Full guides, API reference, and examples
+📖 **[Complete Documentation](https://velesio.github.io/velesio-aiserver/)** - Full guides, API reference, and examples
 
 - 🚀 **[Getting Started](docs/getting-started.md)** - Installation and basic setup
 - 🏗️ **[Architecture](docs/architecture.md)** - System design and components  
@@ -40,7 +40,7 @@ NVIDIA Container Toolkit
 Docker compose plugin
 
 # 1. Get the code
-git clone https://github.com/velesioHQ/velesio-aiserver.git
+git clone https://github.com/velesio/velesio-aiserver.git
 cd velesio-aiserver
 
 # 2. Configure environment

@@ -7,14 +7,14 @@ nav_order: 1
 
 # LLM for Unity Integration
 
-A Unity package that connects [LLMUnity](https://github.com/undreamai/LLMUnity) to velesio AI Server for seamless LLM integration.
+A Unity package that connects [LLMUnity](https://github.com/undreamai/LLMUnity) to Velesio AI Server for seamless LLM integration.
 
 ## Technical Overview
 
-This integration provides a bridge between Unity and velesio AI Server's `/completion` endpoint:
+This integration provides a bridge between Unity and Velesio AI Server's `/completion` endpoint:
 
 ```
-Unity Game → LLMUnity Package → HTTP POST → velesio AI Server → LLM Response
+Unity Game → LLMUnity Package → HTTP POST → Velesio AI Server → LLM Response
 ```
 
 ### API Integration
@@ -44,14 +44,14 @@ Unity Game → LLMUnity Package → HTTP POST → velesio AI Server → LLM Resp
 
 ### Unity Implementation
 
-The integration configures LLMUnity to use velesio AI Server as a remote endpoint instead of running local models:
+The integration configures LLMUnity to use Velesio AI Server as a remote endpoint instead of running local models:
 
 ```csharp
-// Configure LLMUnity to use velesio AI Server
+// Configure LLMUnity to use Velesio AI Server
 var llmConfig = new LLMConfiguration
 {
     remote = true,
-    host = "your-velesio-server.com",
+    host = "your-Velesio-server.com",
     port = 8000,
     endpoint = "/completion",
     apiKey = "your-api-token"

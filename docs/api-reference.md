@@ -6,7 +6,7 @@ nav_order: 6
 
 # API Reference
 
-Complete documentation for all velesio AI Server endpoints.
+Complete documentation for all Velesio AI Server endpoints.
 
 ## Authentication
 
@@ -430,7 +430,7 @@ public class AIChat : MonoBehaviour
 ```python
 import requests
 
-class velesioClient:
+class VelesioClient:
     def __init__(self, base_url, api_token):
         self.base_url = base_url
         self.headers = {"Authorization": f"Bearer {api_token}"}
@@ -444,13 +444,13 @@ class velesioClient:
         return response.json()
 
 # Usage
-client = velesioClient("http://localhost:8000", "your-token")
+client = VelesioClient("http://localhost:8000", "your-token")
 result = client.complete("Explain AI:", max_tokens=100)
 ```
 
 ### JavaScript/Node.js
 ```javascript
-class velesioClient {
+class VelesioClient {
     constructor(baseUrl, apiToken) {
         this.baseUrl = baseUrl;
         this.headers = {
@@ -470,7 +470,7 @@ class velesioClient {
 }
 
 // Usage
-const client = new velesioClient('http://localhost:8000', 'your-token');
+const client = new VelesioClient('http://localhost:8000', 'your-token');
 const result = await client.complete('Hello AI!');
 ```
 

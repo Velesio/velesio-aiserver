@@ -6,11 +6,11 @@ nav_order: 7
 
 # Deployment Guide
 
-This guide covers production deployment strategies for velesio AI Server's independent components.
+This guide covers production deployment strategies for Velesio AI Server's independent components.
 
 ## Component Deployment Options
 
-velesio AI Server is built with **modular components** that can be deployed flexibly:
+Velesio AI Server is built with **modular components** that can be deployed flexibly:
 
 ### 🏢 All-in-One Deployment
 Deploy all components on a single server:
@@ -128,8 +128,8 @@ API_TOKENS=your-secret-token
 **Setup**:
 ```bash
 # 1. Clone repository
-git clone https://github.com/velesioHQ/velesio-aiserver.git
-cd velesio-aiserver
+git clone https://github.com/Velesio/Velesio-aiserver.git
+cd Velesio-aiserver
 
 # 2. Configure production environment
 cp .env.example .env.production
@@ -163,7 +163,7 @@ docker-compose -f docker-compose.prod.yml up -d --build
 **Example ECS Task Definition**:
 ```json
 {
-  "family": "velesio-api",
+  "family": "Velesio-api",
   "requiresCompatibilities": ["FARGATE"],
   "networkMode": "awsvpc",
   "cpu": "1024",
@@ -171,7 +171,7 @@ docker-compose -f docker-compose.prod.yml up -d --build
   "containerDefinitions": [
     {
       "name": "api",
-      "image": "velesiohq/velesio-api:latest",
+      "image": "Velesio/Velesio-api:latest",
       "portMappings": [
         {
           "containerPort": 8000,
@@ -439,7 +439,7 @@ services:
 
 ## Monitoring and Logging
 
-velesio AI Server includes a comprehensive monitoring stack with Grafana dashboards, Prometheus metrics, and centralized logging. For complete setup instructions and usage details, see the [Monitoring Documentation]({{ '/components/monitoring' | relative_url }}).
+Velesio AI Server includes a comprehensive monitoring stack with Grafana dashboards, Prometheus metrics, and centralized logging. For complete setup instructions and usage details, see the [Monitoring Documentation]({{ '/components/monitoring' | relative_url }}).
 
 ### Production Monitoring Stack
 
@@ -512,8 +512,8 @@ async def completion(request: CompletionRequest):
 
 **Log Rotation**:
 ```bash
-# /etc/logrotate.d/velesio
-/var/log/velesio/*.log {
+# /etc/logrotate.d/Velesio
+/var/log/Velesio/*.log {
     daily
     missingok
     rotate 30
@@ -522,7 +522,7 @@ async def completion(request: CompletionRequest):
     notifempty
     create 644 root root
     postrotate
-        docker kill -s USR1 $(docker ps -q --filter name=velesio)
+        docker kill -s USR1 $(docker ps -q --filter name=Velesio)
     endscript
 }
 ```
@@ -554,12 +554,12 @@ CUDA_VISIBLE_DEVICES=0,1 docker-compose up gpu_worker
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: velesio-api-hpa
+  name: Velesio-api-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: velesio-api
+    name: Velesio-api
   minReplicas: 2
   maxReplicas: 10
   metrics:
@@ -667,7 +667,7 @@ redis_pool = redis.ConnectionPool(
 ```yaml
 # alerts.yml
 groups:
-- name: velesio
+- name: Velesio
   rules:
   - alert: HighQueueDepth
     expr: redis_queue_depth > 10

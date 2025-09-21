@@ -1,6 +1,6 @@
-# velesio AI Server Documentation
+# Velesio AI Server Documentation
 
-This repository contains the documentation for velesio AI Server, automatically built and deployed using GitHub Pages.
+This repository contains the documentation for Velesio AI Server, automatically built and deployed using GitHub Pages.
 
 ## Local Development
 
@@ -66,7 +66,7 @@ Documentation is automatically deployed to GitHub Pages when:
 - Changes are made to files in the `docs/` directory
 - The deployment workflow is manually triggered
 
-The site is available at: `https://velesiohq.github.io/velesio-aiserver`
+The site is available at: `https://Velesio.github.io/Velesio-aiserver`
 
 ## Structure
 

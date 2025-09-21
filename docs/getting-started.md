@@ -6,7 +6,7 @@ nav_order: 2
 
 # Getting Started
 
-This guide will help you set up and run velesio AI Server locally for development or testing.
+This guide will help you set up and run Velesio AI Server locally for development or testing.
 
 ## Prerequisites
 
@@ -29,8 +29,8 @@ docker run --rm --gpus all nvidia/cuda:11.8-base-ubuntu20.04 nvidia-smi
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/velesioHQ/velesio-aiserver.git
-cd velesio-aiserver
+git clone https://github.com/Velesio/Velesio-aiserver.git
+cd Velesio-aiserver
 ```
 
 ### 2. Environment Configuration
@@ -180,7 +180,7 @@ docker-compose up -d
 ✅ **Docker containers running**
 ```bash
 docker-compose ps
-# Should show: api, redis, velesio-gpu all running
+# Should show: api, redis, Velesio-gpu all running
 ```
 
 ✅ **API responds to health check**
@@ -191,7 +191,7 @@ curl http://localhost:8000/health
 
 ✅ **Models loaded successfully**
 ```bash
-docker-compose logs velesio-gpu | grep -i "model"
+docker-compose logs Velesio-gpu | grep -i "model"
 # Should show model loading messages
 ```
 

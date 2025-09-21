@@ -4,13 +4,13 @@ title: Home
 nav_order: 1
 ---
 
-# velesio AI Server
+# Velesio AI Server
 
 A high-performance, microservice-based AI inference server designed for scalable LLM and Stable Diffusion workloads.
 
 ## Overview
 
-velesio AI Server is a production-ready AI inference platform that provides:
+Velesio AI Server is a production-ready AI inference platform that provides:
 
 - **LLM Text Generation** via custom llama.cpp integration
 - **Stable Diffusion Image Generation** with WebUI support
@@ -60,8 +60,8 @@ velesio AI Server is a production-ready AI inference platform that provides:
 
 1. **Clone and Configure**
    ```bash
-   git clone https://github.com/velesioHQ/velesio-aiserver.git
-   cd velesio-aiserver
+   git clone https://github.com/Velesio/Velesio-aiserver.git
+   cd Velesio-aiserver
    cp .env.example .env
    ```
 
@@ -105,4 +105,4 @@ velesio AI Server is a production-ready AI inference platform that provides:
 
 ---
 
-**Need help?** Check our [troubleshooting guide](troubleshooting.html) or open an issue on [GitHub](https://github.com/velesioHQ/velesio-aiserver).
+**Need help?** Check our [troubleshooting guide](troubleshooting.html) or open an issue on [GitHub](https://github.com/Velesio/Velesio-aiserver).
