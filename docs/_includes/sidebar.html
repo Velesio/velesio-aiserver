@@ -1,6 +1,8 @@
 <nav class="sidebar" id="sidebar">
   <div class="sidebar-content">
     <ul class="sidebar-nav">
+      
+      
       <li class="nav-item">
         <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">
           <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -9,7 +11,7 @@
           Home
         </a>
       </li>
-      
+
       <li class="nav-item">
         <a href="{{ '/getting-started.html' | relative_url }}" class="nav-link {% if page.url contains 'getting-started' %}active{% endif %}">
           <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -18,25 +20,7 @@
           Getting Started
         </a>
       </li>
-      
-      <li class="nav-item">
-        <a href="{{ '/architecture.html' | relative_url }}" class="nav-link {% if page.url contains 'architecture' %}active{% endif %}">
-          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-          </svg>
-          Architecture
-        </a>
-      </li>
-      
-      <li class="nav-item">
-        <a href="{{ '/api-reference.html' | relative_url }}" class="nav-link {% if page.url contains 'api-reference' %}active{% endif %}">
-          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
-          </svg>
-          API Reference
-        </a>
-      </li>
-      
+
       <li class="nav-item">
         <a href="{{ '/deployment.html' | relative_url }}" class="nav-link {% if page.url contains 'deployment' %}active{% endif %}">
           <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -45,7 +29,34 @@
           Deployment
         </a>
       </li>
-      
+
+      <li class="nav-item">
+        <a href="{{ '/architecture.html' | relative_url }}" class="nav-link {% if page.url contains 'architecture' %}active{% endif %}">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          Architecture
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="{{ '/api-reference.html' | relative_url }}" class="nav-link {% if page.url contains 'api-reference' %}active{% endif %}">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+          </svg>
+          API Reference
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="{{ '/model-templates.html' | relative_url }}" class="nav-link {% if page.url contains 'model-templates' %}active{% endif %}">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M4 4h16v2H4V4zm0 6h10v2H4v-2zm0 6h16v2H4v-2z"/>
+          </svg>
+          Model Templates
+        </a>
+      </li>
+
       <li class="nav-item">
         <a href="{{ '/troubleshooting.html' | relative_url }}" class="nav-link {% if page.url contains 'troubleshooting' %}active{% endif %}">
           <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">

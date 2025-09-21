@@ -11,7 +11,6 @@ Before you begin, ensure you have:
 - **Docker** and **Docker Compose** installed
 - **NVIDIA GPU** with CUDA support (for GPU acceleration)
 - **NVIDIA Docker runtime** configured
-- At least **8GB RAM** and **4GB GPU memory**
 
 ## Installation
 

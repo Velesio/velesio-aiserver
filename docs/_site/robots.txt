@@ -1,1 +1,1 @@
-Sitemap: http://0.0.0.0:4000/Velesio-aiserver/sitemap.xml
+Sitemap: http://0.0.0.0:4000/velesio-aiserver/sitemap.xml
