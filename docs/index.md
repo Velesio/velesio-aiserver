@@ -4,13 +4,13 @@ title: Home
 nav_order: 1
 ---
 
-# neovratz AI Server
+# velesio AI Server
 
 A high-performance, microservice-based AI inference server designed for scalable LLM and Stable Diffusion workloads.
 
 ## Overview
 
-neovratz AI Server is a production-ready AI inference platform that provides:
+velesio AI Server is a production-ready AI inference platform that provides:
 
 - **LLM Text Generation** via custom llama.cpp integration
 - **Stable Diffusion Image Generation** with WebUI support
@@ -60,8 +60,8 @@ neovratz AI Server is a production-ready AI inference platform that provides:
 
 1. **Clone and Configure**
    ```bash
-   git clone https://github.com/neovratzHQ/neovratz-aiserver.git
-   cd neovratz-aiserver
+   git clone https://github.com/velesioHQ/velesio-aiserver.git
+   cd velesio-aiserver
    cp .env.example .env
    ```
 
@@ -105,4 +105,4 @@ neovratz AI Server is a production-ready AI inference platform that provides:
 
 ---
 
-**Need help?** Check our [troubleshooting guide](troubleshooting.html) or open an issue on [GitHub](https://github.com/neovratzHQ/neovratz-aiserver).
+**Need help?** Check our [troubleshooting guide](troubleshooting.html) or open an issue on [GitHub](https://github.com/velesioHQ/velesio-aiserver).

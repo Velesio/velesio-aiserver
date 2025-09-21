@@ -12,15 +12,15 @@ services:
     restart: unless-stopped
     labels:
       container_name: "redis"
-      service_name: "neovratz"
+      service_name: "velesio"
       pod_name: "redis-pod"
 
   api:
-    image: ghcr.io/neovratzhq/neovratz-api:latest
+    image: ghcr.io/velesiohq/velesio-api:latest
     build:
       context: ./api
       dockerfile: Dockerfile
-    container_name: neovratz-api
+    container_name: velesio-api
     depends_on:
       - redis
     environment:
@@ -31,16 +31,16 @@ services:
       - "8000:8000"
     restart: unless-stopped
     labels:
-      container_name: "neovratz-api"
-      service_name: "neovratz"
+      container_name: "velesio-api"
+      service_name: "velesio"
       pod_name: "api-pod"
 
   gpu:
-    image: ghcr.io/neovratzhq/neovratz-gpu:latest  
+    image: ghcr.io/velesiohq/velesio-gpu:latest  
     build:
       context: ./gpu
       dockerfile: Dockerfile
-    container_name: neovratz-gpu
+    container_name: velesio-gpu
     ports: 
       - "1337:1337"
       - "7860:7860"
@@ -65,8 +65,8 @@ services:
           devices:
             - capabilities: [gpu]
     labels:
-      container_name: "neovratz-gpu"
-      service_name: "neovratz"
+      container_name: "velesio-gpu"
+      service_name: "velesio"
       pod_name: "gpu-worker-pod"
 
   # nginx:

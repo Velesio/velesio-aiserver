@@ -7,7 +7,7 @@ nav_order: 3
 
 # Monitoring Stack
 
-A comprehensive observability solution that provides real-time monitoring, metrics collection, and alerting for all neovratz AI Server components.
+A comprehensive observability solution that provides real-time monitoring, metrics collection, and alerting for all velesio AI Server components.
 
 ## Overview
 
@@ -18,7 +18,7 @@ A comprehensive observability solution that provides real-time monitoring, metri
 
 The monitoring stack is a **standalone, optional component** that can be deployed:
 - **Alongside** the main application for integrated monitoring
-- **Separately** for external monitoring of multiple neovratz deployments  
+- **Separately** for external monitoring of multiple velesio deployments  
 - **Independently** for development and testing environments
 
 ## Deployment Flexibility
@@ -38,8 +38,8 @@ docker-compose up -d
 Deploy monitoring independently on a dedicated monitoring server:
 ```bash
 # On monitoring server
-git clone https://github.com/neovratzHQ/neovratz-aiserver.git
-cd neovratz-aiserver/monitoring
+git clone https://github.com/velesioHQ/velesio-aiserver.git
+cd velesio-aiserver/monitoring
 
 # Configure remote targets in prometheus.yml
 docker-compose up -d
@@ -49,7 +49,7 @@ docker-compose up -d
 Monitor only specific components by configuring Prometheus targets:
 ```yaml
 # Monitor only API service
-- job_name: 'neovratz-api'
+- job_name: 'velesio-api'
   static_configs:
     - targets: ['remote-host:8000']
 ```
@@ -126,7 +126,7 @@ The monitoring stack includes four auto-provisioned dashboards:
 - **Power consumption** and limits
 - **Fan speed** and clock frequencies
 
-### 📝 neovratz Logs
+### 📝 velesio Logs
 - **Centralized log viewing** from all services
 - **Log level filtering** (INFO, WARNING, ERROR)
 - **Search and filtering** capabilities
@@ -138,7 +138,7 @@ The monitoring stack includes four auto-provisioned dashboards:
 
 - Docker and Docker Compose installed
 - NVIDIA drivers (for GPU monitoring)
-- Running neovratz AI Server instance
+- Running velesio AI Server instance
 
 ### Setup
 
@@ -195,7 +195,7 @@ command:
 
 ## Usage
 
-### Monitoring neovratz AI Server
+### Monitoring velesio AI Server
 
 1. **API Performance**: Monitor request rates and response times
 2. **Queue Health**: Check Redis queue depth and processing rates
@@ -212,7 +212,7 @@ Configure alerts in Grafana for:
 
 ### Log Analysis
 
-Use the neovratz Logs dashboard to:
+Use the velesio Logs dashboard to:
 - Debug API request failures
 - Monitor worker job processing
 - Track model loading times
@@ -259,7 +259,7 @@ For high-volume environments:
 
 ### With Main Application
 
-The monitoring stack is designed to work alongside the main neovratz AI Server:
+The monitoring stack is designed to work alongside the main velesio AI Server:
 
 ```bash
 # Start main application

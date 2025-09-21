@@ -7,7 +7,7 @@ has_children: true
 
 # Components
 
-neovratz AI Server is built with a **modular, component-based architecture** where each component can be deployed independently or together based on your infrastructure needs.
+velesio AI Server is built with a **modular, component-based architecture** where each component can be deployed independently or together based on your infrastructure needs.
 
 ## Available Components
 

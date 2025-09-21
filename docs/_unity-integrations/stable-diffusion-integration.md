@@ -7,14 +7,14 @@ nav_order: 2
 
 # Stable Diffusion for Unity
 
-A Unity integration that connects [Stable-Diffusion-Unity-Integration](https://github.com/dobrado76/Stable-Diffusion-Unity-Integration) to neovratz AI Server for real-time image generation.
+A Unity integration that connects [Stable-Diffusion-Unity-Integration](https://github.com/dobrado76/Stable-Diffusion-Unity-Integration) to velesio AI Server for real-time image generation.
 
 ## Technical Overview
 
-This integration provides a bridge between Unity and neovratz AI Server's Stable Diffusion endpoints:
+This integration provides a bridge between Unity and velesio AI Server's Stable Diffusion endpoints:
 
 ```
-Unity Game → SD Unity Package → HTTP POST → neovratz AI Server → Generated Image
+Unity Game → SD Unity Package → HTTP POST → velesio AI Server → Generated Image
 ```
 
 ### API Integration
@@ -61,13 +61,13 @@ Unity Game → SD Unity Package → HTTP POST → neovratz AI Server → Generat
 
 ### Unity Implementation
 
-Configure the SD Unity package to use neovratz AI Server as the backend:
+Configure the SD Unity package to use velesio AI Server as the backend:
 
 ```csharp
-// Configure Stable Diffusion to use neovratz AI Server
+// Configure Stable Diffusion to use velesio AI Server
 var sdConfig = new StableDiffusionConfig
 {
-    serverUrl = "http://your-neovratz-server.com:8000",
+    serverUrl = "http://your-velesio-server.com:8000",
     apiEndpoint = "/txt2img",
     timeout = 30f
 };

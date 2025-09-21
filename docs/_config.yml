@@ -1,12 +1,12 @@
-# neovratz AI Server Documentation
-title: neovratz AI Server
+# velesio AI Server Documentation
+title: velesio AI Server
 description: A microservice-based AI inference server with Redis queue-based worker architecture
-baseurl: "/neovratz-aiserver" # the subpath of your site, e.g. /blog
-url: "https://neovratzhq.github.io" # the base hostname & protocol for your site
+baseurl: "/velesio-aiserver" # the subpath of your site, e.g. /blog
+url: "https://velesiohq.github.io" # the base hostname & protocol for your site
 
 # GitHub integration
-github_username: neovratzHQ
-repository: neovratz-aiserver
+github_username: velesioHQ
+repository: velesio-aiserver
 
 # Build settings
 markdown: kramdown
@@ -87,13 +87,13 @@ rouge:
 
 # SEO
 twitter:
-  username: neovratzhq
+  username: velesiohq
   card: summary
 
 social:
-  name: neovratz
+  name: velesio
   links:
-    - https://github.com/neovratzHQ
+    - https://github.com/velesioHQ
 
 # Exclude from processing
 exclude:

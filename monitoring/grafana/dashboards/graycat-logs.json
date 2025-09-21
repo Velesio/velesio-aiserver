@@ -309,7 +309,7 @@
           "refId": "A"
         }
       ],
-      "title": "All neovratz Services Logs",
+      "title": "All velesio Services Logs",
       "type": "logs"
     }
   ],
@@ -318,7 +318,7 @@
   "tags": [
     "docker",
     "logs",
-    "neovratz"
+    "velesio"
   ],
   "templating": {
     "list": [
@@ -356,7 +356,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "neovratz Docker Logs",
-  "uid": "neovratz-logs",
+  "title": "velesio Docker Logs",
+  "uid": "velesio-logs",
   "version": 1
 }

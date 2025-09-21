@@ -7,7 +7,7 @@ has_children: true
 
 # Unity Integrations
 
-neovratz AI Server provides seamless integration capabilities for Unity game development, enabling developers to incorporate AI-powered features directly into their Unity projects.
+velesio AI Server provides seamless integration capabilities for Unity game development, enabling developers to incorporate AI-powered features directly into their Unity projects.
 
 ## Available Integrations
 

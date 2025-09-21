@@ -38,11 +38,11 @@ scrape_configs:
         replacement: 'redis'
         target_label: 'compose_service'
       - source_labels: ['container']
-        regex: 'neovratz-api'
+        regex: 'velesio-api'
         replacement: 'api'
         target_label: 'compose_service'
       - source_labels: ['container']
-        regex: 'neovratz-gpu'
+        regex: 'velesio-gpu'
         replacement: 'gpu'
         target_label: 'compose_service'
 
