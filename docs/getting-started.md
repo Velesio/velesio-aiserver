@@ -41,18 +41,20 @@ REMOTE=true # false does not connect llamacpp server to api
 REDIS_HOST=redis
 REDIS_PASS=secure_redis_pass
 API_TOKENS=secure_token,secure_token2
+
+#UndreamAI Server Settings
+MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf
 LLAMA_SERVER_URL=http://localhost:1337
 
-#Models
+
+#Stable Diffusion Settings
 RUN_SD=true
-MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf
 SD_MODEL_URL=https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16
 LORA_URL=https://civitai.com/api/download/models/110115?type=Model&format=SafeTensor
 VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors
 ```
 
 ### 3. (Optional) Self Hosted Setup Configuration
-
 
 The server binaries are included in the public images, but if you are rebuilding the image you should include them, you can do so with.
 ```bash
@@ -63,13 +65,13 @@ The system will automatically download model from MODEL_RULs on first run, you c
 - **LLamacpp models**: `gpu/data/models/text/model.gguf`
 - **SD models**: `gpu/data/models/image/models/`
 
-### 4. Build and Run
+### 4. Run
 
 ```bash
 # Start all services
 docker-compose up -d
 
-# Rebuild images
+# (Optional) Rebuild images
 docker-compose up --build -d 
 
 # Check service status
@@ -153,6 +155,7 @@ docker-compose logs redis
 
 ## Next Steps
 
+- Check out the Unity Integrations section for various integrations!
 - [Architecture Overview](architecture.html) - Understand the system design
 - [API Reference](api-reference.html) - Explore all available endpoints
 - [Deployment Guide](deployment.html) - Production deployment strategies
