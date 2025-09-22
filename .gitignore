@@ -3,5 +3,8 @@ gpu/data
 nginx/logs/*
 nginx/ssl/*
 docs/vendor
+docs/.bundle
+docs/_site
+docs/Gemfile.lock
 gpu/undreamai_server
 gpu/libundreamai_linux-cuda-cu12.2.0.so

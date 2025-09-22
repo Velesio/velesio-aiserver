@@ -5,6 +5,7 @@
 @import "dark-mode";
 @import "syntax-highlighting";
 @import "footer";
+@import "toc";
 
 // Simple, clean code block styling - no more nested hell
 div[class*="highlighter-rouge"] {
@@ -47,4 +48,20 @@ code.highlighter-rouge {
   padding: 0.2em 0.4em !important;
   border-radius: 4px !important;
   margin: 0 !important;
+}
+
+.wrapper {
+  max-width: calc(100% - 20px);
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+@media (min-width: 1600px) {
+  .wrapper {
+    max-width: 1500px;
+  }
+}
+
+.wrapper {
+  max-width: 95%;
 }

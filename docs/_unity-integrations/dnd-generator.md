@@ -26,8 +26,4 @@ This model stack is focused around the [DND Character Maker Lora](https://civita
 
 This is the primary scene of the Asset. The player fill out various characteristics of a character, or leaves them to be random, a prompt is then made to llamacpp and stabledifussion to generate a background and portrait of the character. The player can then chat with the character with a set context.
 
-The primary configuration game object is the VelesioAI Integration game object, it contains the configurations for the llamacpp and stable diffusion connections as well as the scene itself:
-- LLAMACPP Configuration's most important component is the address where llamacpp is running, by default variables in Unity are the default variables of the VelesioAI Server when you host it with the example variables.
-
-<img src="{{ '/assets/dnd-image.png' | relative_url }}" alt="DND Generator" style="width: 100%; height: auto;" />
-
+The primary configuration game object is the VelesioAI Integration game object, it contains the configurations for the llamacpp and stable diffusion connections as well as the scene itself
