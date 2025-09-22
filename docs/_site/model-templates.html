@@ -295,6 +295,15 @@
           Stable Diffusion for Unity
         </a>
       </li>
+      
+      <li class="nav-item">
+        <a href="/velesio-aiserver/unity-integrations/dnd-generator/" class="nav-link ">
+          <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          DND Generator
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -324,38 +333,6 @@
 </pre></td></tr></tbody></table></code></pre></div></div>
 
 <h2 id="low-specs">Low Specs:</h2>
-<p>Reccomended for testing or low-specs GPUs.</p>
-
-<p>Gwen2.5-3B for text generation.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-</pre></td><td class="rouge-code"><pre><span class="nv">MODEL_URL</span><span class="o">=</span>https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf
-<span class="nv">SD_MODEL_URL</span><span class="o">=</span>https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors
-</pre></td></tr></tbody></table></code></pre></div></div>
-<hr />
-<p>layout: page
-title: Model Templates
-nav_order: 8
-—</p>
-
-<p>This page contains templates of model url download stacks for a specific experience. You can use them by placing them in your environment variables.</p>
-
-<h2 id="dnd-character-generator-1">DND Character Generator:</h2>
-<p>Recommended for the DND Character Generator Unity Asset.
-<a href="https://huggingface.co/DavidAU/Llama-3.2-8X3B-MOE-Dark-Champion-Instruct-uncensored-abliterated-18.4B-GGUF">DarkChampion-Instruct</a> used for RPG themed text generation. For image Dreamshaper combined with DND NPC Portraits Lora and stabilityAI VAE.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="nv">MODEL_URL</span><span class="o">=</span>https://huggingface.co/DavidAU/Llama-3.-8X3B-MOE-Dark-Champion-Instruct-uncensored-abliterated-18.4B-GGUF/resolve/main/L3.2-8X3B-MOE-Dark-Champion-Inst-18.4B-uncen-ablit_D_AU-Q3_k_s.gguf
-<span class="nv">SD_MODEL_URL</span><span class="o">=</span>https://civitai.com/api/download/models/128713?type<span class="o">=</span>Model&amp;format<span class="o">=</span>SafeTensor&amp;size<span class="o">=</span>pruned&amp;fp<span class="o">=</span>fp16
-<span class="nv">LORA_URL</span><span class="o">=</span>https://civitai.com/api/download/models/110115?type<span class="o">=</span>Model&amp;format<span class="o">=</span>SafeTensor
-<span class="nv">VAE_URL</span><span class="o">=</span>https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<h2 id="low-specs-1">Low Specs:</h2>
 <p>Reccomended for testing or low-specs GPUs.</p>
 
 <p>Gwen2.5-3B for text generation.</p>
@@ -450,7 +427,7 @@ nav_order: 8
           <p class="build-info">
             Built with ❤️ using Jekyll
             <br>
-            <small>Last updated: September 21, 2025</small>
+            <small>Last updated: September 22, 2025</small>
           </p>
         </div>
       </div>
