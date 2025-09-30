@@ -7,6 +7,22 @@
 @import "footer";
 @import "toc";
 
+// Add more spacing between sections and paragraphs
+.page-content {
+  h2, h3 {
+    margin-top: 2rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  p {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  ul, ol {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
 // Simple, clean code block styling - no more nested hell
 div[class*="highlighter-rouge"] {
   background: var(--code-bg) !important;

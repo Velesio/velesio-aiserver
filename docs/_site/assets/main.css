@@ -477,6 +477,10 @@ button:hover, .btn:hover { background-color: var(--button-hover); }
   .page-content { width: 100%; } }
 .page-content { width: calc(100% - 260px); }
 
+.page-content h2, .page-content h3 { margin-top: 2rem !important; margin-bottom: 1rem !important; }
+.page-content p { margin-bottom: 1.5rem !important; }
+.page-content ul, .page-content ol { margin-bottom: 1.5rem !important; }
+
 div[class*="highlighter-rouge"] { background: var(--code-bg) !important; border: none !important; border-left: 4px solid var(--link-color) !important; border-radius: 8px !important; margin: 1rem 0 !important; padding: 16px !important; overflow: auto !important; }
 div[class*="highlighter-rouge"] * { background: transparent !important; border: none !important; margin: 0 !important; }
 div[class*="highlighter-rouge"] .highlight, div[class*="highlighter-rouge"] pre, div[class*="highlighter-rouge"] code, div[class*="highlighter-rouge"] table, div[class*="highlighter-rouge"] tbody, div[class*="highlighter-rouge"] tr, div[class*="highlighter-rouge"] td { background: transparent !important; border: none !important; padding: 0 !important; margin: 0 !important; }

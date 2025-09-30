@@ -3,22 +3,22 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>DND Generator | Velesio AI Server</title>
+<title>RPG Generator | Velesio AI Server</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="DND Generator" />
+<meta property="og:title" content="RPG Generator" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Introduction The RPG Character Generator Unity asset fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has one scene which features a RPG Character generator that allows playes to generate and talk to DND characters in various scenarios." />
-<meta property="og:description" content="Introduction The RPG Character Generator Unity asset fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has one scene which features a RPG Character generator that allows playes to generate and talk to DND characters in various scenarios." />
+<meta name="description" content="Introduction The RPG Character Generator Unity asset fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has one scene which features a RPG Character generator that allows playes to generate and talk to DND characters in various scenarios. It is a combination of two open source projects, Undream LLM for unity and dobrado76’s Stable Diffusion Integration for unity to create a comprehensive tool for AI generated content, both for development and runtime." />
+<meta property="og:description" content="Introduction The RPG Character Generator Unity asset fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has one scene which features a RPG Character generator that allows playes to generate and talk to DND characters in various scenarios. It is a combination of two open source projects, Undream LLM for unity and dobrado76’s Stable Diffusion Integration for unity to create a comprehensive tool for AI generated content, both for development and runtime." />
 <link rel="canonical" href="http://0.0.0.0:4000/velesio-aiserver/unity-integrations/dnd-generator/" />
 <meta property="og:url" content="http://0.0.0.0:4000/velesio-aiserver/unity-integrations/dnd-generator/" />
 <meta property="og:site_name" content="Velesio AI Server" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2025-09-22T22:52:27+02:00" />
+<meta property="article:published_time" content="2025-09-23T22:27:21+02:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="DND Generator" />
+<meta property="twitter:title" content="RPG Generator" />
 <meta name="twitter:site" content="@Velesio" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-09-22T22:52:27+02:00","datePublished":"2025-09-22T22:52:27+02:00","description":"Introduction The RPG Character Generator Unity asset fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has one scene which features a RPG Character generator that allows playes to generate and talk to DND characters in various scenarios.","headline":"DND Generator","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/velesio-aiserver/unity-integrations/dnd-generator/"},"url":"http://0.0.0.0:4000/velesio-aiserver/unity-integrations/dnd-generator/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-09-23T22:27:21+02:00","datePublished":"2025-09-23T22:27:21+02:00","description":"Introduction The RPG Character Generator Unity asset fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has one scene which features a RPG Character generator that allows playes to generate and talk to DND characters in various scenarios. It is a combination of two open source projects, Undream LLM for unity and dobrado76’s Stable Diffusion Integration for unity to create a comprehensive tool for AI generated content, both for development and runtime.","headline":"RPG Generator","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/velesio-aiserver/unity-integrations/dnd-generator/"},"url":"http://0.0.0.0:4000/velesio-aiserver/unity-integrations/dnd-generator/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/velesio-aiserver/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/velesio-aiserver/feed.xml" title="Velesio AI Server" /></head>
 <body><header class="site-header" role="banner">
@@ -314,13 +314,13 @@
     <div class="wrapper">
       <article class="post">
         <header class="post-header">
-          <h1 class="post-title">DND Generator</h1></header>
+          <h1 class="post-title">RPG Generator</h1></header>
 
         <div class="post-content">
           <h2 id="introduction">Introduction</h2>
-<p>The RPG Character Generator Unity asset fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has one scene which features a RPG Character generator that allows playes to generate and talk to DND characters in various scenarios.</p>
+<p>The RPG Character Generator Unity asset fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has one scene which features a RPG Character generator that allows playes to generate and talk to DND characters in various scenarios. It is a combination of two open source projects, Undream LLM for unity and dobrado76’s Stable Diffusion Integration for unity to create a comprehensive tool for AI generated content, both for development and runtime.</p>
 
-<p>To optimally experience the asset it is reccomended to utilize the RPG Character model stack.</p>
+<p>The AI models stack is used to generate all of the content showcased in the asset’s marketing material.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -334,11 +334,165 @@
 
 <p>This model stack is focused around the <a href="https://civitai.com/models/1360012/dnd-character-maker-classes-and-races-concept">DND Character Maker Lora</a> and the goal is to create portraits of characters in various contexts with which the player can chat with. All of the dropdown menu options are created to narrow down the options to specific lora keywords.</p>
 
+<p>For more detailed documentation on the LLM for Unity and SD Integration, on which this asset is built on, you can consult their respective documentations.</p>
+
 <h2 id="character-generator-scene">Character Generator Scene</h2>
 
 <p>This is the primary scene of the Asset. The player fill out various characteristics of a character, or leaves them to be random, a prompt is then made to llamacpp and stabledifussion to generate a background and portrait of the character. The player can then chat with the character with a set context.</p>
 
-<p>The primary configuration game object is the VelesioAI Integration game object, it contains the configurations for the llamacpp and stable diffusion connections as well as the scene itself</p>
+<p>The primary configuration game object is the VelesioAI Integration game object, it contains the configurations for the llamacpp and stable diffusion connections as well as the scene itself.</p>
+
+<p>SCREENSHOT</p>
+
+<p>You can also utilize a local LLM through the disabled LLM object and unflicking Remote in the main configuration object.</p>
+
+<hr />
+
+<h2 id="scripts-documentation">Scripts documentation</h2>
+
+<h3 id="characterconfiguratorcs"><code class="language-plaintext highlighter-rouge">CharacterConfigurator.cs</code></h3>
+
+<p><strong>Purpose:</strong></p>
+
+<p>This script acts as the bridge between the user interface for character creation and the backend generation logic. It collects all user-defined parameters from input fields and dropdowns and passes them to the <code class="language-plaintext highlighter-rouge">PromptButton</code> script to initiate the character generation process.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li><strong>UI Elements:</strong> A collection of <code class="language-plaintext highlighter-rouge">TMP_InputField</code>, <code class="language-plaintext highlighter-rouge">TMP_Dropdown</code>, and <code class="language-plaintext highlighter-rouge">Toggle</code> elements that capture user preferences for the character’s name, race, class, universe, alignment, level, context, and portrait description.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">startGenerationButton</code>:</strong> The <code class="language-plaintext highlighter-rouge">Button</code> that triggers the character generation.</li>
+  <li><strong>Dependencies:</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">promptButtonScript</code>: A required reference to the <code class="language-plaintext highlighter-rouge">PromptButton</code> script, which it calls to start the generation.</li>
+      <li><code class="language-plaintext highlighter-rouge">sceneManager</code>: A required reference to the <code class="language-plaintext highlighter-rouge">SceneManager</code> to control UI panel transitions.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Core Methods:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">TriggerGeneration()</code>: Gathers all data from the UI inputs, determines if any values need to be randomized, and calls <code class="language-plaintext highlighter-rouge">promptButtonScript.StartCharacterGeneration()</code> with the final parameters. It also instructs the <code class="language-plaintext highlighter-rouge">SceneManager</code> to switch to the background/results view.</li>
+  <li><code class="language-plaintext highlighter-rouge">ShowConfiguration()</code>: Resets all UI fields to their default state and tells the <code class="language-plaintext highlighter-rouge">SceneManager</code> to return to the configuration view.</li>
+  <li><code class="language-plaintext highlighter-rouge">ShowLoadingIndicator()</code> / <code class="language-plaintext highlighter-rouge">HideLoadingIndicator()</code>: These methods are called by <code class="language-plaintext highlighter-rouge">PromptButton</code> to toggle the loading animation via the <code class="language-plaintext highlighter-rouge">SceneManager</code>.</li>
+</ul>
+
+<hr />
+
+<h3 id="promptbuttoncs"><code class="language-plaintext highlighter-rouge">PromptButton.cs</code></h3>
+
+<p><strong>Purpose:</strong></p>
+
+<p>This is the central script for the character generation logic. It constructs a detailed prompt for the LLM based on the template and user-provided constraints. After receiving the character description from the LLM, it parses the response and, if enabled, constructs a new prompt to generate a character portrait using the Stable Diffusion script.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li><strong>LLM Components:</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">llmCharacter</code>: The <code class="language-plaintext highlighter-rouge">LLMCharacter</code> component used to generate the character’s text description.</li>
+      <li><code class="language-plaintext highlighter-rouge">sdImageGenerator</code>: The <code class="language-plaintext highlighter-rouge">StableDiffusionText2Image</code> component used for generating the portrait.</li>
+    </ul>
+  </li>
+  <li><strong>UI Elements:</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">responseText</code>: A <code class="language-plaintext highlighter-rouge">Text</code> element to display the generated character sheet.</li>
+      <li><code class="language-plaintext highlighter-rouge">characterPortraitImage</code>: A <code class="language-plaintext highlighter-rouge">RawImage</code> to display the generated character portrait.</li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">characterPrompt</code>:</strong> A <code class="language-plaintext highlighter-rouge">TextArea</code> string that serves as the base template for the LLM.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">portraitStylePrefix</code> / <code class="language-plaintext highlighter-rouge">negativePrompt</code>:</strong> Strings used to refine the prompt sent to the image generator for better results.</li>
+  <li><strong>Dependencies:</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">chatInterface</code> (<code class="language-plaintext highlighter-rouge">DemoScript</code>): Used to pass the final character context to the chat system.</li>
+      <li><code class="language-plaintext highlighter-rouge">characterConfigurator</code>: Used to show/hide the loading indicator.</li>
+      <li><code class="language-plaintext highlighter-rouge">sceneManager</code>: Used to update the “Current Situation” text on the background panel.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Core Methods:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">StartCharacterGeneration(...)</code>: The main entry point. It builds the final text prompt, awaits the response from the <code class="language-plaintext highlighter-rouge">llmCharacter</code>, parses the result, and then triggers the <code class="language-plaintext highlighter-rouge">sdImageGenerator</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">BuildComprehensiveImagePrompt(...)</code>: Creates a detailed prompt for the image generator by combining the <code class="language-plaintext highlighter-rouge">portraitStylePrefix</code> with key details extracted from the generated character description.</li>
+  <li><code class="language-plaintext highlighter-rouge">DisplayCharacterPortrait(Texture2D portraitTexture)</code>: A callback method that is executed when the <code class="language-plaintext highlighter-rouge">sdImageGenerator</code> finishes. It applies the received <code class="language-plaintext highlighter-rouge">Texture2D</code> to the <code class="language-plaintext highlighter-rouge">characterPortraitImage</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">CancelRequest()</code>: Stops any ongoing LLM or Stable Diffusion requests and resets the UI.</li>
+</ul>
+
+<hr />
+
+<h3 id="dndcharactercs-component-demoscript"><code class="language-plaintext highlighter-rouge">DNDCharacter.cs</code> (Component: <code class="language-plaintext highlighter-rouge">DemoScript</code>)</h3>
+
+<p><strong>Purpose:</strong></p>
+
+<p>This script manages the interactive chat functionality. Once a character is generated, this script takes over to facilitate a role-playing conversation. It uses the generated character’s information, universe, and situation to maintain context in its conversation with the player.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">llmCharacter</code>:</strong> The <code class="language-plaintext highlighter-rouge">LLMCharacter</code> component used to generate in-character chat responses.</li>
+  <li><strong>UI Elements:</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">playerText</code>: An <code class="language-plaintext highlighter-rouge">InputField</code> for the user to type messages.</li>
+      <li><code class="language-plaintext highlighter-rouge">AIText</code>: A <code class="language-plaintext highlighter-rouge">TextMeshProUGUI</code> element to display the conversation log.</li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">systemPrompt</code>:</strong> A string that instructs the LLM to respond in character based on the provided context.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">chatHistory</code>:</strong> A <code class="language-plaintext highlighter-rouge">List&lt;string&gt;</code> that stores the conversation, which is used to update the chat display.</li>
+</ul>
+
+<p><strong>Core Methods:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">SetCharacterContext(string characterInfo, string universe, string context)</code>: Called by <code class="language-plaintext highlighter-rouge">PromptButton</code> after generation is complete. It initializes the chat by providing the script with the character’s details, universe, and current situation. It also triggers an initial in-character remark from the LLM.</li>
+  <li><code class="language-plaintext highlighter-rouge">onInputFieldSubmit(string message)</code>: Triggered when the player sends a message. It constructs a new prompt including the system prompt, character context, and the player’s message, then sends it to the <code class="language-plaintext highlighter-rouge">llmCharacter</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">SetAIText(string text)</code>: A callback for the <code class="language-plaintext highlighter-rouge">llmCharacter.Chat</code> call that updates the AI’s response in the chat window as it’s being streamed.</li>
+</ul>
+
+<hr />
+
+<h3 id="scenemanagercs"><code class="language-plaintext highlighter-rouge">SceneManager.cs</code></h3>
+
+<p><strong>Purpose:</strong></p>
+
+<p>This script acts as a simple state machine for the UI. It manages which panels (Configuration, Background, Chat) are active, ensuring that the user only sees the relevant interface for the current state of the application.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li><strong>UI Panels:</strong> <code class="language-plaintext highlighter-rouge">GameObject</code> references to the different panels that make up the UI (<code class="language-plaintext highlighter-rouge">configurationPanel</code>, <code class="language-plaintext highlighter-rouge">backgroundPanel</code>, <code class="language-plaintext highlighter-rouge">chatPanel</code>, <code class="language-plaintext highlighter-rouge">loadingIndicator</code>).</li>
+  <li><strong>Navigation Buttons:</strong> <code class="language-plaintext highlighter-rouge">Button</code> references for navigating between the “Background” and “Chat” views.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">SceneState</code> Enum:</strong> An enum (<code class="language-plaintext highlighter-rouge">Configuration</code>, <code class="language-plaintext highlighter-rouge">Background</code>, <code class="language-plaintext highlighter-rouge">Chat</code>) to define the possible UI states.</li>
+</ul>
+
+<p><strong>Core Methods:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">SwitchToScene(SceneState newState)</code>: The primary method for changing the application’s state. It deactivates all panels and then activates only the ones required for the <code class="language-plaintext highlighter-rouge">newState</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">ShowLoadingIndicator(bool show)</code>: Toggles the visibility of the <code class="language-plaintext highlighter-rouge">loadingIndicator</code> GameObject.</li>
+  <li><code class="language-plaintext highlighter-rouge">UpdateCurrentSituation(string situationText)</code>: Updates a <code class="language-plaintext highlighter-rouge">Text</code> element on the background panel to display the character’s current context.</li>
+  <li><code class="language-plaintext highlighter-rouge">ResetToConfiguration()</code>: A public method to easily return the application to its initial configuration state.</li>
+</ul>
+
+<hr />
+
+<h3 id="simplescenecs-component-simplellmprompt"><code class="language-plaintext highlighter-rouge">SimpleScene.cs</code> (Component: <code class="language-plaintext highlighter-rouge">SimpleLLMPrompt</code>)</h3>
+
+<p><strong>Purpose:</strong></p>
+
+<p>This script provides a minimal, self-contained example of how to use the <code class="language-plaintext highlighter-rouge">LLMCharacter</code> component. It is not used in the main D&amp;D character generator scene but is included as a basic demonstration of sending a prompt to an LLM and receiving a streaming response.</p>
+
+<p><strong>Key Components:</strong></p>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">llmCharacter</code>:</strong> The <code class="language-plaintext highlighter-rouge">LLMCharacter</code> component to interact with.</li>
+  <li><strong>UI Elements:</strong>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">promptInput</code>: A <code class="language-plaintext highlighter-rouge">TMP_InputField</code> for user input.</li>
+      <li><code class="language-plaintext highlighter-rouge">responseText</code>: A <code class="language-plaintext highlighter-rouge">TextMeshProUGUI</code> to display the LLM’s response.</li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">systemPrompt</code>:</strong> A basic instruction for the AI assistant.</li>
+</ul>
+
+<p><strong>Core Methods:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">OnSubmitPrompt()</code>: Called when the user submits text. It sends the input to the <code class="language-plaintext highlighter-rouge">llmCharacter.Chat</code> method.</li>
+  <li><code class="language-plaintext highlighter-rouge">OnResponseUpdate(string partialResponse)</code>: A callback that updates the <code class="language-plaintext highlighter-rouge">responseText</code> with the streaming output from the LLM.</li>
+  <li><code class="language-plaintext highlighter-rouge">OnResponseComplete()</code>: A callback executed when the full response has been received.</li>
+</ul>
 
         </div>
 
@@ -445,7 +599,7 @@
           <p class="build-info">
             Built with ❤️ using Jekyll
             <br>
-            <small>Last updated: September 22, 2025</small>
+            <small>Last updated: September 23, 2025</small>
           </p>
         </div>
       </div>
