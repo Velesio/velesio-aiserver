@@ -1,0 +1,50 @@
+---
+layout: null
+---
+{
+  "posts": [
+    {% for post in site.posts %}
+      {
+        "title": {{ post.title | jsonify }},
+        "url": {{ post.url | relative_url | jsonify }},
+        "date": {{ post.date | date: "%Y-%m-%d" | jsonify }},
+        "content": {{ post.content | strip_html | strip_newlines | jsonify }},
+        "excerpt": {{ post.excerpt | strip_html | strip_newlines | truncatewords: 30 | jsonify }},
+        "categories": {{ post.categories | jsonify }},
+        "tags": {{ post.tags | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ],
+  "pages": [
+    {% for page in site.pages %}
+      {% unless page.url contains '/assets/' or page.url contains '/vendor/' or page.url contains '/node_modules/' or page.url contains '.xml' or page.url contains '.json' %}
+      {
+        "title": {{ page.title | default: page.name | jsonify }},
+        "url": {{ page.url | relative_url | jsonify }},
+        "content": {{ page.content | strip_html | strip_newlines | jsonify }},
+        "excerpt": {{ page.content | strip_html | strip_newlines | truncatewords: 30 | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+      {% endunless %}
+    {% endfor %}
+  ],
+  "components": [
+    {% for component in site.components %}
+      {
+        "title": {{ component.title | jsonify }},
+        "url": {{ component.url | relative_url | jsonify }},
+        "content": {{ component.content | strip_html | strip_newlines | jsonify }},
+        "excerpt": {{ component.content | strip_html | strip_newlines | truncatewords: 30 | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ],
+  "unity_integrations": [
+    {% for integration in site.unity-integrations %}
+      {
+        "title": {{ integration.title | jsonify }},
+        "url": {{ integration.url | relative_url | jsonify }},
+        "content": {{ integration.content | strip_html | strip_newlines | jsonify }},
+        "excerpt": {{ integration.content | strip_html | strip_newlines | truncatewords: 30 | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}

@@ -1,0 +1,115 @@
+---
+---
+
+@import "just-the-docs/just-the-docs";
+
+:root {
+  --primary-color: #3b82f6;
+  --secondary-color: #1e293b;
+  --accent-color: #06b6d4;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --border-radius: 8px;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  background: var(--secondary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+h1, h2 {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.btn {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1.5rem;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-weight: 500;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  text-decoration: none;
+  color: white;
+}
+
+pre, code {
+  border-radius: var(--border-radius) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+.highlight {
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--accent-color);
+}
+
+table {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: none;
+}
+
+th {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: white;
+  font-weight: 600;
+}
+
+td, th {
+  padding: 1rem;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.badge-success {
+  background: var(--success-color);
+  color: white;
+}
+
+.badge-warning {
+  background: var(--warning-color);
+  color: white;
+}
+
+.badge-error {
+  background: var(--error-color);
+  color: white;
+}
+
+.badge-info {
+  background: var(--primary-color);
+  color: white;
+}

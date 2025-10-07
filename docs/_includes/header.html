@@ -6,6 +6,17 @@
     </a>
 
     <div class="header-actions">
+      <!-- Search bar -->
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search documentation..." aria-label="Search">
+        <div class="search-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          </svg>
+        </div>
+        <div id="search-results" class="search-results" style="display: none;"></div>
+      </div>
+
       <!-- Theme toggle -->
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
         <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -43,6 +54,175 @@
   backdrop-filter: blur(8px);
 }
 
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Search Styles */
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+#search-input {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 8px 40px 8px 16px;
+  font-size: 14px;
+  color: var(--text-color);
+  width: 250px;
+  transition: all 0.3s ease;
+}
+
+#search-input:focus {
+  outline: none;
+  border-color: var(--accent-color, #007acc);
+  box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
+  width: 300px;
+}
+
+#search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+  color: var(--text-secondary);
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1001;
+  margin-top: 4px;
+}
+
+.search-result-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-result-item:hover {
+  background-color: var(--hover-bg, rgba(0, 122, 204, 0.1));
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-title {
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.search-result-excerpt {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.search-result-url {
+  color: var(--accent-color, #007acc);
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.search-highlight {
+  background-color: rgba(255, 235, 59, 0.3);
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+.no-results {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+@media screen and (max-width: 768px) {
+  #search-input {
+    width: 200px;
+  }
+  
+  #search-input:focus {
+    width: 220px;
+  }
+  
+  .search-container {
+    order: -1;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .header-wrapper {
+    padding: 0.8rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .header-actions {
+    gap: 0.5rem;
+  }
+  
+  #search-input {
+    width: 140px;
+    font-size: 13px;
+    padding: 6px 32px 6px 12px;
+  }
+  
+  #search-input:focus {
+    width: 170px;
+  }
+  
+  .search-icon {
+    right: 8px;
+  }
+  
+  .search-results {
+    left: -1rem;
+    right: -1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  
+  .theme-toggle,
+  .github-link {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .site-title {
   font-size: 1.5rem;
   font-weight: 600;
@@ -55,6 +235,35 @@
 
 .site-logo {
   font-size: 1.2rem;
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--hover-bg, rgba(0, 122, 204, 0.1));
+  border-color: var(--accent-color, #007acc);
+}
+
+.github-link {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 6px;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.github-link:hover {
+  background-color: var(--hover-bg, rgba(0, 122, 204, 0.1));
+  color: var(--accent-color, #007acc);
 }
 
 .site-nav {

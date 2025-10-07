@@ -48,6 +48,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // Hide search results when mobile menu is opened
+  if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', () => {
+      const searchResults = document.getElementById('search-results');
+      if (searchResults) {
+        searchResults.style.display = 'none';
+      }
+    });
+  }
+
   // Back to top functionality
   const backToTopButton = document.getElementById('back-to-top');
   if (backToTopButton) {
