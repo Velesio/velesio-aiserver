@@ -30,7 +30,8 @@ plugins:
 # Navigation
 header_pages:
   - index.md
-  - getting-started.md
+  - quickstart-selfhost.md
+  - quickstart-runpod.md
   - architecture.md
   - components.md
   - unity-integrations.md

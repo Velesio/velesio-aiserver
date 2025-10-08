@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Getting Started
+title: Self Hosting Quickstart
 nav_order: 2
 ---
 
@@ -53,9 +53,12 @@ LORA_URL=https://civitai.com/api/download/models/110115?type=Model&format=SafeTe
 VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors
 ```
 
+You can check out different model templates in the model templates section.
+
 ### 3. (Optional) Self Hosted Setup Configuration
 
-The server binaries are included in the public images, but if you are rebuilding the image you should include them, you can do so with.
+The UndreamAI server binaries are included in the public images, but if you are rebuilding the image you should include them, you can do so with. UndreamAI is used for Unity compatibility but the application works fine with the defualt llamacpp server as well.
+
 ```bash
 # Setup LLM binary and models
 cd gpu && ./data/llama/server_setup.sh
@@ -79,6 +82,10 @@ docker-compose ps
 # View logs
 docker-compose logs -f
 ```
+
+### 5. Connect in Unity!
+
+Refer to one of the Unity integrations sections to start using your AI Inference server in Unity.
 
 ## First API Call
 
