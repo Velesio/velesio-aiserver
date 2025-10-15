@@ -87,7 +87,7 @@ docker-compose logs -f
 
 Refer to one of the Unity integrations sections to start using your AI Inference server in Unity.
 
-## First API Call
+## Test
 
 Test your installation with a simple API call:
 

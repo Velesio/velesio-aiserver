@@ -16,11 +16,13 @@ Before you begin, ensure you have:
 
 ## Steps
 
-### 1. Open the [Runpod template link](https://console.runpod.io/deploy?template=3rsr5dzv50&ref=muhg2w55) and choose a GPU you want to use. The minimal reccomended GPU for the DND Generator template is the A5000.
+### 1. Open the [Runpod template link](https://console.runpod.io/deploy?template=3rsr5dzv50&ref=muhg2w55)
+
+Choose a GPU you want to use. The minimal reccomended GPU for the DND Generator template is the A5000. You can also use a persistent volume to prevent downloading models every time.
 
 ### 2. Environment Configuration
 
-In the runpod template you must configure your environment variables.
+In the runpod template you can overwrite any environment variables. The default setup uses the reccomended DND Generator models and hosts the ai inference components standalone (REMOTE=false). If you are already hosting an AI server outside of Runpod, in distributed mode, you need to set Remote=true and the REDIS_URL and REDIS_PASS.
 
 ```bash
 # LLAMACPP Server Startup Command
@@ -41,6 +43,17 @@ LORA_URL=https://civitai.com/api/download/models/110115?type=Model&format=SafeTe
 VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors
 ```
 
+### 3. Wait for installation the first run.
+
+The models and pip requirements will be installed the first time and saved on the disk for persistent runs (8gb minimum without any models).
+
+The AI inference server is up and running when you see this in the logs;
+```bash
+
+velesio-gpu  | INFO [            start_server] HTTP server listening | tid="135629304680448" timestamp=1760540334 n_threads_http="11" port="1337" hostname="0.0.0.0"
+
+```
+
 ### 4. Run!
 
 If you are running in standalone mode, export the ports of LLAMACPP and SD and connect to them directly. If you are running in remote mode, connect to your API server and the runpod GPU worker will pick up jobs from it.
@@ -49,7 +62,7 @@ If you are running in standalone mode, export the ports of LLAMACPP and SD and c
 
 Refer to one of the Unity integrations sections to start using your AI Inference server in Unity.
 
-## First API Call
+## Test
 
 Test your installation with a simple API call:
 
