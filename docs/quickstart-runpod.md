@@ -41,6 +41,7 @@ RUN_SD=true
 SD_MODEL_URL=https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16
 LORA_URL=https://civitai.com/api/download/models/110115?type=Model&format=SafeTensor
 VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors
+SD_STARTUP_COMMAND=./venv/bin/python launch.py --listen --port 7860 --api --skip-torch-cuda-test --no-half-vae --medvram --xformers --skip-version-check
 ```
 
 ### 3. Wait for installation the first run.

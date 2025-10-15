@@ -314,6 +314,12 @@ docker-compose logs Velesio-gpu
    docker-compose logs Velesio-gpu | grep -i "stable"
    ```
 
+4. **Customize SD Startup Parameters**:
+   ```bash
+   # In .env file - customize Stable Diffusion startup command
+   SD_STARTUP_COMMAND=./venv/bin/python launch.py --listen --port 7860 --api --xformers --lowvram
+   ```
+
 ## Network Issues
 
 ### Cannot Access API from External Host

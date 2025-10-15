@@ -12,17 +12,6 @@ High-performance, microservice-based AI inference server with Unity integration 
 - **🐳 Easy Deploy:** Docker Compose setup with auto-downloading models
 - **📊 Monitoring:** Built-in Grafana dashboards and observability
 
-## 📚 Documentation
-
-📖 **[Complete Documentation](https://velesio.github.io/velesio-aiserver/)** - Full guides, API reference, and examples
-
-- 🚀 **[Getting Started](docs/getting-started.md)** - Installation and basic setup
-- 🏗️ **[Architecture](docs/architecture.md)** - System design and components  
-- 🚢 **[Deployment](docs/deployment.md)** - Production deployment strategies
-- 🔌 **[API Reference](docs/api-reference.md)** - Complete endpoint documentation
-- 🛠️ **[Components](docs/components.md)** - Individual service configuration
-- 🔧 **[Troubleshooting](docs/troubleshooting.md)** - Common issues and solutions
-
 ## ⚡ Quick Start
 
 ### RunPod Template
@@ -64,6 +53,16 @@ Built specifically for Unity developers:
 - **[LLM for Unity](https://assetstore.unity.com/packages/tools/ai-ml-integration/llm-for-unity-273604)** - Text Generation
 - **[SD Integration For Untiy](https://github.com/dobrado76/Stable-Diffusion-Unity-Integration)** - Image Generation
 
+## 📚 Documentation
+
+📖 **[Complete Documentation](https://velesio.github.io/velesio-aiserver/)** - Full guides, API reference, and examples
+
+- 🚀 **[Getting Started](docs/getting-started.md)** - Installation and basic setup
+- 🏗️ **[Architecture](docs/architecture.md)** - System design and components  
+- 🚢 **[Deployment](docs/deployment.md)** - Production deployment strategies
+- 🔌 **[API Reference](docs/api-reference.md)** - Complete endpoint documentation
+- 🛠️ **[Components](docs/components.md)** - Individual service configuration
+- 🔧 **[Troubleshooting](docs/troubleshooting.md)** - Common issues and solutions
 
 ## 🏗️ Architecture
 

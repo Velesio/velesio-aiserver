@@ -598,6 +598,8 @@ def get_cached_result(self, prompt: str) -> Optional[Dict[str, Any]]:
 | `SD_MODEL_PATH` | `./data/models/image/` | SD models directory |
 | `CONTEXT_SIZE` | `4096` | LLM context window |
 | `RUN_SD` | `true` | Enable Stable Diffusion |
+| `STARTUP_COMMAND` | `./undreamai_server --model...` | LLM server startup command |
+| `SD_STARTUP_COMMAND` | `./venv/bin/python launch.py...` | Stable Diffusion startup command |
 | `REDIS_URL` | `redis://redis:6379` | Redis connection |
 | `WORKER_TIMEOUT` | `600` | Job processing timeout |
 
