@@ -129,13 +129,18 @@ EOF
         fi
     done
     
-    # Start A1111 with xformers optimization
-    ./venv/bin/python launch.py \
-        --listen --port 7860 --api \
-        --skip-torch-cuda-test \
-        --no-half-vae --medvram \
-        --xformers \
-        --skip-version-check &
+    # Start A1111 with command from environment variable
+    if [ -n "$SD_STARTUP_COMMAND" ]; then
+        eval "$SD_STARTUP_COMMAND" &
+    else
+        # Fallback to default command if SD_STARTUP_COMMAND is not set
+        ./venv/bin/python launch.py \
+            --listen --port 7860 --api \
+            --skip-torch-cuda-test \
+            --no-half-vae --medvram \
+            --xformers \
+            --skip-version-check &
+    fi
     
     # Wait for A1111 to start up
     echo "⏳ Waiting for A1111 to start..."

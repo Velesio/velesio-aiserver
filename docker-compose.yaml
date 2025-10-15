@@ -54,6 +54,7 @@ services:
       - PORT=${PORT}
       - RUN_SD=${RUN_SD}
       - STARTUP_COMMAND=${STARTUP_COMMAND}
+      - SD_STARTUP_COMMAND=${SD_STARTUP_COMMAND}
     # if you mount your model directory:
     restart: unless-stopped
     volumes:
