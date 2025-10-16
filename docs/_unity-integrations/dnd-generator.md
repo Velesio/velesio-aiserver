@@ -24,17 +24,33 @@ For more detailed documentation on the LLM for Unity and SD Integration, on whic
 
 ## Character Generator Scene
 
-This is the primary scene of the Asset. The player fill out various characteristics of a character, or leaves them to be random, a prompt is then made to llamacpp and stabledifussion to generate a background and portrait of the character. The player can then chat with the character with a set context.
+This is the primary scene of the Asset. The player fill out various characteristics of a character, or leaves them to be random, a prompt is then made to llamacpp and stablediffusion to generate a background and portrait of the character. The player can then chat with the character with a set context.
 
 The primary configuration game object is the VelesioAI Integration game object, it contains the configurations for the llamacpp and stable diffusion connections as well as the scene itself.
 
-SCREENSHOT
+![DND Generator Scene Overview]({{ '/assets/images/scene.png' | relative_url }})
+*Main character generation interface*
 
 You can also utilize a local LLM through the disabled LLM object and unflicking Remote in the main configuration object.
 
+Within the object, there is a LLMCharacter script, here you can configure the connection to your llamacpp server, most importantly the host and api key.
+
+![LLM Configuration]({{ '/assets/images/object.png' | relative_url }})
+
+
+Bellow that you will see the SD configuration, here you set the hostname of the SD server (in the example we are pointing to the velesio api server so the url is the same as llamacpp but you might opt to host them completely seperately). Once your SD instance is set up, you have to press 'List models' to load the available models from the server, to be used by calls.
+
+![SD Configuration]({{ '/assets/images/sdconfig.png' | relative_url }})
+
+Within the scene, there is a character portrait, this is where you can find the SD to image script, which generates character portraits. Various configuration settings can be seen in this game object, most importantly the model that should be used. You can generate images in the editor itself but in the active scene this is filled out at runtime.
+
+![Portrait config]({{ '/assets/images/portrait.png' | relative_url }})
+
+All of these components of the scene come together when you fill out the initial platform, you essentially create a DND character, their portrait is generated and then you can chat with them, all through AI.
+
+All of the dropdown options in the scene are there to work optimally with the above reccomended model stack, they are trigger words that the portrait generation model expects to generate a specific character. You can visit the model's Civitai page for further details.
 
 ---
-
 
 ## Scripts documentation
 
