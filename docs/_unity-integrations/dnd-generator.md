@@ -12,7 +12,7 @@ The RPG Character Generator Unity asset fully utilizes every feature of the Vele
 The AI models stack is used to generate all of the content showcased in the asset's marketing material.
 
 ```bash
-MODEL_URL=https://huggingface.co/DavidAU/Llama-3.-8X3B-MOE-Dark-Champion-Instruct-uncensored-abliterated-18.4B-GGUF/resolve/main/L3.2-8X3B-MOE-Dark-Champion-Inst-18.4B-uncen-ablit_D_AU-Q3_k_s.gguf
+MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf
 SD_MODEL_URL=https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16
 LORA_URL=https://civitai.com/api/download/models/1569286?type=Model&format=SafeTensor
 VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors
@@ -46,7 +46,7 @@ Within the scene, there is a character portrait, this is where you can find the 
 
 ![Portrait config]({{ '/assets/images/portrait.png' | relative_url }})
 
-All of these components of the scene come together when you fill out the initial platform, you essentially create a DND character, their portrait is generated and then you can chat with them, all through AI.
+All of these components of the scene come together when you fill out the initial form, you essentially create a DND character, their portrait is generated and then you can chat with them, all through AI.
 
 All of the dropdown options in the scene are there to work optimally with the above reccomended model stack, they are trigger words that the portrait generation model expects to generate a specific character. You can visit the model's Civitai page for further details.
 

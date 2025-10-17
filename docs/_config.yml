@@ -30,15 +30,15 @@ plugins:
 # Navigation
 header_pages:
   - index.md
-  - quickstart-selfhost.md
   - quickstart-runpod.md
+  - quickstart-selfhost.md
+  - model-templates.md
   - architecture.md
   - components.md
   - unity-integrations.md
   - api-reference.md
   - deployment.md
   - troubleshooting.md
-  - model-templates.md
 
 # Collections for better organization
 collections:

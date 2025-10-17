@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Self Hosting Quickstart
-nav_order: 2
+nav_order: 3
 ---
 
 ## Prerequisites
@@ -32,26 +32,23 @@ cp .env.example .env
 Edit the `.env` file with your settings:
 
 ```bash
-# LLAMACPP Server Startup Command
+# Startup Commands
 STARTUP_COMMAND=./undreamai_server --model /app/data/models/text/model.gguf --host 0.0.0.0 --port 1337 --gpu-layers 37 --template chatml
+SD_STARTUP_COMMAND=./venv/bin/python launch.py --listen --port 7860 --api --skip-torch-cuda-test --no-half-vae --medvram --xformers --skip-version-check
 
-#Connectivity
+# Configuration
 REMOTE=true # false does not connect llamacpp server to api
+RUN_SD=true
 REDIS_HOST=redis
 REDIS_PASS=secure_redis_pass
 API_TOKENS=secure_token,secure_token2
 
-#UndreamAI Server Settings
+# Model URLs
 MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf
 LLAMA_SERVER_URL=http://localhost:1337
-
-
-#Stable Diffusion Settings
-RUN_SD=true
 SD_MODEL_URL=https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16
 LORA_URL=https://civitai.com/api/download/models/110115?type=Model&format=SafeTensor
 VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors
-SD_STARTUP_COMMAND=./venv/bin/python launch.py --listen --port 7860 --api --skip-torch-cuda-test --no-half-vae --medvram --xformers --skip-version-check
 ```
 
 You can check out different model templates in the model templates section.

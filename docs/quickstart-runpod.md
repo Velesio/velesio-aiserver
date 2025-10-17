@@ -16,44 +16,45 @@ Before you begin, ensure you have:
 
 ## Steps
 
-### 1. Open the [Runpod template link](https://console.runpod.io/deploy?template=3rsr5dzv50&ref=muhg2w55)
+### 1. Open the [Runpod template link](https://console.runpod.io/hub/template/velesio-ai-server?id=8yqg0h6ps1)
 
-Choose a GPU you want to use. The minimal reccomended GPU for the DND Generator template is the A5000. You can also use a persistent volume to prevent downloading models every time.
+Choose a GPU you want to use. The minimal reccomended GPU for the DND Generator template is the RTX 2000 Ada. You can also use a persistent volume to prevent downloading models on every pod reset.
 
-### 2. Environment Configuration
+### 2. Environment Variables Configuration
 
-In the runpod template you can overwrite any environment variables. The default setup uses the reccomended DND Generator models and hosts the ai inference components standalone (REMOTE=false). If you are already hosting an AI server outside of Runpod, in distributed mode, you need to set Remote=true and the REDIS_URL and REDIS_PASS.
+In the runpod template you can overwrite any environment variables. The default setup uses the reccomended DND Generator models and hosts the ai inference components standalone (REMOTE=false). If you are already hosting an api server outside of Runpod, in distributed mode, you need to set Remote=true and the REDIS_URL and REDIS_PASS.
 
 ```bash
-# LLAMACPP Server Startup Command
+# Startup commands
 STARTUP_COMMAND=./undreamai_server --model /app/data/models/text/model.gguf --host 0.0.0.0 --port 1337 --gpu-layers 37 --template chatml
+SD_STARTUP_COMMAND=./venv/bin/python launch.py --listen --port 7860 --api --nowebui --skip-torch-cuda-test --no-half-vae --medvram --xformers --skip-version-check
 
-#Connectivity
+#Configuration
 REMOTE=false # false does not connect llamacpp server to api
+RUN_SD=true
 REDIS_HOST=redis
 REDIS_PASS=secure_redis_pass
 
-#UndreamAI Server Settings
+# Model urls
 MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf
-
-#Stable Diffusion Settings
-RUN_SD=true
 SD_MODEL_URL=https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16
 LORA_URL=https://civitai.com/api/download/models/110115?type=Model&format=SafeTensor
 VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors
 SD_STARTUP_COMMAND=./venv/bin/python launch.py --listen --port 7860 --api --skip-torch-cuda-test --no-half-vae --medvram --xformers --skip-version-check
 ```
 
-### 3. Wait for installation the first run.
+### 3. Wait for server to start up
 
-The models and pip requirements will be installed the first time and saved on the disk for persistent runs (8gb minimum without any models).
+The models and pip requirements will be installed the first time and saved on the disk for persistent runs.
 
 The AI inference server is up and running when you see this in the logs;
 ```bash
-
 velesio-gpu  | INFO [            start_server] HTTP server listening | tid="135629304680448" timestamp=1760540334 n_threads_http="11" port="1337" hostname="0.0.0.0"
-
 ```
+
+You should also see both the llamacpp and Stable Diffusion services online, you can click on them here to get each service's URL.
+
+![Ready Services]({{ '/assets/images/online.png' | relative_url }})
 
 ### 4. Run!
 

@@ -56,34 +56,6 @@ Velesio AI Server is a production-ready AI inference platform that provides:
 - Redis queue monitoring
 - GPU utilization tracking
 
-## Quick Start
-
-1. **Clone and Configure**
-   ```bash
-   git clone https://github.com/Velesio/Velesio-aiserver.git
-   cd Velesio-aiserver
-   cp .env.example .env
-   ```
-
-2. **Set API Tokens**
-   ```bash
-   # Edit .env file
-   API_TOKENS=your-secret-token-here
-   ```
-
-3. **Deploy**
-   ```bash
-   docker-compose up -d --build
-   ```
-
-4. **Test API**
-   ```bash
-   curl -X POST http://localhost:8000/completion \
-     -H "Authorization: Bearer your-secret-token-here" \
-     -H "Content-Type: application/json" \
-     -d '{"prompt": "Hello, world!", "max_tokens": 50}'
-   ```
-
 ## Services
 
 | Service | Port | Description |
@@ -97,11 +69,11 @@ Velesio AI Server is a production-ready AI inference platform that provides:
 
 ## Next Steps
 
-- [Getting Started Guide](getting-started.html) - Detailed setup instructions
-- [Architecture Overview](architecture.html) - Deep dive into system design
-- [API Reference](api-reference.html) - Complete endpoint documentation
+- [Quickstart Cloud Infra](quickstart-runpod.html) - Detailed setup instructions
+- [Quickstart Self hosted](quickstart-selfhost.html) - Deep dive into system design
+- [Architecture](architecture.html) - Complete endpoint documentation
 - [Deployment Guide](deployment.html) - Production deployment strategies
-- [Troubleshooting](troubleshooting.html) - Common issues and solutions
+- [Model Templates](model-templates.html) - Common issues and solutions
 
 ---
 
