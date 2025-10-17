@@ -35,7 +35,6 @@ header_pages:
   - model-templates.md
   - architecture.md
   - components.md
-  - unity-integrations.md
   - api-reference.md
   - deployment.md
   - troubleshooting.md

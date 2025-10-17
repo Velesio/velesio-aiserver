@@ -69,7 +69,7 @@ Refer to one of the Unity integrations sections to start using your AI Inference
 Test your installation with a simple API call:
 
 ```bash
-curl -X POST http://localhost:8000/completion \
+curl -X POST http://LLAMACPP_URL/completion \
   -H "Authorization: Bearer secure_token" \
   -H "Content-Type: application/json" \
   -d '{

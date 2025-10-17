@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Model Templates
-nav_order: 8
+nav_order: 4
 ---
 
 This page contains templates of model url download stacks for a specific experience. You can use them by placing them in your environment variables.

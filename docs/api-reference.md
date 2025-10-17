@@ -1,7 +1,7 @@
 ---
 layout: page
 title: API Reference
-nav_order: 6
+nav_order: 8
 ---
 
 # API Reference
