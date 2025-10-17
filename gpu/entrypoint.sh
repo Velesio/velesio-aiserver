@@ -135,7 +135,7 @@ EOF
     else
         # Fallback to default command if SD_STARTUP_COMMAND is not set
         ./venv/bin/python launch.py \
-            --listen --port 7860 --api \
+            --listen --port 7860 --api --nowebui\
             --skip-torch-cuda-test \
             --no-half-vae --medvram \
             --xformers \
@@ -159,8 +159,8 @@ if [ "$REMOTE" = "true" ]; then
     python3 llm.py &
 fi
 
-# Start the SD worker only if RUN_SD=true
-if [ "$RUN_SD" = "true" ]; then
+# Start the SD worker only if RUN_SD=true AND REMOTE=true
+if [ "$RUN_SD" = "true" ] && [ "$REMOTE" = "true" ]; then
     python3 sd.py &
 fi
 
