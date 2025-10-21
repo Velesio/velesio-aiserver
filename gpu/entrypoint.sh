@@ -8,6 +8,41 @@ mkdir -p /app/data/models/image/models/Lora
 mkdir -p /app/data/models/image/models/embeddings
 mkdir -p /app/data/sd
 
+# Check if virtual environment exists, if not create it and install packages
+if [ ! -d "/app/data/venv" ]; then
+    echo "🐍 Creating virtual environment and installing Python packages..."
+    python3 -m venv /app/data/venv
+    source /app/data/venv/bin/activate
+    
+    # Upgrade pip first
+    pip install --upgrade pip
+    
+    # Install PyTorch and related packages with CUDA support
+    echo "📦 Installing PyTorch with CUDA support..."
+    pip install --no-cache-dir torch torchvision torchaudio xformers --index-url https://download.pytorch.org/whl/cu124
+    
+    # Install other requirements
+    echo "📦 Installing remaining Python packages..."
+    pip install --no-cache-dir -r /app/requirements.txt
+    
+    # Install additional dependencies that might be needed by Stable Diffusion
+    echo "📦 Installing additional SD dependencies..."
+    pip install --no-cache-dir click uvicorn fastapi
+    
+    echo "✅ Python packages installed to persistent volume"
+else
+    echo "🔄 Using existing virtual environment from persistent volume"
+    source /app/data/venv/bin/activate
+fi
+
+# Wait for critical packages to be properly installed before proceeding
+echo "🔍 Verifying Python environment setup..."
+until /app/data/venv/bin/python -c "import torch, torchvision, gradio; print('Critical packages available')" 2>/dev/null; do
+    echo "⏳ Waiting for package installation to complete..."
+    sleep 5
+done
+echo "✅ Python environment verified - ready to proceed"
+
 if [ ! -f /app/data/models/text/model.gguf ]; then
     wget -O /app/data/models/text/model.gguf "$MODEL_URL"
 fi
@@ -81,12 +116,10 @@ if [ "$RUN_SD" = "true" ]; then
     git config --global user.name "Docker User"
     git config --global user.email "docker@example.com"
     
-    # Set up Python virtual environment if not already done
-    if [ ! -d "venv" ]; then
-        echo "🐍 Creating Python virtual environment..."
-        python3 -m venv venv --system-site-packages
-        # Install any additional A1111-specific packages if needed
-        ./venv/bin/pip install --upgrade pip
+    # Set up virtual environment if not already linked
+    if [ ! -L "venv" ] && [ ! -d "venv" ]; then
+        echo "🔗 Creating symlink to shared virtual environment..."
+        ln -s /app/data/venv venv
     fi
     
     # Create webui-user.sh for optimal settings WITH xformers
@@ -133,19 +166,25 @@ EOF
     if [ -n "$SD_STARTUP_COMMAND" ]; then
         eval "$SD_STARTUP_COMMAND" &
     else
-        # Fallback to default command if SD_STARTUP_COMMAND is not set
+        # Use our unified Wu-Tang venv - Cash Rules Everything Around Me!
         ./venv/bin/python launch.py \
             --listen --port 7860 --api --nowebui\
             --skip-torch-cuda-test \
             --no-half-vae --medvram \
             --xformers \
-            --skip-version-check &
+            --skip-version-check \
+            --skip-install &
     fi
     
     # Wait for A1111 to start up
     echo "⏳ Waiting for A1111 to start..."
     sleep 30
     cd /app
+fi
+
+# Ensure virtual environment is activated for all subsequent operations
+if [ -d "/app/data/venv" ]; then
+    source /app/data/venv/bin/activate
 fi
 
 # Start with startup command from environment variable
@@ -156,12 +195,12 @@ sleep 5
 
 # Start the Python worker only if REMOTE=true
 if [ "$REMOTE" = "true" ]; then
-    python3 llm.py &
+    /app/data/venv/bin/python llm.py &
 fi
 
 # Start the SD worker only if RUN_SD=true AND REMOTE=true
 if [ "$RUN_SD" = "true" ] && [ "$REMOTE" = "true" ]; then
-    python3 sd.py &
+    /app/data/venv/bin/python sd.py &
 fi
 
 wait

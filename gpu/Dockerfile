@@ -2,24 +2,17 @@ FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04
 
 WORKDIR /app
 
-# Install system dependencies in one layer and clean up
+# Install only essential system dependencies
 RUN apt-get update && apt-get install -y \
     python3 python3-pip python3-venv curl wget git \
     libgl1-mesa-glx libglib2.0-0 libsm6 libxext6 libxrender-dev libgomp1 \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-# 🎯 COPY REQUIREMENTS FIRST (for better caching)
+# Copy requirements for reference but don't install yet
 COPY requirements.txt /app/
 
-# 🎯 INSTALL PYTHON PACKAGES BEFORE COPYING CODE
-RUN pip install --no-cache-dir torch torchvision torchaudio xformers --index-url https://download.pytorch.org/whl/cu124 \
-    && pip install --no-cache-dir -r requirements.txt \
-    && rm -rf ~/.cache/pip \
-    && find /usr/local/lib/python3.10/dist-packages -name "*.pyc" -delete \
-    && find /usr/local/lib/python3.10/dist-packages -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
-
-# 🎯 COPY APPLICATION CODE LAST
+# Copy application code
 COPY entrypoint.sh /app/
 COPY *.py /app/
 
