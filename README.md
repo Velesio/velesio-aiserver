@@ -14,7 +14,10 @@ High-performance, microservice-based AI inference server with Unity integration 
 
 ## ⚡ Quick Start
 
-### RunPod Template
+- 🚀 **[Cloud Quickstart](docs/quickstart-runpod.md)** - Get started quickly with Runpod!
+- 🚀 **[Self Hosted Quickstart](docs/quickstart-selfhost.md)** - Get started with your own infrastructure!
+
+### RunPod
 Deploy instantly on RunPod GPU cloud:
 - 🔗 **[One-Click Deploy of GPU component](https://console.runpod.io/deploy?template=3rsr5dzv50&ref=muhg2w55)**
 - Set `REMOTE=false` for standalone inference endpoint (make sure to expose llamacpp and SD ports)
@@ -36,15 +39,17 @@ cd velesio-aiserver
 cp .env.example .env  # Edit tokens and model URLs
 
 # 3. Launch!
-docker-compose up -d
+docker compose up -d
 
-# 4. If you are locally developing you can use the --build flag, and include the undreamai_server binaries in the /gpu dir with the server_setup.sh script
-docker-compose up -d --build
+# If you are locally developing you can use the --build flag, and include the undreamai_server binaries in the /gpu dir with the server_setup.sh script
+docker compose up -d --build
+
+# There is also an included grafana monitoring stack!
+cd monitoring
+docker compose up -d
 ```
 
 Your API will be available at `http://localhost:8000` 🎉
-
-> 📖 **Need more details?** Check out the **[Getting Started Guide](docs/getting-started.md)** for comprehensive setup instructions.
 
 ## 🎮 Unity Integrations
 
@@ -57,12 +62,10 @@ Built specifically for Unity developers:
 
 📖 **[Complete Documentation](https://velesio.github.io/velesio-aiserver/)** - Full guides, API reference, and examples
 
-- 🚀 **[Getting Started](docs/getting-started.md)** - Installation and basic setup
-- 🏗️ **[Architecture](docs/architecture.md)** - System design and components  
-- 🚢 **[Deployment](docs/deployment.md)** - Production deployment strategies
-- 🔌 **[API Reference](docs/api-reference.md)** - Complete endpoint documentation
-- 🛠️ **[Components](docs/components.md)** - Individual service configuration
-- 🔧 **[Troubleshooting](docs/troubleshooting.md)** - Common issues and solutions
+- 🏗️ **[Model Templates](docs/model-templates.md)** - Model stack templates
+- 🚢 **[Deployment Strategies](docs/model-templates.md)** - Both distributed and standalone
+- 🛠️ **[Components](docs/model-templates.md)** - Individual service configuration
+- 🎮 **[Discord](https://discord.gg/3WgaZqCq)** - For Support & Discussion
 
 ## 🏗️ Architecture
 
