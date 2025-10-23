@@ -85,36 +85,21 @@ fi
 # Start Automatic1111 WebUI if RUN_SD is enabled
 if [ "$RUN_SD" = "true" ]; then
     echo "🎨 Setting up Automatic1111 WebUI..."
-    
+    GIT_DISCOVERY_ACROSS_FILESYSTEM=1
     # Check if SD WebUI is already set up (look for launch.py)
-    if [ ! -f "/app/data/sd/launch.py" ]; then
+    if [ ! -d "/app/data/sd" ] || [ ! -f "/app/data/sd/launch.py" ]; then
         echo "📦 Cloning Automatic1111 WebUI to /app/data/sd..."
-        # Backup models directory if it exists
-        if [ -d "/app/data/sd/models" ]; then
-            echo "📦 Backing up existing models directory..."
-            cp -r /app/data/sd/models /tmp/sd_models_backup
-        fi
-        # Remove incomplete installation and clone fresh
         rm -rf /app/data/sd
         git clone --depth 1 https://github.com/AUTOMATIC1111/stable-diffusion-webui.git /app/data/sd
         
-        # Remove ALL .git folders to avoid git repository issues completely
-        find /app/data/sd -name ".git" -type d -exec rm -rf {} + 2>/dev/null || true
-        
-        # Restore models directory if backup exists
-        if [ -d "/tmp/sd_models_backup" ]; then
-            echo "📦 Restoring models directory..."
-            rm -rf /app/data/sd/models
-            mv /tmp/sd_models_backup /app/data/sd/models
-        fi
+        # Remove .git directory to save space and avoid git issues
+        rm -rf /app/data/sd/.git
+        echo "✅ Automatic1111 WebUI cloned successfully"
+    else
+        echo "✅ Using existing Automatic1111 WebUI installation"
     fi
     
     cd /app/data/sd
-    
-    # Fix Git ownership issues before any Git operations
-    git config --global --add safe.directory '*'
-    git config --global user.name "Docker User"
-    git config --global user.email "docker@example.com"
     
     # Set up virtual environment if not already linked
     if [ ! -L "venv" ] && [ ! -d "venv" ]; then
