@@ -25,10 +25,15 @@ for i in {1..60}; do
 done
 
 # 3) Pull the model (if not already present)
-echo "Pulling model: $OLLAMA_MODEL"
-ollama pull "$OLLAMA_MODEL" || {
-  echo "⚠️ Failed to pull $OLLAMA_MODEL — check your network or model name."
-}
+echo "Checking if model exists: $OLLAMA_MODEL"
+if ollama list | grep -q "$OLLAMA_MODEL"; then
+  echo "✓ Model $OLLAMA_MODEL already exists locally, skipping pull"
+else
+  echo "Pulling model: $OLLAMA_MODEL"
+  ollama pull "$OLLAMA_MODEL" || {
+    echo "⚠️ Failed to pull $OLLAMA_MODEL — check your network or model name."
+  }
+fi
 
 # 4) Optional: Warm up the model once to keep it hot
 echo "Warming up model: $OLLAMA_MODEL"
