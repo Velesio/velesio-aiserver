@@ -86,11 +86,11 @@ services:
       - "11434:11434"
     restart: unless-stopped
     entrypoint: /entrypoint.sh
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - capabilities: [gpu]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://127.0.0.1:11434/api/tags"]
       interval: 10s

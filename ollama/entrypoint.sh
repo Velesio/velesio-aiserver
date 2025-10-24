@@ -37,4 +37,5 @@ curl -sS http://127.0.0.1:11434/api/generate \
   -d "{\"model\":\"$OLLAMA_MODEL\",\"prompt\":\" \"}" >/dev/null 2>&1 || true
 
 # 5) Wait on the Ollama server process
-echo "Ollama server started. Keeping container alive..."
+echo "Ollama server started..."
+wait "$SERVER_PID"
