@@ -73,29 +73,36 @@ services:
       pod_name: "gpu-worker-pod"
 
   ollama:
+    profiles: ["ollama"]
     image: ollama/ollama:latest
     environment:
       - OLLAMA_MODELS=/models
     volumes:
-      - ./.gpu/data/models/text:/models
+      - ./gpu/data/models/text:/models
     ports:
       - "11434:11434"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
 
 
-  # nginx:
-  #   image: nginx:alpine
-  #   container_name: nginx
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-  #     - ./nginx/ssl:/etc/nginx/ssl:ro
-  #     - ./nginx/logs/nginx:/var/log/nginx
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - api
-  #   labels:
-  #     container_name: "nginx"
-  #     service_name: "reverse-proxy"
-  #     pod_name: "nginx-pod"
+  nginx:
+    profiles: ["nginx"]
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/logs/nginx:/var/log/nginx
+    restart: unless-stopped
+    depends_on:
+      - api
+    labels:
+      container_name: "nginx"
+      service_name: "reverse-proxy"
+      pod_name: "nginx-pod"
