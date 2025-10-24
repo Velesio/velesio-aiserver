@@ -36,6 +36,7 @@ services:
       pod_name: "api-pod"
 
   gpu:
+    profiles: ["gpu"]
     image: ghcr.io/velesio/velesio-gpu:latest  
     build:
       context: ./gpu
@@ -49,13 +50,17 @@ services:
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PASS=${REDIS_PASS}
       - LLAMA_SERVER_URL=${LLAMA_SERVER_URL}
-      - REMOTE=${REMOTE}
+      - API=${API}
       - MODEL_URL=${MODEL_URL}
       - PORT=${PORT}
       - RUN_SD=${RUN_SD}
       - RUN_LLAMACPP=${RUN_LLAMACPP}
       - STARTUP_COMMAND=${STARTUP_COMMAND}
       - SD_STARTUP_COMMAND=${SD_STARTUP_COMMAND}
+      - RUN_OLLAMA=${RUN_OLLAMA:-false}
+      - OLLAMA_SERVER_URL=${OLLAMA_SERVER_URL:-http://ollama:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-gemma2:2b}
+      - SD_SERVER_URL=${SD_SERVER_URL:-http://localhost:7860}
     # if you mount your model directory:
     restart: unless-stopped
     volumes:

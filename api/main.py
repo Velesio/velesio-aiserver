@@ -109,6 +109,20 @@ class ChatRequest(BaseModel):
 class TokenizeRequest(BaseModel):
     content: str
 
+# Ollama Chat models
+class OllamaChatMessage(BaseModel):
+    role: str  # system, user, assistant
+    content: str
+    images: Optional[List[str]] = None  # Base64 encoded images
+
+class OllamaChatRequest(BaseModel):
+    model: str
+    messages: List[OllamaChatMessage]
+    stream: Optional[bool] = False
+    format: Optional[str] = None  # json
+    options: Optional[Dict[str, Any]] = None
+    keep_alive: Optional[str] = None
+
 # CompletionRequest - same as ChatRequest but for completion endpoint
 class CompletionRequest(BaseModel):
     prompt: str
@@ -337,6 +351,179 @@ async def stream_completion_response(task_id: str):
     timeout_response = {"error": "Request timeout"}
     timeout_json = json.dumps(timeout_response)
     yield f"data: {timeout_json}\n\n"
+
+async def stream_chat_response(task_id: str, model: str):
+    """Stream chat response in Ollama format as it arrives from GPU worker"""
+    logger.info(f"Starting Ollama chat stream for task {task_id}")
+    
+    timeout = 300  # 5 minutes timeout
+    start_time = time.time()
+    chunks_sent = False
+    last_chunk_count = 0
+    total_tokens_sent = 0
+    last_progress_log = 0
+    
+    while time.time() - start_time < timeout:
+        try:
+            # Check for streaming updates first
+            stream_key = f"stream:{task_id}"
+            current_chunk_count = await redis_client.llen(stream_key)
+            
+            if current_chunk_count > last_chunk_count:
+                # Get only the new chunks
+                new_chunks = await redis_client.lrange(stream_key, last_chunk_count, current_chunk_count - 1)
+                
+                if new_chunks:
+                    # Process each new streaming chunk immediately
+                    for chunk_data in new_chunks:
+                        try:
+                            chunk = json.loads(chunk_data)
+                            # Convert to Ollama chat format
+                            ollama_chunk = {
+                                "model": model,
+                                "created_at": time.strftime("%Y-%m-%dT%H:%M:%S.%fZ", time.gmtime()),
+                                "message": {
+                                    "role": "assistant",
+                                    "content": chunk.get("content", "")
+                                },
+                                "done": False
+                            }
+                            chunk_json = json.dumps(ollama_chunk)
+                            yield f"{chunk_json}\n"
+                            chunks_sent = True
+                            total_tokens_sent += 1
+                            await asyncio.sleep(0.001)
+                        except json.JSONDecodeError:
+                            logger.error(f"Invalid JSON in stream chunk: {chunk_data}")
+                    
+                    # Log progress
+                    current_time = time.time()
+                    if (total_tokens_sent - last_progress_log >= 50) or (current_time - start_time > last_progress_log + 10):
+                        logger.info(f"Task {task_id}: streaming progress - {total_tokens_sent} tokens sent, {current_time - start_time:.1f}s elapsed")
+                        last_progress_log = total_tokens_sent
+                    
+                    last_chunk_count = current_chunk_count
+            
+            # Check for final result
+            result_key = f"result:{task_id}"
+            result_data = await redis_client.get(result_key)
+            
+            if result_data:
+                result = json.loads(result_data)
+                elapsed_time = time.time() - start_time
+                logger.info(f"Task {task_id} completed: {total_tokens_sent} tokens, {elapsed_time:.1f}s duration")
+                
+                if result.get("error"):
+                    error_response = {
+                        "model": model,
+                        "created_at": time.strftime("%Y-%m-%dT%H:%M:%S.%fZ", time.gmtime()),
+                        "message": {
+                            "role": "assistant",
+                            "content": ""
+                        },
+                        "done": True,
+                        "error": result["error"]
+                    }
+                    yield f"{json.dumps(error_response)}\n"
+                else:
+                    # Send final done signal
+                    response_data = result.get("data", {})
+                    final_response = {
+                        "model": model,
+                        "created_at": time.strftime("%Y-%m-%dT%H:%M:%S.%fZ", time.gmtime()),
+                        "message": {
+                            "role": "assistant",
+                            "content": "" if chunks_sent else response_data.get("content", "")
+                        },
+                        "done": True,
+                        "total_duration": int(elapsed_time * 1e9),  # Convert to nanoseconds
+                        "load_duration": response_data.get("load_duration", 0),
+                        "prompt_eval_count": response_data.get("prompt_eval_count", 0),
+                        "prompt_eval_duration": response_data.get("prompt_eval_duration", 0),
+                        "eval_count": response_data.get("eval_count", total_tokens_sent),
+                        "eval_duration": response_data.get("eval_duration", 0)
+                    }
+                    yield f"{json.dumps(final_response)}\n"
+                
+                # Clean up
+                await redis_client.delete(result_key)
+                await redis_client.delete(stream_key)
+                return
+            
+            await asyncio.sleep(0.05)  # Check every 50ms for new tokens
+            
+        except Exception as e:
+            logger.error(f"Error in chat stream for task {task_id}: {e}")
+            error_response = {
+                "model": model,
+                "created_at": time.strftime("%Y-%m-%dT%H:%M:%S.%fZ", time.gmtime()),
+                "message": {
+                    "role": "assistant",
+                    "content": ""
+                },
+                "done": True,
+                "error": f"Streaming error: {str(e)}"
+            }
+            yield f"{json.dumps(error_response)}\n"
+            return
+    
+    # Timeout reached
+    logger.error(f"Timeout reached for chat task {task_id} after {time.time() - start_time:.1f}s")
+    timeout_response = {
+        "model": model,
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%S.%fZ", time.gmtime()),
+        "message": {
+            "role": "assistant",
+            "content": ""
+        },
+        "done": True,
+        "error": "Request timeout"
+    }
+    yield f"{json.dumps(timeout_response)}\n"
+
+@app.post("/chat")
+async def chat(request: OllamaChatRequest, token: str = Depends(verify_token)):
+    """Handle Ollama-native chat requests with streaming support"""
+    logger.info(f"Chat request received for model: {request.model}")
+    
+    try:
+        # Create task for Redis
+        task_data = {
+            "endpoint": "chat",
+            "data": request.dict(),
+            "timestamp": time.time()
+        }
+        
+        # Add to Redis queue
+        task_id = str(uuid.uuid4())
+        await redis_client.lpush("gpu_tasks", json.dumps({
+            "id": task_id,
+            **task_data
+        }))
+        
+        logger.info(f"Chat task {task_id} added to Redis queue")
+        
+        # Check if streaming is requested
+        if request.stream:
+            return StreamingResponse(
+                stream_chat_response(task_id, request.model),
+                media_type="text/event-stream",
+                headers={
+                    "Cache-Control": "no-cache",
+                    "Connection": "keep-alive",
+                    "X-Accel-Buffering": "no"
+                }
+            )
+        else:
+            # Wait for result
+            result = await wait_for_result(task_id)
+            if result.get("error"):
+                raise HTTPException(status_code=500, detail=result["error"])
+            return result["data"]
+            
+    except Exception as e:
+        logger.error(f"Error in chat: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/completion")
 async def completion(request: CompletionRequest, token: str = Depends(verify_token)):

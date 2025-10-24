@@ -88,7 +88,7 @@ cd monitoring && docker-compose up -d
 ### 🎯 **Component-Specific Deployment**
 Deploy only the components you need:
 - **API-only**: For serverless GPU workers or external inference services
-- **GPU-only**: For dedicated inference workers connecting to remote APIs  
+- **GPU-only**: For dedicated inference workers connecting to API APIs  
 - **Monitoring-only**: For centralized observability across multiple deployments
 
 ## Component Communication

@@ -94,7 +94,7 @@ Content-Type: application/json
 
 ### Benefits
 
-- **Remote Processing**: Leverages powerful GPU servers for generation
+- **API Processing**: Leverages powerful GPU servers for generation
 - **Real-time Generation**: Create images during gameplay
 - **Multiple Models**: Server-side model switching capability
 - **Memory Efficient**: No local VRAM requirements

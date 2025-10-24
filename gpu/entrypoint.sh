@@ -172,26 +172,41 @@ if [ -d "/app/data/venv" ]; then
     source /app/data/venv/bin/activate
 fi
 
-# Start with startup command from environment variable ONLY if RUN_LLAMACPP is enabled
-if [ "${RUN_LLAMACPP:-true}" = "true" ]; then
-    GIT_DISCOVERY_ACROSS_FILESYSTEM=1
-    echo "🚀 Starting llama.cpp server..."
-    eval "$STARTUP_COMMAND" &
+# Check if RUN_OLLAMA mode is enabled
+if [ "${RUN_OLLAMA:-false}" = "true" ]; then
+    echo "🦙 OLLAMA MODE ENABLED"
+    echo "🦙 Using external Ollama server at ${OLLAMA_SERVER_URL:-http://localhost:11434}"
     
-    # Wait for server to start
-    sleep 5
-    
-    # Start the Python LLM worker only if REMOTE=true
-    if [ "$REMOTE" = "true" ]; then
-        echo "🔌 Starting LLM worker connected to Redis..."
-        /app/data/venv/bin/python llm.py &
+    # Start Ollama LLM worker if API=true
+    if [ "$API" = "true" ]; then
+        echo "🔌 Starting Ollama LLM worker connected to Redis..."
+        /app/data/venv/bin/python ollama_llm.py &
     fi
+    
+    echo "✅ Ollama LLM worker started"
 else
-    echo "⏭️  Skipping llama.cpp server startup (RUN_LLAMACPP=false)"
+    # Original LLaMA.cpp startup logic
+    # Start with startup command from environment variable ONLY if RUN_LLAMACPP is enabled
+    if [ "${RUN_LLAMACPP:-true}" = "true" ]; then
+        GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+        echo "🚀 Starting llama.cpp server..."
+        eval "$STARTUP_COMMAND" &
+        
+        # Wait for server to start
+        sleep 5
+        
+        # Start the Python LLM worker only if API=true
+        if [ "$API" = "true" ]; then
+            echo "🔌 Starting LLM worker connected to Redis..."
+            /app/data/venv/bin/python llm.py &
+        fi
+    else
+        echo "⏭️  Skipping llama.cpp server startup (RUN_LLAMACPP=false)"
+    fi
 fi
 
-# Start the SD worker only if RUN_SD=true AND REMOTE=true
-if [ "$RUN_SD" = "true" ] && [ "$REMOTE" = "true" ]; then
+# Start the SD worker (works with both Ollama and llama.cpp modes)
+if [ "$RUN_SD" = "true" ] && [ "$API" = "true" ]; then
     echo "🎨 Starting Stable Diffusion worker connected to Redis..."
     /app/data/venv/bin/python sd.py &
 fi

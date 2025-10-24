@@ -44,13 +44,13 @@ Unity Game → LLMUnity Package → HTTP POST → Velesio AI Server → LLM Resp
 
 ### Unity Implementation
 
-The integration configures LLMUnity to use Velesio AI Server as a remote endpoint instead of running local models:
+The integration configures LLMUnity to use Velesio AI Server as a API endpoint instead of running local models:
 
 ```csharp
 // Configure LLMUnity to use Velesio AI Server
 var llmConfig = new LLMConfiguration
 {
-    remote = true,
+    API = true,
     host = "your-Velesio-server.com",
     port = 8000,
     endpoint = "/completion",
