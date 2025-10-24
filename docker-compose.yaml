@@ -78,19 +78,25 @@ services:
     container_name: velesio-ollama
     environment:
       - OLLAMA_MODELS=/models
-      - OLLAMA_MODEL=${OLLAMA_MODEL:-gemma3:4b}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-gemma2:2b}
     volumes:
-      - ./gpu/data/models/text:/models
+      - ./ollama/models:/models
       - ./ollama/entrypoint.sh:/entrypoint.sh
     ports:
       - "11434:11434"
     restart: unless-stopped
     entrypoint: /entrypoint.sh
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [gpu]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:11434/api/tags"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
     labels:
       container_name: "velesio-ollama"
       service_name: "velesio"

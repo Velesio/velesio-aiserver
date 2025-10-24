@@ -8,3 +8,4 @@ docs/_site
 docs/Gemfile.lock
 gpu/undreamai_server
 gpu/libundreamai_linux-cuda-cu12.2.0.so
+ollama/models

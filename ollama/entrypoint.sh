@@ -1,44 +1,40 @@
-#!/bin/sh
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Start Ollama server in background
+# Defaults (can be overridden via environment)
+OLLAMA_MODEL="${OLLAMA_MODEL:-gemma2:2b}"
+OLLAMA_MODELS="${OLLAMA_MODELS:-/models}"
+OLLAMA_KEEP_ALIVE="${OLLAMA_KEEP_ALIVE:-30m}"
+
+echo "=== Starting Ollama Server ==="
+echo "Model directory: $OLLAMA_MODELS"
+echo "Default model: $OLLAMA_MODEL"
+
+# 1) Start Ollama server in the background
 ollama serve &
-OLLAMA_PID=$!
+SERVER_PID=$!
 
-# Wait for Ollama to be ready (60 second timeout)
-echo "Waiting for Ollama server..."
-n=0
-until curl -s http://localhost:11434/api/tags >/dev/null 2>&1 || [ $n -ge 60 ]; do
-  n=$((n+1))
+# 2) Wait for the API to become available
+echo "Waiting for Ollama API to become ready..."
+for i in {1..60}; do
+  if curl -sf http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
+    echo "Ollama API is ready!"
+    break
+  fi
   sleep 1
 done
 
-if [ $n -ge 60 ]; then
-  echo "Ollama failed to start"
-  kill $OLLAMA_PID 2>/dev/null || true
-  exit 1
-fi
+# 3) Pull the model (if not already present)
+echo "Pulling model: $OLLAMA_MODEL"
+ollama pull "$OLLAMA_MODEL" || {
+  echo "⚠️ Failed to pull $OLLAMA_MODEL — check your network or model name."
+}
 
-echo "Ollama server ready"
+# 4) Optional: Warm up the model once to keep it hot
+echo "Warming up model: $OLLAMA_MODEL"
+curl -sS http://127.0.0.1:11434/api/generate \
+  -H "Content-Type: application/json" \
+  -d "{\"model\":\"$OLLAMA_MODEL\",\"prompt\":\" \"}" >/dev/null 2>&1 || true
 
-# Pull model if specified and not present
-if [ -n "$OLLAMA_MODEL" ]; then
-  echo "Checking for model: $OLLAMA_MODEL"
-  
-  if ! ollama list | grep -q "^$OLLAMA_MODEL"; then
-    echo "Model $OLLAMA_MODEL not found. Pulling..."
-    ollama pull "$OLLAMA_MODEL"
-    echo "Model $OLLAMA_MODEL pulled successfully"
-  else
-    echo "Model $OLLAMA_MODEL already exists"
-  fi
-  
-  # Preload model into memory
-  echo "Preloading model $OLLAMA_MODEL..."
-  printf "" | ollama run "$OLLAMA_MODEL" >/dev/null 2>&1 || true
-  echo "Model $OLLAMA_MODEL ready for inference"
-fi
-
-# Keep container running
-echo "Ollama service ready. Waiting for requests..."
-wait $OLLAMA_PID
+# 5) Wait on the Ollama server process
+echo "Ollama server started. Keeping container alive..."
