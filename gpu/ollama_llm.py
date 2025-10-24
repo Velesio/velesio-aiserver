@@ -145,6 +145,230 @@ def handle_chat(request_dict):
         logger.error(f"Error in chat endpoint: {str(e)}")
         return {"error": f"Error with chat: {str(e)}"}
 
+def handle_generate(request_dict):
+    """Handle Ollama-native generate/completion requests"""
+    try:
+        logger.info(f"Processing Ollama generate request: {request_dict}")
+        
+        # Request is already in Ollama format, pass through
+        ollama_request = {
+            "model": request_dict.get("model", OLLAMA_MODEL),
+            "prompt": request_dict["prompt"],
+            "stream": False
+        }
+        
+        # Add optional parameters
+        if request_dict.get("suffix"):
+            ollama_request["suffix"] = request_dict["suffix"]
+        if request_dict.get("images"):
+            ollama_request["images"] = request_dict["images"]
+        if request_dict.get("format"):
+            ollama_request["format"] = request_dict["format"]
+        if request_dict.get("options"):
+            ollama_request["options"] = request_dict["options"]
+        if request_dict.get("system"):
+            ollama_request["system"] = request_dict["system"]
+        if request_dict.get("template"):
+            ollama_request["template"] = request_dict["template"]
+        if request_dict.get("raw"):
+            ollama_request["raw"] = request_dict["raw"]
+        if request_dict.get("keep_alive"):
+            ollama_request["keep_alive"] = request_dict["keep_alive"]
+        if request_dict.get("context"):
+            ollama_request["context"] = request_dict["context"]
+        
+        logger.info(f"Sending to Ollama server: {ollama_request}")
+        
+        # Send request to Ollama server
+        response = requests.post(
+            f"{OLLAMA_SERVER}/api/generate",
+            json=ollama_request,
+            timeout=300
+        )
+        response.raise_for_status()
+        
+        # Return response in Ollama format
+        result = response.json()
+        logger.info(f"Ollama generate response: {result}")
+        return result
+                
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Request error in generate: {str(e)}")
+        return {"error": f"Ollama server error: {str(e)}"}
+    except Exception as e:
+        logger.error(f"Error in generate endpoint: {str(e)}")
+        return {"error": f"Error with generate: {str(e)}"}
+
+def handle_tags():
+    """List available models from Ollama server"""
+    try:
+        logger.info("Processing tags (list models) request")
+        
+        # Send request to Ollama server
+        response = requests.get(
+            f"{OLLAMA_SERVER}/api/tags",
+            timeout=30
+        )
+        response.raise_for_status()
+        
+        # Return response in Ollama format
+        result = response.json()
+        logger.info(f"Ollama tags response: {len(result.get('models', []))} models")
+        return result
+                
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Request error in tags: {str(e)}")
+        return {"error": f"Ollama server error: {str(e)}"}
+    except Exception as e:
+        logger.error(f"Error in tags endpoint: {str(e)}")
+        return {"error": f"Error with tags: {str(e)}"}
+
+def handle_embed(request_dict):
+    """Handle embeddings generation requests"""
+    try:
+        logger.info(f"Processing Ollama embed request: {request_dict}")
+        
+        # Request is already in Ollama format, pass through
+        ollama_request = {
+            "model": request_dict.get("model", OLLAMA_MODEL),
+            "input": request_dict["input"]
+        }
+        
+        # Add optional parameters
+        if "truncate" in request_dict:
+            ollama_request["truncate"] = request_dict["truncate"]
+        if request_dict.get("options"):
+            ollama_request["options"] = request_dict["options"]
+        if request_dict.get("keep_alive"):
+            ollama_request["keep_alive"] = request_dict["keep_alive"]
+        
+        logger.info(f"Sending to Ollama server: {ollama_request}")
+        
+        # Send request to Ollama server
+        response = requests.post(
+            f"{OLLAMA_SERVER}/api/embed",
+            json=ollama_request,
+            timeout=60
+        )
+        response.raise_for_status()
+        
+        # Return response in Ollama format
+        result = response.json()
+        logger.info(f"Ollama embed response: {len(result.get('embeddings', []))} embeddings")
+        return result
+                
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Request error in embed: {str(e)}")
+        return {"error": f"Ollama server error: {str(e)}"}
+    except Exception as e:
+        logger.error(f"Error in embed endpoint: {str(e)}")
+        return {"error": f"Error with embed: {str(e)}"}
+
+async def handle_generate_streaming(request_dict, task_id):
+    """Handle streaming Ollama generate requests"""
+    try:
+        logger.info(f"Processing streaming Ollama generate request: {request_dict}")
+        
+        # Request is already in Ollama format
+        ollama_request = {
+            "model": request_dict.get("model", OLLAMA_MODEL),
+            "prompt": request_dict["prompt"],
+            "stream": True
+        }
+        
+        # Add optional parameters
+        if request_dict.get("suffix"):
+            ollama_request["suffix"] = request_dict["suffix"]
+        if request_dict.get("images"):
+            ollama_request["images"] = request_dict["images"]
+        if request_dict.get("format"):
+            ollama_request["format"] = request_dict["format"]
+        if request_dict.get("options"):
+            ollama_request["options"] = request_dict["options"]
+        if request_dict.get("system"):
+            ollama_request["system"] = request_dict["system"]
+        if request_dict.get("template"):
+            ollama_request["template"] = request_dict["template"]
+        if request_dict.get("raw"):
+            ollama_request["raw"] = request_dict["raw"]
+        if request_dict.get("keep_alive"):
+            ollama_request["keep_alive"] = request_dict["keep_alive"]
+        if request_dict.get("context"):
+            ollama_request["context"] = request_dict["context"]
+        
+        logger.info(f"Sending streaming generate request to Ollama: {ollama_request}")
+        
+        # Send streaming request to Ollama server
+        response = requests.post(
+            f"{OLLAMA_SERVER}/api/generate",
+            json=ollama_request,
+            stream=True,
+            timeout=300
+        )
+        response.raise_for_status()
+        
+        # Stream the response tokens back through Redis
+        token_count = 0
+        for line in response.iter_lines():
+            if line:
+                try:
+                    chunk = json.loads(line)
+                    
+                    # Extract response content for streaming
+                    content = chunk.get("response", "")
+                    
+                    if content:
+                        # Push token to Redis stream
+                        stream_chunk = {
+                            "content": content
+                        }
+                        await redis_client.rpush(f"stream:{task_id}", json.dumps(stream_chunk))
+                        token_count += 1
+                    
+                    # Check if this is the final chunk
+                    if chunk.get("done", False):
+                        logger.info(f"Ollama generate streaming complete: {token_count} tokens")
+                        # Store final result with metadata
+                        final_result = {
+                            "response": "",  # Content already streamed
+                            "context": chunk.get("context", []),
+                            "total_duration": chunk.get("total_duration", 0),
+                            "load_duration": chunk.get("load_duration", 0),
+                            "prompt_eval_count": chunk.get("prompt_eval_count", 0),
+                            "prompt_eval_duration": chunk.get("prompt_eval_duration", 0),
+                            "eval_count": chunk.get("eval_count", token_count),
+                            "eval_duration": chunk.get("eval_duration", 0)
+                        }
+                        await redis_client.set(
+                            f"result:{task_id}",
+                            json.dumps({"data": final_result}),
+                            ex=300
+                        )
+                        break
+                        
+                except json.JSONDecodeError as e:
+                    logger.error(f"Failed to parse streaming chunk: {e}")
+                    continue
+        
+        logger.info(f"Ollama generate streaming completed for task {task_id}")
+        
+    except requests.exceptions.RequestException as e:
+        error_msg = f"Ollama server error during streaming: {str(e)}"
+        logger.error(error_msg)
+        await redis_client.set(
+            f"result:{task_id}",
+            json.dumps({"error": error_msg}),
+            ex=300
+        )
+    except Exception as e:
+        error_msg = f"Error in generate streaming: {str(e)}"
+        logger.error(error_msg)
+        await redis_client.set(
+            f"result:{task_id}",
+            json.dumps({"error": error_msg}),
+            ex=300
+        )
+
 async def handle_chat_streaming(request_dict, task_id):
     """Handle streaming Ollama chat requests"""
     try:
@@ -355,6 +579,21 @@ async def process_gpu_tasks():
                         # Handle non-streaming chat
                         result = handle_chat(request_data)
                         await redis_client.set(f"result:{task_id}", json.dumps({"data": result}), ex=300)
+                elif endpoint == "generate":
+                    if request_data.get("stream", False):
+                        await handle_generate_streaming(request_data, task_id)
+                    else:
+                        # Handle non-streaming generate
+                        result = handle_generate(request_data)
+                        await redis_client.set(f"result:{task_id}", json.dumps({"data": result}), ex=300)
+                elif endpoint == "tags":
+                    # Handle tags (list models) request
+                    result = handle_tags()
+                    await redis_client.set(f"result:{task_id}", json.dumps({"data": result}), ex=300)
+                elif endpoint == "embed":
+                    # Handle embeddings request
+                    result = handle_embed(request_data)
+                    await redis_client.set(f"result:{task_id}", json.dumps({"data": result}), ex=300)
                 elif endpoint == "template":
                     # Handle template request
                     result = get_template()
