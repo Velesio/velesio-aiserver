@@ -85,7 +85,7 @@ fi
 # Start Automatic1111 WebUI if RUN_SD is enabled
 if [ "$RUN_SD" = "true" ]; then
     echo "🎨 Setting up Automatic1111 WebUI..."
-    GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+    export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
     # Check if SD WebUI is already set up (look for launch.py)
     if [ ! -d "/app/data/sd" ] || [ ! -f "/app/data/sd/launch.py" ]; then
         echo "📦 Cloning Automatic1111 WebUI to /app/data/sd..."

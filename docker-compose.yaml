@@ -75,17 +75,26 @@ services:
   ollama:
     profiles: ["ollama"]
     image: ollama/ollama:latest
+    container_name: velesio-ollama
     environment:
       - OLLAMA_MODELS=/models
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-gemma3:4b}
     volumes:
       - ./gpu/data/models/text:/models
+      - ./ollama/entrypoint.sh:/entrypoint.sh
     ports:
       - "11434:11434"
+    restart: unless-stopped
+    entrypoint: /entrypoint.sh
     deploy:
       resources:
         reservations:
           devices:
             - capabilities: [gpu]
+    labels:
+      container_name: "velesio-ollama"
+      service_name: "velesio"
+      pod_name: "ollama-pod"
 
 
   nginx:
