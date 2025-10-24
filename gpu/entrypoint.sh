@@ -85,7 +85,7 @@ fi
 # Start Automatic1111 WebUI if RUN_SD is enabled
 if [ "$RUN_SD" = "true" ]; then
     echo "🎨 Setting up Automatic1111 WebUI..."
-    GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+    export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
     # Check if SD WebUI is already set up (look for launch.py)
     if [ ! -d "/app/data/sd" ] || [ ! -f "/app/data/sd/launch.py" ]; then
         echo "📦 Cloning Automatic1111 WebUI to /app/data/sd..."
@@ -172,19 +172,27 @@ if [ -d "/app/data/venv" ]; then
     source /app/data/venv/bin/activate
 fi
 
-# Start with startup command from environment variable
-eval "$STARTUP_COMMAND" &
-
-# Wait for server to start
-sleep 5
-
-# Start the Python worker only if REMOTE=true
-if [ "$REMOTE" = "true" ]; then
-    /app/data/venv/bin/python llm.py &
+# Start with startup command from environment variable ONLY if RUN_LLAMACPP is enabled
+if [ "${RUN_LLAMACPP:-true}" = "true" ]; then
+    GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+    echo "🚀 Starting llama.cpp server..."
+    eval "$STARTUP_COMMAND" &
+    
+    # Wait for server to start
+    sleep 5
+    
+    # Start the Python LLM worker only if REMOTE=true
+    if [ "$REMOTE" = "true" ]; then
+        echo "🔌 Starting LLM worker connected to Redis..."
+        /app/data/venv/bin/python llm.py &
+    fi
+else
+    echo "⏭️  Skipping llama.cpp server startup (RUN_LLAMACPP=false)"
 fi
 
 # Start the SD worker only if RUN_SD=true AND REMOTE=true
 if [ "$RUN_SD" = "true" ] && [ "$REMOTE" = "true" ]; then
+    echo "🎨 Starting Stable Diffusion worker connected to Redis..."
     /app/data/venv/bin/python sd.py &
 fi
 
