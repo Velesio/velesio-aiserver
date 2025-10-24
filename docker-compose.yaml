@@ -53,6 +53,7 @@ services:
       - MODEL_URL=${MODEL_URL}
       - PORT=${PORT}
       - RUN_SD=${RUN_SD}
+      - RUN_LLAMACPP=${RUN_LLAMACPP}
       - STARTUP_COMMAND=${STARTUP_COMMAND}
       - SD_STARTUP_COMMAND=${SD_STARTUP_COMMAND}
     # if you mount your model directory:
@@ -70,6 +71,16 @@ services:
       container_name: "velesio-gpu"
       service_name: "velesio"
       pod_name: "gpu-worker-pod"
+
+  ollama:
+    image: ollama/ollama:latest
+    environment:
+      - OLLAMA_MODELS=/models
+    volumes:
+      - ./.gpu/data/models/text:/models
+    ports:
+      - "11434:11434"
+
 
   # nginx:
   #   image: nginx:alpine
