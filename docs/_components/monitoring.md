@@ -41,7 +41,7 @@ Deploy monitoring independently on a dedicated monitoring server:
 git clone https://github.com/Velesio/Velesio-aiserver.git
 cd Velesio-aiserver/monitoring
 
-# Configure remote targets in prometheus.yml
+# Configure API targets in prometheus.yml
 docker-compose up -d
 ```
 
@@ -51,7 +51,7 @@ Monitor only specific components by configuring Prometheus targets:
 # Monitor only API service
 - job_name: 'Velesio-api'
   static_configs:
-    - targets: ['remote-host:8000']
+    - targets: ['API-host:8000']
 ```
 
 ## Overview

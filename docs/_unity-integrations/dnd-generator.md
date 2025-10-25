@@ -31,7 +31,7 @@ The primary configuration game object is the VelesioAI Integration game object, 
 ![DND Generator Scene Overview]({{ '/assets/images/scene.png' | relative_url }})
 *Main character generation interface*
 
-You can also utilize a local LLM through the disabled LLM object and unflicking Remote in the main configuration object.
+You can also utilize a local LLM through the disabled LLM object and unflicking API in the main configuration object.
 
 Within the object, there is a LLMCharacter script, here you can configure the connection to your llamacpp server, most importantly the host and api key.
 

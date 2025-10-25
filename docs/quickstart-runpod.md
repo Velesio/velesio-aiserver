@@ -6,12 +6,12 @@ nav_order: 2
 
 ## Prerequisites
 
-In runpod only the GPU component can be hosted, you can either host it standalone with REMOTE set to false, or connect it to an external API service. Hosting the API service in runpod is not possible for now since they don't support firewall configurations.
+In runpod only the GPU component can be hosted, you can either host it standalone with API set to false, or connect it to an external API service. Hosting the API service in runpod is not possible for now since they don't support firewall configurations.
 
 Before you begin, ensure you have:
 
 - **A Runpod account** if you don't have one yet, you can use my [refferal link](https://runpod.io?ref=muhg2w55) to get a 5$ starting bonus!
-- If you are running in REMOTE mode, you need to host the API server externally from Rupod, on AWS Lightsail for example. Make sure to open the redis port just to the Runpod worker's IP for optimal security. For a testing setup, its best to just start off with REMOTE=false.
+- If you are running in API=true mode, you need to host the API server externally from Rupod, on AWS Lightsail for example. Make sure to open the redis port just to the Runpod worker's IP for optimal security. For a testing setup, its best to just start off with API=false.
 
 
 ## Steps
@@ -22,7 +22,7 @@ Choose a GPU you want to use. The minimal reccomended GPU for the DND Generator 
 
 ### 2. Environment Variables Configuration
 
-In the runpod template you can overwrite any environment variables. The default setup uses the reccomended DND Generator models and hosts the ai inference components standalone (REMOTE=false). If you are already hosting an api server outside of Runpod, in distributed mode, you need to set Remote=true and the REDIS_URL and REDIS_PASS.
+In the runpod template you can overwrite any environment variables. The default setup uses the reccomended DND Generator models and hosts the ai inference components standalone (API=false). If you are already hosting an api server outside of Runpod, in distributed mode, you need to set API=true and the REDIS_URL and REDIS_PASS.
 
 ```bash
 # Startup commands
@@ -30,7 +30,7 @@ STARTUP_COMMAND=./undreamai_server --model /app/data/models/text/model.gguf --ho
 SD_STARTUP_COMMAND=./venv/bin/python launch.py --listen --port 7860 --api --nowebui --skip-torch-cuda-test --no-half-vae --medvram --xformers --skip-version-check
 
 #Configuration
-REMOTE=false # false does not connect llamacpp server to api
+API=false # false does not connect llamacpp server to api
 RUN_SD=true
 REDIS_HOST=redis
 REDIS_PASS=secure_redis_pass
@@ -58,7 +58,7 @@ You should also see both the llamacpp and Stable Diffusion services online, you 
 
 ### 4. Run!
 
-If you are running in standalone mode, export the ports of LLAMACPP and SD and connect to them directly. If you are running in remote mode, connect to your API server and the runpod GPU worker will pick up jobs from it.
+If you are running in standalone mode, export the ports of LLAMACPP and SD and connect to them directly. If you are running in API mode, connect to your API server and the runpod GPU worker will pick up jobs from it.
 
 ### 5. Connect in Unity!
 

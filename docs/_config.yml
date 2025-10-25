@@ -32,6 +32,7 @@ header_pages:
   - index.md
   - quickstart-runpod.md
   - quickstart-selfhost.md
+  - ollama-integration.md
   - model-templates.md
   - architecture.md
   - components.md

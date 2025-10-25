@@ -37,7 +37,7 @@ STARTUP_COMMAND=./undreamai_server --model /app/data/models/text/model.gguf --ho
 SD_STARTUP_COMMAND=./venv/bin/python launch.py --listen --port 7860 --api --skip-torch-cuda-test --no-half-vae --medvram --xformers --skip-version-check
 
 # Configuration
-REMOTE=true # false does not connect llamacpp server to api
+API=true # false does not connect llamacpp server to api
 RUN_SD=true
 REDIS_HOST=redis
 REDIS_PASS=secure_redis_pass
