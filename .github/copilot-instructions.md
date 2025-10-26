@@ -5,7 +5,10 @@
 This is a **microservice-based AI inference server** with Redis queue-based worker architecture:
 
 - **`api/`**: FastAPI service handling HTTP requests, auth, and job queuing
-- **`gpu/`**: Worker service containing both LLM (`llm.py`) and Stable Diffusion (`sd.py`) inference engines
+- **`gpu/`**: Worker service with LLM and Stable Diffusion inference engines
+  - Supports **llama.cpp** (custom `undreamai_server` binary) or **Ollama** for LLM
+  - Uses `sd.py` for Stable Diffusion (shared across both LLM modes)
+- **`ollama/`**: Optional Ollama container for easier model management
 - **`redis`**: Message broker decoupling API from GPU workers using RQ (Redis Queue)
 - **`monitoring/`**: Pre-configured Grafana/Prometheus stack with auto-provisioned dashboards
 - **`nginx/`**: Reverse proxy (commented out by default in docker-compose)
@@ -25,9 +28,14 @@ gpu/data/
 
 ## Environment Configuration Patterns
 
-- **Dual Mode Operation**: `REMOTE=true` (worker connects to remote Redis) vs `REMOTE=false` (standalone with exposed ports)
+- **LLM Backend Selection**: 
+  - `RUN_LLAMACPP=true` + `RUN_OLLAMA=false`: Use llama.cpp with custom binary
+  - `RUN_OLLAMA=true` + `RUN_LLAMACPP=false`: Use Ollama for easier model management
+  - Cannot run both simultaneously
+- **Worker Mode**: `API=true` (worker connects to Redis) vs `API=false` (standalone with exposed ports)
 - **Model Auto-Download**: `MODEL_URL`, `SD_MODEL_URL`, `LORA_URL`, `VAE_URL` trigger downloads in `entrypoint.sh` if models missing
 - **Token Authentication**: `API_TOKENS` as comma-separated list, validated in `api/main.py` via Bearer token
+- **Ollama Configuration**: `OLLAMA_SERVER_URL`, `OLLAMA_MODEL` when using Ollama mode
 
 ## Development Workflows
 
@@ -44,15 +52,17 @@ docker-compose up -d --build
 ```
 
 ### GPU Worker Debugging
-- Port 1337: LLaMA inference endpoint (when `REMOTE=false`)
+- Port 1337: LLaMA inference endpoint (when `API=false`)
 - Port 7860: Stable Diffusion WebUI (when `RUN_SD=true`)
 - Check worker logs: `docker logs velesio-gpu`
 - Redis queue inspection: Connect to Redis on port 6379
 
 ### Model Management
-- Text models: Place `.gguf` files in `gpu/data/models/text/`
+- Text models (llama.cpp): Place `.gguf` files in `gpu/data/models/text/`
+- Text models (Ollama): Pull via `docker exec velesio-ollama ollama pull <model>`
 - Image models: Place `.safetensors`/`.ckpt` in `gpu/data/models/image/models/Stable-diffusion/`
 - Volume-mounted at `/app/data` in containers
+- Ollama models stored in `ollama/models/` (persistent)
 
 ## Project-Specific Conventions
 
@@ -102,4 +112,6 @@ Start with: `cd monitoring && docker-compose up -d`
 - **Model loading**: Verify URLs in `.env` and check `entrypoint.sh` logs
 - **GPU allocation**: Ensure Docker has GPU access and `GPU_LAYERS` > 0
 - **Queue issues**: Monitor Redis queue depth and worker status
-- **Port conflicts**: 1337 (LLM), 7860 (SD), 6379 (Redis), 8000 (API)
+- **Port conflicts**: 1337 (LLM), 7860 (SD), 6379 (Redis), 8000 (API), 11434 (Ollama)
+- **Ollama issues**: Check container is running (`docker ps | grep ollama`), test connection (`curl http://localhost:11434/api/tags`)
+- **Mode conflicts**: Can't run `RUN_OLLAMA=true` and `RUN_LLAMACPP=true` simultaneously

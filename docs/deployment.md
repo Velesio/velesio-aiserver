@@ -26,7 +26,7 @@ Deploy components across multiple servers:
 # Server 1: API + Redis
 docker-compose -f docker-compose.api.yml up -d
 
-# Server 2-N: GPU Workers (connect to remote Redis)
+# Server 2-N: GPU Workers (connect to API Redis)
 docker-compose -f docker-compose.gpu.yml up -d
 
 # Monitoring Server: Centralized observability
@@ -36,7 +36,7 @@ cd monitoring && docker-compose up -d
 ### 🎯 Component-Specific Deployment
 Deploy only the components you need:
 - **API-only**: For serverless GPU workers or external inference services
-- **GPU-only**: For dedicated inference workers connecting to remote APIs
+- **GPU-only**: For dedicated inference workers connecting to API APIs
 - **Monitoring-only**: For centralized observability across multiple deployments
 
 See individual component documentation: [API Service]({{ '/components/api-service' | relative_url }}), [GPU Workers]({{ '/components/gpu-workers' | relative_url }}), [Monitoring Stack]({{ '/components/monitoring-stack' | relative_url }})
@@ -83,14 +83,14 @@ Internet
 
 **Configuration Options**:
 
-#### Standalone Mode (`REMOTE=false`)
+#### Standalone Mode (`API=false`)
 - Hosts the inference endpoint directly on port 1337
 - Ideal for simple setups or direct API access
 - No Redis connection required
 - Access your endpoint at `https://your-pod-id-1337.proxy.runpod.net`
 
-#### Distributed Mode (`REMOTE=true`)
-- Connects to your remote Redis queue
+#### Distributed Mode (`API=true`)
+- Connects to your API Redis queue
 - Best for distributed deployments
 - Requires Redis server accessible from RunPod
 - Set `REDIS_HOST` to your Redis server IP/domain
@@ -99,11 +99,11 @@ Internet
 **Required Environment Variables**:
 ```bash
 # For standalone mode
-REMOTE=false
+API=false
 API_TOKENS=your-secret-token
 
 # For distributed mode  
-REMOTE=true
+API=true
 REDIS_HOST=your-redis-server.com
 REDIS_PASS=your-secure-password
 API_TOKENS=your-secret-token
@@ -362,7 +362,7 @@ API_TOKENS=prod-token-1,prod-token-2,prod-token-3
 LOG_LEVEL=INFO
 CORS_ORIGINS=https://your-app.com,https://api.your-app.com
 
-# Redis Configuration (for remote Redis)
+# Redis Configuration (for API Redis)
 REDIS_URL=redis://your-redis-cluster:6379
 REDIS_PASSWORD=your-redis-password
 

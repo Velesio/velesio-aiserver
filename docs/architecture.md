@@ -43,11 +43,12 @@ Velesio AI Server follows a microservice architecture designed for scalability, 
 │  ┌─────────────────┐  │      │  ┌─────────────────────────┐  │
 │  │ undreamai_server│  │      │  │    Automatic1111        │  │
 │  │ (llama.cpp fork)│  │      │  │      WebUI              │  │
-│  └─────────────────┘  │      │  └─────────────────────────┘  │
-│  ┌─────────────────┐  │      │  ┌─────────────────────────┐  │
-│  │  GGUF Models    │  │      │  │  Stable Diffusion      │  │
-│  │     (Text)      │  │      │  │      Models             │  │
-│  └─────────────────┘  │      │  └─────────────────────────┘  │
+│  │   OR Ollama     │  │      │  └─────────────────────────┘  │
+│  └─────────────────┘  │      │  ┌─────────────────────────┐  │
+│  ┌─────────────────┐  │      │  │  Stable Diffusion      │  │
+│  │  GGUF Models    │  │      │  │      Models             │  │
+│  │     (Text)      │  │      │  └─────────────────────────┘  │
+│  └─────────────────┘  │      │
 └───────────────────────┘      └───────────────────────────────┘
           │                               │
           └─────────────┬─────────────────┘
@@ -120,20 +121,28 @@ llama_queue:
 
 ### 3. GPU Workers
 
-#### LLM Worker (`gpu/llm.py`)
+#### LLM Worker (`gpu/llm.py` or `gpu/ollama_llm.py`)
 
-**Core Technology**: `undreamai_server` (custom llama.cpp fork)
+**Core Technology**: `undreamai_server` (custom llama.cpp fork) or Ollama
 
+**llama.cpp Mode:**
 - **Model Format**: GGUF (GPT-Generated Unified Format)
 - **Inference Engine**: Custom llama.cpp binary optimized for undream.ai
 - **GPU Acceleration**: CUDA with configurable layer offloading
 - **Context Management**: Configurable context windows (2K-32K tokens)
+
+**Ollama Mode:**
+- **Model Format**: Ollama's native format
+- **Inference Engine**: Ollama API server
+- **GPU Acceleration**: Automatic CUDA support
+- **Model Management**: Simplified pull/push workflow
 
 **Features**:
 - Streaming text generation
 - Configurable sampling parameters
 - Multi-turn conversation support
 - Memory-efficient attention mechanisms
+- Drop-in replacement between llama.cpp and Ollama
 
 #### Stable Diffusion Worker (`gpu/sd.py`)
 
@@ -166,7 +175,7 @@ The monitoring stack is a **standalone component** that provides comprehensive o
 - **Metrics Collection**: System, Redis, GPU, and custom application metrics
 - **Alerting**: Configurable alerts for system health and performance  
 - **Data Retention**: Configurable retention (default: 200h of metric history)
-- **Remote Monitoring**: Can monitor multiple Velesio deployments from a central location
+- **API Monitoring**: Can monitor multiple Velesio deployments from a central location
 
 #### Grafana
 - **Pre-configured Dashboards**: Four auto-provisioned dashboards
@@ -245,14 +254,14 @@ For detailed setup and deployment options, see the [Monitoring Stack Component](
 
 ## Deployment Modes
 
-### Standalone Mode (`REMOTE=false`)
+### Standalone Mode (`API=false`)
 - All services run on single machine
 - Redis exposed on localhost:6379
 - Direct worker access on ports 1337/7860
 - Ideal for development and small deployments
 
-### Distributed Mode (`REMOTE=true`)
-- Workers connect to remote Redis instance
+### Distributed Mode (`API=true`)
+- Workers connect to API Redis instance
 - Horizontal scaling of GPU workers
 - Load balancing across multiple machines
 - Production-ready architecture
@@ -321,7 +330,7 @@ services:
 services:
   gpu_worker:
     environment:
-      - REMOTE=true
+      - API=true
       - REDIS_HOST=server1:6379
 ```
 
@@ -329,12 +338,12 @@ services:
 ```bash
 # Central monitoring for all deployments
 cd monitoring
-# Configure prometheus.yml with remote targets
+# Configure prometheus.yml with API targets
 docker-compose up -d
 ```
 
 ### 🎯 Hybrid Deployment
-Mix local and remote components:
+Mix local and API components:
 - API + Redis locally
 - GPU workers on dedicated GPU servers
 - Centralized monitoring for multiple environments
@@ -345,7 +354,7 @@ Mix local and remote components:
 |-----------|------------|---------|
 | API | FastAPI + Uvicorn | High-performance async web framework |
 | Queue | Redis + RQ | Message broker and job queue |
-| LLM Engine | undreamai_server | Custom llama.cpp fork |
+| LLM Engine | llama.cpp / Ollama | Text generation (configurable) |
 | SD Engine | Automatic1111 WebUI | Feature-rich SD implementation |
 | Monitoring | Prometheus + Grafana | Metrics and visualization |
 | Orchestration | Docker Compose | Service coordination |
