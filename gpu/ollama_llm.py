@@ -36,7 +36,7 @@ def tokenize_text(content: str):
     try:
         # Ollama doesn't have a tokenize endpoint, approximate with character count
         # Rough estimate: 1 token ≈ 4 characters
-        tokens = [i for i in range(len(content) // 4)]
+        tokens = list(range(len(content) // 4))
         return {"tokens": tokens}
     except Exception as e:
         logger.error(f"Error tokenizing: {str(e)}")
