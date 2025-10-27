@@ -32,7 +32,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
 # Copy ONLY the compiled llama-server binary from builder stage
 COPY --from=builder /build/llama.cpp/build/bin/llama-server /app/llama-server
 
-# Verify the binary exists and is executable
+# Verify the binary exists and is executable 
 RUN test -f /app/llama-server && chmod +x /app/llama-server
 
 # Copy application files
