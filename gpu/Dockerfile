@@ -24,7 +24,7 @@ WORKDIR /app
 
 # Install only runtime dependencies (minimal, no git/cmake)
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    python3 python3-pip python3-venv wget ca-certificates \
+    python3 python3-pip python3-venv wget ca-certificates git \
     libcurl4 libgomp1 \
     libgl1-mesa-glx libglib2.0-0 libsm6 libxext6 libxrender-dev \
     && rm -rf /var/lib/apt/lists/*

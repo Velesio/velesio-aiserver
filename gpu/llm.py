@@ -21,13 +21,31 @@ def get_template():
     """Get the chat template from the LLaMA server"""
     logger.info("Getting template from LLaMA server")
     try:
-        response = requests.post(f"{LLAMA_SERVER}/template", json={}, timeout=30)
+        # Official llama.cpp uses /api/show endpoint for template info
+        response = requests.post(f"{LLAMA_SERVER}/api/show", json={}, timeout=30)
         response.raise_for_status()
         result = response.json()
         logger.info(f"Template response: {result}")
+        # Return the template field if available, otherwise return the whole response
+        if "template" in result:
+            return {"template": result["template"]}
         return result
     except Exception as e:
         logger.error(f"Error getting template: {str(e)}")
+        return {"error": str(e)}
+
+def get_props():
+    """Get server properties from the LLaMA server"""
+    logger.info("Getting props from LLaMA server")
+    try:
+        # Official llama.cpp uses /props endpoint
+        response = requests.get(f"{LLAMA_SERVER}/props", timeout=30)
+        response.raise_for_status()
+        result = response.json()
+        logger.info(f"Props response: {result}")
+        return result
+    except Exception as e:
+        logger.error(f"Error getting props: {str(e)}")
         return {"error": str(e)}
 
 def tokenize_text(content: str):
@@ -258,6 +276,10 @@ async def process_gpu_tasks():
                     # Handle template request
                     result = get_template()
                     await redis_client.set(f"result:{task_id}", json.dumps({"data": result}), ex=300)
+                elif endpoint == "props":
+                    # Handle props request
+                    result = get_props()
+                    await redis_client.set(f"result:{task_id}", json.dumps({"data": result}), ex=300)
                 elif endpoint == "tokenize":
                     # Handle tokenize request
                     result = tokenize_text(request_data["content"])
@@ -277,7 +299,7 @@ async def process_gpu_tasks():
     logger.info("GPU task processor stopped")
 
 # Add this to make functions available globally for RQ
-__all__ = ['call_inference', 'get_template', 'tokenize_text', 'handle_completion', 'handle_slots']
+__all__ = ['call_inference', 'get_template', 'get_props', 'tokenize_text', 'handle_completion', 'handle_slots']
 
 async def main():
     """Main async function to run both RQ worker and GPU task processor"""
