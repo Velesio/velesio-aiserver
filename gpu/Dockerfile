@@ -1,24 +1,43 @@
+# Stage 1: Build llama-server with CUDA support
+FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 AS builder
+
+WORKDIR /build
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    git build-essential cmake ninja-build libcurl4-openssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Clone, compile llama.cpp with CUDA support, and extract the server binary
+RUN git clone https://github.com/ggerganov/llama.cpp.git && \
+    cd llama.cpp && \
+    mkdir -p build && cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release -DGGML_CUDA=ON -DBUILD_SHARED_LIBS=OFF && \
+    cmake --build . --config Release --target llama-server -j$(nproc) && \
+    test -f ./bin/llama-server || (echo "llama-server binary not found" && exit 1)
+
+# Stage 2: Minimal runtime image
 FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04
 
 WORKDIR /app
 
-# Install only essential system dependencies
+# Install only runtime dependencies
 RUN apt-get update && apt-get install -y \
-    python3 python3-pip python3-venv curl wget git \
-    libgl1-mesa-glx libglib2.0-0 libsm6 libxext6 libxrender-dev libgomp1 \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+    python3 python3-pip python3-venv git wget \
+    libcurl4 libgomp1 \
+    libgl1-mesa-glx libglib2.0-0 libsm6 libxext6 libxrender-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements for reference but don't install yet
+# Copy ONLY the compiled llama-server binary from builder stage
+COPY --from=builder /build/llama.cpp/build/bin/llama-server /app/llama-server
+
+# Verify the binary exists and is executable
+RUN test -f /app/llama-server && chmod +x /app/llama-server
+
+# Copy application files
 COPY requirements.txt /app/
-
-# Copy application code
 COPY entrypoint.sh /app/
 COPY *.py /app/
-
-# Copy llama binaries
-COPY libundreamai_linux-cuda-cu12.2.0.so /app/
-COPY undreamai_server /app/
 
 RUN chmod +x entrypoint.sh
 
