@@ -190,13 +190,77 @@ else
     # Original LLaMA.cpp startup logic
     # Start with startup command from environment variable ONLY if RUN_LLAMACPP is enabled
     if [ "${RUN_LLAMACPP:-true}" = "true" ]; then
+                # Ensure llama-server binary exists in persistent folder; if not, build it there
+                BINARY_DIR="/app/data/binaries"
+                BINARY_PATH="$BINARY_DIR/llama-server"
+                mkdir -p "$BINARY_DIR"
+                if [ ! -x "$BINARY_PATH" ]; then
+                        echo "🔨 llama-server not found in $BINARY_DIR — building from source (CPU-only, conservative flags)..."
+                        echo "🔧 Build dependencies should be installed in the Docker image. Proceeding to build."
+
+                        TMPDIR=$(mktemp -d)
+                        git clone https://github.com/ggml-org/llama.cpp.git "$TMPDIR/llama.cpp" || { echo "❌ git clone failed"; exit 1; }
+                        mkdir -p "$TMPDIR/llama.cpp/build" && cd "$TMPDIR/llama.cpp/build" || exit 1
+
+                                    # Decide whether to build with CUDA support.
+                                    # Use nvcc detection or FORCE_CUDA=1 to enable CUDA build when available.
+                                    if command -v nvcc >/dev/null 2>&1 || [ "${FORCE_CUDA:-0}" = "1" ]; then
+                                            echo "🔌 nvcc detected or FORCE_CUDA=1 — building with CUDA support"
+                                            BUILD_CUDA=ON
+                                            # Use native tuning when building with CUDA for best performance on the build host
+                                            CFLAGS='-O3 -march=native'
+                                            CXXFLAGS="$CFLAGS"
+                                    else
+                                            echo "⚙️  nvcc not detected — building CPU-only portable binary (conservative flags)"
+                                            BUILD_CUDA=OFF
+                                            # Conservative CPU flags to avoid illegal-instruction on varied hosts
+                                            CFLAGS='-O3 -march=x86-64 -mtune=generic -mno-avx -mno-avx2'
+                                            CXXFLAGS="$CFLAGS"
+                                    fi
+
+                                    cmake .. \
+                                        -DCMAKE_BUILD_TYPE=Release \
+                                        -DGGML_CUDA=${BUILD_CUDA} \
+                                        -DGGML_NATIVE=OFF \
+                                        -DBUILD_SHARED_LIBS=OFF \
+                                        -DCMAKE_C_FLAGS="$CFLAGS" \
+                                        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+                                        || { echo "❌ cmake configure failed"; exit 1; }
+
+                        cmake --build . --config Release --target llama-server -j"$(nproc)" || { echo "❌ build failed"; exit 1; }
+                        strip ./bin/llama-server || true
+                        mv ./bin/llama-server "$BINARY_PATH"
+                        chmod +x "$BINARY_PATH"
+                        cd /app
+                        rm -rf "$TMPDIR"
+                        echo "✅ llama-server built and available at $BINARY_PATH"
+                else
+                        echo "✅ Using existing llama-server at $BINARY_PATH"
+                fi
+
         GIT_DISCOVERY_ACROSS_FILESYSTEM=1
         echo "🚀 Starting llama.cpp server..."
-        eval "$STARTUP_COMMAND" &
-        
+
+        # Prefer binary in persistent folder. If STARTUP_COMMAND references 'llama-server' replace it,
+        # otherwise build a default command using the persistent binary.
+        if [ -n "$STARTUP_COMMAND" ]; then
+            # If the user provided a STARTUP_COMMAND that references 'llama-server',
+            # replace the command token with the persistent binary while preserving args.
+            if echo "$STARTUP_COMMAND" | grep -q "llama-server"; then
+                ARGS="${STARTUP_COMMAND#*llama-server}"
+                CMD="$BINARY_PATH$ARGS"
+            else
+                # STARTUP_COMMAND doesn't reference llama-server: run it as-is
+                CMD="$STARTUP_COMMAND"
+            fi
+        else
+            CMD="$BINARY_PATH --model /app/data/models/text/model.gguf --host 0.0.0.0 --port 1337"
+        fi
+        eval "$CMD" &
+
         # Wait for server to start
         sleep 5
-        
+
         # Start the Python LLM worker only if API=true
         if [ "$API" = "true" ]; then
             echo "🔌 Starting LLM worker connected to Redis..."
