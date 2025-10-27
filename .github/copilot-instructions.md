@@ -6,7 +6,7 @@ This is a **microservice-based AI inference server** with Redis queue-based work
 
 - **`api/`**: FastAPI service handling HTTP requests, auth, and job queuing
 - **`gpu/`**: Worker service with LLM and Stable Diffusion inference engines
-  - Supports **llama.cpp** (custom `undreamai_server` binary) or **Ollama** for LLM
+  - Supports **llama.cpp** (standard `llama-server` binary) or **Ollama** for LLM
   - Uses `sd.py` for Stable Diffusion (shared across both LLM modes)
 - **`ollama/`**: Optional Ollama container for easier model management
 - **`redis`**: Message broker decoupling API from GPU workers using RQ (Redis Queue)
@@ -19,12 +19,11 @@ This is a **microservice-based AI inference server** with Redis queue-based work
 
 ```
 gpu/data/
-├── llama/undreamai_server          # Custom llama.cpp binary (not standard)
 ├── models/text/model.gguf          # LLM model (auto-downloaded)
 └── models/image/models/Stable-diffusion/  # SD models (auto-downloaded)
 ```
 
-**Important**: This uses `undreamai_server` (custom llama.cpp fork), not standard llama.cpp. The binary is fetched via `gpu/data/llama/server_setup.sh`.
+**Important**: This uses standard `llama-server` from llama.cpp with CUDA support, compiled during Docker image build.
 
 ## Environment Configuration Patterns
 
@@ -94,7 +93,7 @@ except Exception as e:
 2. Application requirements
 3. Code last (fast-changing)
 
-**Binary Management**: Only copies `undreamai_server` binary, excludes models from image (volume-mounted instead).
+**Binary Management**: Compiles `llama-server` from source with CUDA support in builder stage, copies binary to runtime image. Models are volume-mounted, not included in image.
 
 ## Monitoring Stack
 

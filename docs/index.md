@@ -36,7 +36,7 @@ Velesio AI Server is a production-ready AI inference platform that provides:
 ## Key Features
 
 ### 🚀 **High Performance**
-- Custom llama.cpp binary (`undreamai_server`) or Ollama for flexible LLM deployment
+- Standard llama.cpp server with CUDA support or Ollama for flexible LLM deployment
 - GPU acceleration with CUDA support
 - Asynchronous job processing via Redis Queue
 

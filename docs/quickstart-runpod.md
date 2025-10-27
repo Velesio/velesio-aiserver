@@ -26,7 +26,7 @@ In the runpod template you can overwrite any environment variables. The default 
 
 ```bash
 # Startup commands
-STARTUP_COMMAND=./undreamai_server --model /app/data/models/text/model.gguf --host 0.0.0.0 --port 1337 --gpu-layers 37 --template chatml
+STARTUP_COMMAND=./llama-server --model /app/data/models/text/model.gguf --host 0.0.0.0 --port 1337 --gpu-layers 37 --template chatml
 SD_STARTUP_COMMAND=./venv/bin/python launch.py --listen --port 7860 --api --nowebui --skip-torch-cuda-test --no-half-vae --medvram --xformers --skip-version-check
 
 #Configuration

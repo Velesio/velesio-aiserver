@@ -41,7 +41,7 @@ cp .env.example .env  # Edit tokens and model URLs
 # 3. Launch!
 docker compose up -d
 
-# If you are locally developing you can use the --build flag, and include the undreamai_server binaries in the /gpu dir with the server_setup.sh script
+# If you are locally developing you can use the --build flag to rebuild the images; the llamacpp build stage is quite heavy
 docker compose up -d --build
 
 # There is also an included grafana monitoring stack!

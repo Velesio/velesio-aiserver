@@ -33,7 +33,7 @@ Edit the `.env` file with your settings:
 
 ```bash
 # Startup Commands
-STARTUP_COMMAND=./undreamai_server --model /app/data/models/text/model.gguf --host 0.0.0.0 --port 1337 --gpu-layers 37 --template chatml
+STARTUP_COMMAND=./llama-server --model /app/data/models/text/model.gguf --host 0.0.0.0 --port 1337 --gpu-layers 37 --template chatml
 SD_STARTUP_COMMAND=./venv/bin/python launch.py --listen --port 7860 --api --skip-torch-cuda-test --no-half-vae --medvram --xformers --skip-version-check
 
 # Configuration
@@ -52,10 +52,6 @@ VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/v
 ```
 
 You can check out different model templates in the model templates section.
-
-### 3. (Optional) Self Hosted Setup Configuration
-
-The UndreamAI server binaries are included in the public images, but if you are rebuilding the image you should include them, you can do so with. UndreamAI is used for Unity compatibility but the application works fine with the defualt llamacpp server as well.
 
 ```bash
 # Setup LLM binary and models
