@@ -10,15 +10,22 @@ In runpod only the GPU component can be hosted, you can either host it standalon
 
 Before you begin, ensure you have:
 
-- **A Runpod account** if you don't have one yet, you can use my [refferal link](https://runpod.io?ref=muhg2w55) to get a 5$ starting bonus!
+- **A Runpod account** if you don't have one yet, you can use my [refferal link](https://runpod.io?ref=muhg2w55) to get a 5$ starting bonus!  Its also a great way to support this project!
+
 - If you are running in API=true mode, you need to host the API server externally from Rupod, on AWS Lightsail for example. Make sure to open the redis port just to the Runpod worker's IP for optimal security. For a testing setup, its best to just start off with API=false.
 
+## Image
+
+Runpod tag recommendation
+
+- For Runpod, the template uses the `:amd7702` image tag that is published from this repository for the Runpod RTX 4000 Ada (AMD 7702) pod — this is the tag we tested on that hardware. The `:amd7702` tag contains prebuilt artifacts suited for that environment and should reduce startup friction.
+- The `:amd7702` image is recommended for the RTX 4000 Ada pod, but the `:latest` tag remains available. The `:latest` image will (re)compile the llama.cpp binary where it runs, so if you encounter binary/compatibility issues with the prebuilt tag, try `:latest` which will build locally on the pod instead.
 
 ## Steps
 
 ### 1. Open the [Runpod template link](https://console.runpod.io/hub/template/velesio-ai-server?id=8yqg0h6ps1)
 
-Choose a GPU you want to use. The minimal reccomended GPU for the DND Generator template is the RTX 2000 Ada. You can also use a persistent volume to prevent downloading models on every pod reset.
+Choose a GPU you want to use. The minimal reccomended GPU for the DND Generator template is the RTX 4000 Ada. You can also use a persistent volume to prevent downloading models on every pod reset.
 
 ### 2. Environment Variables Configuration
 
@@ -57,8 +64,6 @@ You should also see both the llamacpp and Stable Diffusion services online, you 
 ![Ready Services]({{ '/assets/images/online.png' | relative_url }})
 
 ### 4. Run!
-
-If you are running in standalone mode, export the ports of LLAMACPP and SD and connect to them directly. If you are running in API mode, connect to your API server and the runpod GPU worker will pick up jobs from it.
 
 ### 5. Connect in Unity!
 

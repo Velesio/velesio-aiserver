@@ -635,6 +635,36 @@ HEALTHCHECK --interval=60s --timeout=30s --start-period=120s --retries=3 \
 
 # Start worker
 CMD ["python3", "llm.py"]
+
+## Note about images and the llama.cpp binary
+
+There are two GPU images provided in the repo and they behave differently with respect to the llama.cpp (`llama-server`) binary:
+
+- Full `Dockerfile` (default): this image includes the build toolchain and will compile the `llama-server` binary where it runs. This is convenient when you don't want to ship a prebuilt binary, but it requires more CPU, disk and time during build/startup.
+
+- `Dockerfile.lite` (lighter): this runtime image is much smaller because it omits the build toolchain. It expects a prebuilt `llama-server` binary to be present in the image context (the repository path `data/binaries/llama-server` is used by convention). When using the `.lite` image make sure the binary is included in the Docker build context and that your startup command points to the correct filename.
+
+Dockerignore guidance:
+
+- Keep excluding large folders (models, venv, downloaded sd assets) to keep image sizes small. Example exclusions to keep in `.dockerignore`:
+
+```text
+venv
+*.pyc
+__pycache__
+data/models/
+gpu/sd/
+```
+
+- For the `.lite` image, ensure the prebuilt binary is NOT ignored so it is available in the build context:
+
+```text
+!data/binaries/llama-server
+```
+
+Runpod images:
+
+- If deploying on Runpod (RTX 4000 Ada / AMD 7702) we publish and recommend using the `:amd7702` image tag which contains prebuilt artifacts tested on that pod. If you prefer the image that compiles `llama-server` at runtime, use the `:latest` tag instead.
 ```
 
 ## Monitoring
