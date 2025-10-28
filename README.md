@@ -14,7 +14,8 @@ High-performance, microservice-based AI inference server with Unity integration 
 
 ## ⚡ Quick Start
 
-- 🚀 **[RunPod Quickstart](docs/quickstart-runpod.md)** - Get started quickly with Runpod!
+- 🚀 **[RunPod Quickstart](docs/quickstart-runpod.md)** - Get started quickly with Runpod! New to RunPod? [Use my refferal link](https://runpod.io?ref=muhg2w55) to get a 5$ bonus and support the project!
+
 - 🚀 **[Self Hosted Quickstart](docs/quickstart-selfhost.md)** - Get started with your own infrastructure!
 
 ## 🎮 Unity Integrations
