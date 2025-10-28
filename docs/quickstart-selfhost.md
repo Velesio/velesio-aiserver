@@ -52,11 +52,6 @@ VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/v
 ```
 
 You can check out different model templates in the model templates section.
-
-```bash
-# Setup LLM binary and models
-cd gpu && ./data/llama/server_setup.sh
-```
 The system will automatically download model from MODEL_RULs on first run, you can also optionally place models in:
 - **LLamacpp models**: `gpu/data/models/text/model.gguf`
 - **SD models**: `gpu/data/models/image/models/`
@@ -65,41 +60,30 @@ The system will automatically download model from MODEL_RULs on first run, you c
 
 When building or running the GPU image you have two options:
 
-- Full `Dockerfile` (default): includes the build toolchain and will compile the `llama-server` (llama.cpp) binary where it runs. This is useful if you don't have a prebuilt binary, but the build step increases startup time and requires more CPU/disk.
+- Full `Dockerfile` (default): includes the build toolchain and will compile the `llama-server` (llama.cpp) binary where it runs. This is useful if you don't have a prebuilt binary, but the build step increases startup time and requires more CPU/disk (~10gb).
 
 - `Dockerfile.lite`: a much smaller runtime image that expects a prebuilt `llama-server` binary inside the image context. By convention place the binary at `data/binaries/llama-server` (or update your startup command to point to the actual filename). Make sure your `.dockerignore` does not exclude that path so the binary is included in the `.lite` build while still excluding large folders like `venv/`, `gpu/sd/` and `data/models/`.
 
-Example `.dockerignore` snippet to exclude big folders but include the binary for `.lite` builds:
-
-```text
-venv
-*.pyc
-__pycache__
-data/models/
-gpu/sd/
-
-!data/binaries/llama-server
-```
-
-If you are deploying to Runpod, we publish a tested tag `:amd7702` for the RTX 4000 Ada (AMD 7702) pod; that tag contains prebuilt artifacts. The `:latest` image will (re)compile `llama-server` where it runs if you prefer a self-compiling image.
-
-### 4. Run
+### 3. Run
 
 ```bash
-# Start all services
-docker-compose up -d
+# API Only:
+docker compose up -d
 
-# (Optional) Rebuild images
-docker-compose up --build -d 
+# LlamaCPP + SD worker:
+docker compose --profile gpu up
 
-# Check service status
-docker-compose ps
+# Ollama:
+docker compose --profile ollama up
 
-# View logs
-docker-compose logs -f
+# Ollama + GPU Worker for FastAPI wrapper (RUN_OLLAMA=true in the .env):
+docker compose --profile ollama --profile gpu up
+
+# If you are locally developing you can use the --build flag to rebuild the images
+docker compose up -d --build
 ```
 
-### 5. Connect in Unity!
+### 4. Connect in Unity!
 
 Refer to one of the Unity integrations sections to start using your AI Inference server in Unity.
 

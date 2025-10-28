@@ -14,42 +14,8 @@ High-performance, microservice-based AI inference server with Unity integration 
 
 ## ⚡ Quick Start
 
-- 🚀 **[Cloud Quickstart](docs/quickstart-runpod.md)** - Get started quickly with Runpod!
+- 🚀 **[RunPod Quickstart](docs/quickstart-runpod.md)** - Get started quickly with Runpod!
 - 🚀 **[Self Hosted Quickstart](docs/quickstart-selfhost.md)** - Get started with your own infrastructure!
-
-### RunPod
-Deploy instantly on RunPod GPU cloud:
-- 🔗 **[One-Click Deploy of GPU component](https://console.runpod.io/deploy?template=3rsr5dzv50&ref=muhg2w55)**
-- Set `API=false` for standalone inference endpoint (make sure to expose llamacpp and SD ports)
-- Set `API=true` to connect to API Redis queue from API component
-
-### Local Setup
-```bash
-# 0. Environment:
-Linux
-NVIDIA GPU with cuda 12.2+ drivers installed
-NVIDIA Container Toolkit
-Docker compose plugin
-
-# 1. Get the code
-git clone https://github.com/velesio/velesio-aiserver.git
-cd velesio-aiserver
-
-# 2. Configure environment
-cp .env.example .env  # Edit tokens and model URLs
-
-# 3. Launch!
-docker compose up -d
-
-# If you are locally developing you can use the --build flag to rebuild the images; the llamacpp build stage is quite heavy
-docker compose up -d --build
-
-# There is also an included grafana monitoring stack!
-cd monitoring
-docker compose up -d
-```
-
-Your API will be available at `http://localhost:8000` 🎉
 
 ## 🎮 Unity Integrations
 
