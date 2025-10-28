@@ -18,7 +18,7 @@ The GPU workers are specialized containers that handle AI inference tasks using 
 
 The GPU workers pull jobs from Redis queue and execute AI inference using:
 
-- **LLM Worker**: Custom `undreamai_server` (llama.cpp fork) for text generation
+- **LLM Worker**: Standard `llama-server` (llama.cpp) for text generation
 - **SD Worker**: Automatic1111 WebUI for image generation
 
 ## Architecture
@@ -58,7 +58,7 @@ The GPU workers pull jobs from Redis queue and execute AI inference using:
 
 ### Core Technology
 
-**Engine**: `undreamai_server` - Custom llama.cpp fork optimized for undream.ai
+**Engine**: `llama-server` - Standard llama.cpp server with CUDA support
 
 **Key Features**:
 - GGUF model format support
@@ -83,9 +83,9 @@ class LLMWorker:
         self.model_loaded = False
         
     def start_server(self):
-        """Start the undreamai_server process"""
-        cmd = [
-            './data/llama/undreamai_server',
+        """Start the llama-server process"""
+        process = subprocess.Popen([
+            './llama-server',
             '--model', './data/models/text/model.gguf',
             '--ctx-size', '4096',
             '--n-gpu-layers', str(os.getenv('GPU_LAYERS', 35)),
@@ -128,7 +128,7 @@ def process_completion_job(self, job_data: Dict[str, Any]) -> Dict[str, Any]:
     max_tokens = job_data.get('max_tokens', 150)
     temperature = job_data.get('temperature', 0.7)
     
-    # Prepare request to undreamai_server
+    # Prepare request to llama-server
     payload = {
         'prompt': prompt,
         'n_predict': max_tokens,
@@ -598,7 +598,7 @@ def get_cached_result(self, prompt: str) -> Optional[Dict[str, Any]]:
 | `SD_MODEL_PATH` | `./data/models/image/` | SD models directory |
 | `CONTEXT_SIZE` | `4096` | LLM context window |
 | `RUN_SD` | `true` | Enable Stable Diffusion |
-| `STARTUP_COMMAND` | `./undreamai_server --model...` | LLM server startup command |
+| `STARTUP_COMMAND` | `./llama-server --model...` | LLM server startup command |
 | `SD_STARTUP_COMMAND` | `./venv/bin/python launch.py...` | Stable Diffusion startup command |
 | `REDIS_URL` | `redis://redis:6379` | Redis connection |
 | `WORKER_TIMEOUT` | `600` | Job processing timeout |
@@ -623,7 +623,7 @@ COPY llm.py sd.py ./
 COPY data/ ./data/
 
 # Set permissions
-RUN chmod +x ./data/llama/undreamai_server
+RUN chmod +x ./llama-server
 
 # Non-root user
 RUN useradd -m -u 1000 worker

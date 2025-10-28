@@ -390,7 +390,7 @@ docker-compose logs Velesio-gpu
 3. **Implement Memory Cleanup**:
    ```bash
    # Clear model cache periodically
-   docker-compose exec Velesio-gpu pkill -f undreamai_server
+   docker-compose exec Velesio-gpu pkill -f llama-server
    ```
 
 ### Queue Backup

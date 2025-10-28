@@ -198,9 +198,49 @@ class SDGenerationRequest(BaseModel):
     n_iter: Optional[int] = 1
 
 # Unity LLM endpoints
+@app.get("/props")
+async def get_props(token: str = Depends(verify_token)):
+    """Get server properties - llama.cpp compatible endpoint"""
+    try:
+        logger.info("Creating props task for async processing")
+        
+        # Create task for Redis
+        task_data = {
+            "endpoint": "props",
+            "data": {},
+            "timestamp": time.time()
+        }
+        
+        # Add to Redis queue
+        task_id = str(uuid.uuid4())
+        await redis_client.lpush("gpu_tasks", json.dumps({
+            "id": task_id,
+            **task_data
+        }))
+        
+        logger.info(f"Props task {task_id} added to Redis queue")
+        
+        # Wait for result
+        result = await wait_for_result(task_id, timeout=30)
+        if result.get("error"):
+            logger.error(f"Props task error: {result['error']}")
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        logger.info(f"Props result: {result.get('data', {})}")
+        return result.get("data", {})
+            
+    except Exception as e:
+        logger.error(f"Error processing props request: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error processing props request: {str(e)}")
+
+@app.get("/template")
+async def get_template_get(token: str = Depends(verify_token)):
+    """Get the chat template from the LLaMA server via Redis async tasks (GET method)"""
+    return await get_template_post(token)
+
 @app.post("/template")
-async def get_template(token: str = Depends(verify_token)):
-    """Get the chat template from the LLaMA server via Redis async tasks"""
+async def get_template_post(token: str = Depends(verify_token)):
+    """Get the chat template from the LLaMA server via Redis async tasks (POST method)"""
     try:
         logger.info("Creating template task for async processing")
         

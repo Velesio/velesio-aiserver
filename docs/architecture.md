@@ -41,7 +41,7 @@ Velesio AI Server follows a microservice architecture designed for scalability, 
 ┌─────────▼─────────────┐      ┌─────────▼─────────────────────┐
 │    LLM Worker         │      │  Stable Diffusion Worker     │
 │  ┌─────────────────┐  │      │  ┌─────────────────────────┐  │
-│  │ undreamai_server│  │      │  │    Automatic1111        │  │
+│  │  llama-server  │  │      │  │    Automatic1111        │  │
 │  │ (llama.cpp fork)│  │      │  │      WebUI              │  │
 │  │   OR Ollama     │  │      │  └─────────────────────────┘  │
 │  └─────────────────┘  │      │  ┌─────────────────────────┐  │
@@ -123,7 +123,7 @@ llama_queue:
 
 #### LLM Worker (`gpu/llm.py` or `gpu/ollama_llm.py`)
 
-**Core Technology**: `undreamai_server` (custom llama.cpp fork) or Ollama
+**Core Technology**: `llama-server` (standard llama.cpp) or Ollama
 
 **llama.cpp Mode:**
 - **Model Format**: GGUF (GPT-Generated Unified Format)
@@ -223,7 +223,7 @@ For detailed setup and deployment options, see the [Monitoring Stack Component](
 3. **Worker Processing**
    - LLM worker polls Redis queue
    - Loads request parameters
-   - Calls `undreamai_server` binary
+   - Calls `llama-server` binary
    - Streams or batches response
    - Stores result in Redis with TTL
 

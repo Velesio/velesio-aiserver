@@ -89,7 +89,7 @@ services:
       - ./ollama/entrypoint.sh:/entrypoint.sh
     ports:
       - "11434:11434"
-    restart: unless-stopped
+    restart: never
     entrypoint: /entrypoint.sh
     deploy:
       resources:
