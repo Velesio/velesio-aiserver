@@ -40,7 +40,7 @@ services:
     image: ghcr.io/velesio/velesio-gpu:latest  
     build:
       context: ./gpu
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.lite
     container_name: velesio-gpu
     ports: 
       - "1337:1337"
