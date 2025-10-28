@@ -1,4 +1,4 @@
-# Exclude the entire data directory except what we explicitly need
+# Exclude the entire data directory; if building .lite you can include the binaries folder in the image
 data/
 # Exclude all model file types
 **/*.ckpt
