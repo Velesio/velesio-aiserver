@@ -50,6 +50,10 @@ All of these components of the scene come together when you fill out the initial
 
 All of the dropdown options in the scene are there to work optimally with the above reccomended model stack, they are trigger words that the portrait generation model expects to generate a specific character. You can visit the model's Civitai page for further details.
 
+## Simple Connector Demos
+
+In the Asset pack you will also find 3 simple demo scenes for llamacpp, ollama and automatic1111 SD, each of them follows the same idea, just click on the VelesioAI Integration game object, configure the server you're connecting to and follow the instructions in the scene.
+
 ---
 
 ## Scripts documentation

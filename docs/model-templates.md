@@ -7,7 +7,7 @@ nav_order: 4
 This page contains templates of model url download stacks for a specific experience. You can use them by placing them in your environment variables.
 
 ## RPG Character Generator:
-Recommended for the RPG Character Generator Unity Asset.
+Recommended for the RPG Character Generator Demo Scene from the Unity integration Asset.
 [DarkChampion-Instruct](https://huggingface.co/DavidAU/Llama-3.2-8X3B-MOE-Dark-Champion-Instruct-uncensored-abliterated-18.4B-GGUF) used for RPG themed text generation. For image Dreamshaper combined with DND NPC Portraits Lora and stabilityAI VAE.
 
 ```bash
@@ -15,6 +15,11 @@ MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen
 SD_MODEL_URL=https://civitai.com/api/download/models/128713?type=Model&format=SafeTensor&size=pruned&fp=fp16
 LORA_URL=https://civitai.com/api/download/models/1569286?type=Model&format=SafeTensor
 VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/vae-ft-mse-840000-ema-pruned.safetensors
+
+
+#Other LoRA options
+https://civitai.com/models/102885/dnd-npc-portraits
+https://civitai.com/models/656440/dnd-npc-character-portrait-lora-pen-and-paper
 ```
 
 ## Low Specs:
