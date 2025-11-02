@@ -89,7 +89,6 @@ services:
       - ./ollama/entrypoint.sh:/entrypoint.sh
     ports:
       - "11434:11434"
-    restart: never
     entrypoint: /entrypoint.sh
     deploy:
       resources:
@@ -97,7 +96,7 @@ services:
           devices:
             - capabilities: [gpu]
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://127.0.0.1:11434/api/tags"]
+      test: ["CMD", "ollama", "list"]
       interval: 10s
       timeout: 3s
       retries: 10

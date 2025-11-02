@@ -73,7 +73,7 @@ def handle_completion(request_dict):
         # Convert Unity request to LLaMA.cpp format
         llama_request = {
             "prompt": request_dict["prompt"],
-            "id_slot": request_dict.get("id_slot", -1),  # Critical: Pass slot ID for context
+            "id_slot": request_dict.get("id_slot", -1),
             "temperature": request_dict.get("temperature", 0.2),
             "top_k": request_dict.get("top_k", 40),
             "top_p": request_dict.get("top_p", 0.9),

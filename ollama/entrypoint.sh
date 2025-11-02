@@ -17,7 +17,7 @@ SERVER_PID=$!
 # 2) Wait for the API to become available
 echo "Waiting for Ollama API to become ready..."
 for i in {1..60}; do
-  if curl -sf http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
+  if ollama list >/dev/null 2>&1; then
     echo "Ollama API is ready!"
     break
   fi
@@ -35,11 +35,30 @@ else
   }
 fi
 
-# 4) Optional: Warm up the model once to keep it hot
-echo "Warming up model: $OLLAMA_MODEL"
-curl -sS http://127.0.0.1:11434/api/generate \
-  -H "Content-Type: application/json" \
-  -d "{\"model\":\"$OLLAMA_MODEL\",\"prompt\":\" \"}" >/dev/null 2>&1 || true
+# 4) Pre-heat the model with retries and proper waiting
+echo "Pre-heating model: $OLLAMA_MODEL (this may take 10-30 seconds...)"
+WARMUP_SUCCESS=false
+for attempt in {1..5}; do
+  echo "  Warmup attempt $attempt/5..."
+  
+  # Use ollama run with a short prompt to warm up the model
+  RESPONSE=$(ollama run "$OLLAMA_MODEL" "Hi" 2>&1)
+  EXIT_CODE=$?
+  
+  if [[ $EXIT_CODE -eq 0 ]] && [[ -n "$RESPONSE" ]]; then
+    echo "✓ Model pre-heated successfully!"
+    echo "  Response: $(echo "$RESPONSE" | head -c 100)..."
+    WARMUP_SUCCESS=true
+    break
+  else
+    echo "  ⚠️ Warmup attempt $attempt failed (exit code: $EXIT_CODE), retrying in 3s..."
+    sleep 3
+  fi
+done
+
+if [[ "$WARMUP_SUCCESS" == "false" ]]; then
+  echo "⚠️ All warmup attempts failed - model will load on first request"
+fi
 
 # 5) Wait on the Ollama server process
 echo "Ollama server started..."
