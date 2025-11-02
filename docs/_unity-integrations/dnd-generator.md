@@ -1,17 +1,17 @@
 ---
 layout: page
-title: RPG Generator
+title: Velesio AIntegration
 parent: Unity Integrations
 nav_order: 3
 ---
 
 
 ## Introduction
-The RPG Character Generator Unity asset fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has one scene which features a RPG Character generator that allows playes to generate and talk to DND characters in various scenarios. It is a combination of two open source projects, Undream LLM for unity and dobrado76's Stable Diffusion Integration for unity to create a comprehensive tool for AI generated content, both for development and runtime.
+The Velesio AIntegration Unity asset fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has one scene which features a RPG Character generator that allows playes to generate and talk to DND characters in various scenarios. It is a combination of two open source projects, Undream LLM for unity and dobrado76's Stable Diffusion Integration for unity to create a comprehensive tool for AI generated content, both for development and runtime.
 
 All of the scenes from the asset pack were developed for and tested in Full HD (1920x1080 resolution), that is reccomended for testing.
 
-The AI models stack is used to generate all of the content showcased in the asset's marketing material.
+The AI models stack is used to generate all of the content showcased in the asset's marketing material. Also reccomended for the RPG Generator demo scene since the drop-down menu options are designated to utilize trigger words in the LoRA that is used. The asset's font also requires TMP and TMP Extras to be installed, you can do so from Window > TextMeshPro in the Editor.
 
 ```bash
 MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf

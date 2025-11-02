@@ -95,12 +95,12 @@ services:
         reservations:
           devices:
             - capabilities: [gpu]
-    healthcheck:
-      test: ["CMD", "ollama", "list"]
-      interval: 10s
-      timeout: 3s
-      retries: 10
-      start_period: 10s
+    # healthcheck:
+    #   test: ["CMD", "ollama", "list"]
+    #   interval: 10s
+    #   timeout: 3s
+    #   retries: 10
+    #   start_period: 10s
     labels:
       container_name: "velesio-ollama"
       service_name: "velesio"
