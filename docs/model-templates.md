@@ -8,7 +8,7 @@ This page contains templates of model url download stacks for a specific experie
 
 ## RPG Character Generator:
 Recommended for the RPG Character Generator Demo Scene from the Unity integration Asset.
-[DarkChampion-Instruct](https://huggingface.co/DavidAU/Llama-3.2-8X3B-MOE-Dark-Champion-Instruct-uncensored-abliterated-18.4B-GGUF) used for RPG themed text generation. For image Dreamshaper combined with DND NPC Portraits Lora and stabilityAI VAE.
+[DarkChampion-Instruct](https://huggingface.co/DavidAU/Llama-3.2-8X3B-MOE-Dark-Champion-Instruct-uncensored-abliterated-18.4B-GGUF) used for RPG themed text generation. For image Dreamshaper combined with RPG NPC Portraits Lora and stabilityAI VAE.
 
 ```bash
 MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q8_0.gguf
@@ -18,8 +18,8 @@ VAE_URL=https://huggingface.co/stabilityai/sd-vae-ft-mse-original/resolve/main/v
 
 
 #Other LoRA options
-https://civitai.com/models/102885/dnd-npc-portraits
-https://civitai.com/models/656440/dnd-npc-character-portrait-lora-pen-and-paper
+https://civitai.com/models/102885/rpg-npc-portraits
+https://civitai.com/models/656440/rpg-npc-character-portrait-lora-pen-and-paper
 ```
 
 ## Low Specs:

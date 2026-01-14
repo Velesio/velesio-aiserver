@@ -25,11 +25,11 @@ Runpod tag recommendation
 
 ### 1. Open the [Runpod template link](https://console.runpod.io/hub/template/velesio-ai-server?id=8yqg0h6ps1)
 
-Choose a GPU you want to use. The minimal reccomended GPU for the DND Generator template is the RTX 4000 Ada. You can also use a persistent volume to prevent downloading models on every pod reset.
+Choose a GPU you want to use. The minimal reccomended GPU for the RPG Generator template is the RTX 4000 Ada. You can also use a persistent volume to prevent downloading models on every pod reset.
 
 ### 2. Environment Variables Configuration
 
-In the runpod template you can overwrite any environment variables. The default setup uses the reccomended DND Generator models and hosts the ai inference components standalone (API=false). If you are already hosting an api server outside of Runpod, in distributed mode, you need to set API=true and the REDIS_URL and REDIS_PASS.
+In the runpod template you can overwrite any environment variables. The default setup uses the reccomended RPG Generator models and hosts the ai inference components standalone (API=false). If you are already hosting an api server outside of Runpod, in distributed mode, you need to set API=true and the REDIS_URL and REDIS_PASS.
 
 ```bash
 # Startup commands
