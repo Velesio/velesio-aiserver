@@ -7,7 +7,7 @@ nav_order: 3
 
 
 ## Introduction
-[The PersonaForge Unity asset](https://assetstore.unity.com/preview/335152/1228038) fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has one scene which features a RPG Character generator that allows playes to generate and talk to RPG characters in various scenarios. It is a combination of two open source projects, Undream LLM for unity and dobrado76's Stable Diffusion Integration for unity to create a comprehensive tool for AI generated content, both for development and runtime.
+[The PersonaForge Unity asset](https://assetstore.unity.com/preview/335152/1228038) fully utilizes every feature of the Velesio AIServer and is the optimal way to utilize it. Currently the Generator has a minigame scene which features a RPG Character generator that allows playes to generate and talk to RPG characters in various scenarios.
 
 All of the scenes from the asset pack were developed for and tested in Full HD (1920x1080 resolution), that is reccomended for testing.
 
@@ -56,129 +56,311 @@ All of the dropdown options in the scene are there to work optimally with the ab
 
 In the Asset pack you will also find 3 simple demo scenes for llamacpp, ollama and automatic1111 SD, each of them follows the same idea, just click on the VelesioAI Integration game object, configure the server you're connecting to and follow the instructions in the scene.
 
----
+## Simple AI Chat
 
-## Scripts documentation
+The Asset also features a simple chat feature, simply go to Window > Velesio > AI Chat Window
 
-### `CharacterConfigurator.cs`
-
-**Purpose:**
-
-This script acts as the bridge between the user interface for character creation and the backend generation logic. It collects all user-defined parameters from input fields and dropdowns and passes them to the `PromptButton` script to initiate the character generation process.
-
-
-**Key Components:**
-- **UI Elements:** A collection of `TMP_InputField`, `TMP_Dropdown`, and `Toggle` elements that capture user preferences for the character's name, race, class, universe, alignment, level, context, and portrait description.
-- **`startGenerationButton`:** The `Button` that triggers the character generation.
-- **Dependencies:**
-    - `promptButtonScript`: A required reference to the `PromptButton` script, which it calls to start the generation.
-    - `sceneManager`: A required reference to the `SceneManager` to control UI panel transitions.
-
-
-**Core Methods:**
-- `TriggerGeneration()`: Gathers all data from the UI inputs, determines if any values need to be randomized, and calls `promptButtonScript.StartCharacterGeneration()` with the final parameters. It also instructs the `SceneManager` to switch to the background/results view.
-- `ShowConfiguration()`: Resets all UI fields to their default state and tells the `SceneManager` to return to the configuration view.
-- `ShowLoadingIndicator()` / `HideLoadingIndicator()`: These methods are called by `PromptButton` to toggle the loading animation via the `SceneManager`.
-
+It can be used for convenient debugging on LLM connectivity as well as brainstorming ideas within Unity and your managed hardware!
 
 ---
 
+## Scripts Documentation
 
-### `PromptButton.cs`
-
-**Purpose:**
-
-This is the central script for the character generation logic. It constructs a detailed prompt for the LLM based on the template and user-provided constraints. After receiving the character description from the LLM, it parses the response and, if enabled, constructs a new prompt to generate a character portrait using the Stable Diffusion script.
-
-
-**Key Components:**
-- **LLM Components:**
-    - `llmCharacter`: The `LLMCharacter` component used to generate the character's text description.
-    - `sdImageGenerator`: The `StableDiffusionText2Image` component used for generating the portrait.
-- **UI Elements:**
-    - `responseText`: A `Text` element to display the generated character sheet.
-    - `characterPortraitImage`: A `RawImage` to display the generated character portrait.
-- **`characterPrompt`:** A `TextArea` string that serves as the base template for the LLM.
-- **`portraitStylePrefix` / `negativePrompt`:** Strings used to refine the prompt sent to the image generator for better results.
-- **Dependencies:**
-    - `chatInterface` (`DemoScript`): Used to pass the final character context to the chat system.
-    - `characterConfigurator`: Used to show/hide the loading indicator.
-    - `sceneManager`: Used to update the "Current Situation" text on the background panel.
-
-
-**Core Methods:**
-- `StartCharacterGeneration(...)`: The main entry point. It builds the final text prompt, awaits the response from the `llmCharacter`, parses the result, and then triggers the `sdImageGenerator`.
-- `BuildComprehensiveImagePrompt(...)`: Creates a detailed prompt for the image generator by combining the `portraitStylePrefix` with key details extracted from the generated character description.
-- `DisplayCharacterPortrait(Texture2D portraitTexture)`: A callback method that is executed when the `sdImageGenerator` finishes. It applies the received `Texture2D` to the `characterPortraitImage`.
-- `CancelRequest()`: Stops any ongoing LLM or Stable Diffusion requests and resets the UI.
-
+```
+PersonaForge/
+├── Demos/
+│   ├── RPG Character Generator/    ← Main demo scene & scripts
+│   ├── Simple LlamaCPP/            ← Basic LlamaCPP example
+│   ├── Simple Ollama/              ← Basic Ollama example
+│   └── Simple SD/                  ← Basic Stable Diffusion example
+├── Scripts/
+│   ├── Runtime/
+│   │   ├── Llamacpp/               ← LlamaCPP integration
+│   │   ├── Ollama/                 ← Ollama API wrapper
+│   │   └── StableDiffusion/        ← Image generation
+│   └── Editor/                     ← Custom inspectors
+└── Settings/                       ← ScriptableObject configs
+```
 
 ---
 
+## Architecture Overview
 
-### `RPGCharacter.cs` (Component: `DemoScript`)
-
-**Purpose:**
-
-This script manages the interactive chat functionality. Once a character is generated, this script takes over to facilitate a role-playing conversation. It uses the generated character's information, universe, and situation to maintain context in its conversation with the player.
-
-
-**Key Components:**
-- **`llmCharacter`:** The `LLMCharacter` component used to generate in-character chat responses.
-- **UI Elements:**
-    - `playerText`: An `InputField` for the user to type messages.
-    - `AIText`: A `TextMeshProUGUI` element to display the conversation log.
-- **`systemPrompt`:** A string that instructs the LLM to respond in character based on the provided context.
-- **`chatHistory`:** A `List<string>` that stores the conversation, which is used to update the chat display.
-
-
-**Core Methods:**
-- `SetCharacterContext(string characterInfo, string universe, string context)`: Called by `PromptButton` after generation is complete. It initializes the chat by providing the script with the character's details, universe, and current situation. It also triggers an initial in-character remark from the LLM.
-- `onInputFieldSubmit(string message)`: Triggered when the player sends a message. It constructs a new prompt including the system prompt, character context, and the player's message, then sends it to the `llmCharacter`.
-- `SetAIText(string text)`: A callback for the `llmCharacter.Chat` call that updates the AI's response in the chat window as it's being streamed.
-
----
-
-
-### `SceneManager.cs`
-
-**Purpose:**
-
-This script acts as a simple state machine for the UI. It manages which panels (Configuration, Background, Chat) are active, ensuring that the user only sees the relevant interface for the current state of the application.
-
-
-**Key Components:**
-- **UI Panels:** `GameObject` references to the different panels that make up the UI (`configurationPanel`, `backgroundPanel`, `chatPanel`, `loadingIndicator`).
-- **Navigation Buttons:** `Button` references for navigating between the "Background" and "Chat" views.
-- **`SceneState` Enum:** An enum (`Configuration`, `Background`, `Chat`) to define the possible UI states.
-
-
-**Core Methods:**
-- `SwitchToScene(SceneState newState)`: The primary method for changing the application's state. It deactivates all panels and then activates only the ones required for the `newState`.
-- `ShowLoadingIndicator(bool show)`: Toggles the visibility of the `loadingIndicator` GameObject.
-- `UpdateCurrentSituation(string situationText)`: Updates a `Text` element on the background panel to display the character's current context.
-- `ResetToConfiguration()`: A public method to easily return the application to its initial configuration state.
-
+```
+┌─────────────────────────┐
+│  CharacterConfigurator  │  ← Collects UI inputs
+└───────────┬─────────────┘
+            │
+            ▼
+┌─────────────────────────┐
+│        Prompt.cs        │  ← Builds prompts, calls LLM, triggers SD
+└───────────┬─────────────┘
+            │
+    ┌───────┴───────┐
+    ▼               ▼
+┌──────────┐  ┌──────────┐
+│ LlamaCPP │  │  Ollama  │  ← Dual inference backends
+└──────────┘  └──────────┘
+            │
+            ▼
+┌─────────────────────────┐
+│   Stable Diffusion      │  ← Portrait generation
+└───────────┬─────────────┘
+            │
+            ▼
+┌─────────────────────────┐
+│    RPGCharacter.cs      │  ← Interactive roleplay chat
+└─────────────────────────┘
+```
 
 ---
 
+## RPG Character Generator Scripts
 
-### `SimpleScene.cs` (Component: `SimpleLLMPrompt`)
+### CharacterConfigurator.cs
 
-**Purpose:**
-
-This script provides a minimal, self-contained example of how to use the `LLMCharacter` component. It is not used in the main D&D character generator scene but is included as a basic demonstration of sending a prompt to an LLM and receiving a streaming response.
-
+**Purpose:** The bridge between the character creation UI and the generation logic. Collects user parameters from the interface and passes them to the `Prompt` script.
 
 **Key Components:**
-- **`llmCharacter`:** The `LLMCharacter` component to interact with.
-- **UI Elements:**
-    - `promptInput`: A `TMP_InputField` for user input.
-    - `responseText`: A `TextMeshProUGUI` to display the LLM's response.
-- **`systemPrompt`:** A basic instruction for the AI assistant.
-
+- **UI Elements:** `TMP_InputField`, `TMP_Dropdown`, and `Toggle` elements for character name, race, class, universe, alignment, level, context, and portrait description.
+- **Inference Dropdown:** Selects between "Undream AI" (LlamaCPP) or "Ollama" backends.
+- **Dependencies:** Requires references to `Prompt` and `SceneManager` scripts.
 
 **Core Methods:**
-- `OnSubmitPrompt()`: Called when the user submits text. It sends the input to the `llmCharacter.Chat` method.
-- `OnResponseUpdate(string partialResponse)`: A callback that updates the `responseText` with the streaming output from the LLM.
-- `OnResponseComplete()`: A callback executed when the full response has been received.
+| Method | Description |
+|--------|-------------|
+| `TriggerGeneration()` | Gathers UI inputs, handles randomization, and initiates character generation. |
+| `ShowConfiguration()` | Resets UI fields and returns to the configuration view. |
+| `ShowLoadingIndicator()` / `HideLoadingIndicator()` | Toggles the loading animation via `SceneManager`. |
+
+---
+
+### Prompt.cs
+
+**Purpose:** The central orchestrator for character generation. Constructs LLM prompts, handles dual inference backends (LlamaCPP/Ollama), parses responses, and triggers portrait generation via Stable Diffusion.
+
+**Key Components:**
+- **LLM Components:** `llmCharacter` (LlamaCPP) and `sdImageGenerator` (Stable Diffusion).
+- **Ollama Config:** `ollamaUrl` and `ollamaModel` for local Ollama inference.
+- **Prompt Templates:** `characterPrompt`, `portraitStylePrefix`, and `negativePrompt`.
+
+**Core Methods:**
+| Method | Description |
+|--------|-------------|
+| `StartCharacterGeneration(...)` | Main entry point. Builds prompts, calls LLM, parses results, triggers image generation. |
+| `GenerateWithOllama(string prompt)` | Handles streaming generation via the Ollama backend. |
+| `BuildComprehensiveImagePrompt(...)` | Creates a detailed Stable Diffusion prompt from the character description. |
+| `DisplayCharacterPortrait(Texture2D)` | Callback that applies the generated portrait texture to the UI. |
+| `CancelRequest()` | Stops ongoing requests and resets UI state. |
+
+---
+
+### RPGCharacter.cs
+
+**Purpose:** Manages the interactive roleplay chat after character generation. Maintains conversation context and supports both LlamaCPP and Ollama backends.
+
+**Key Components:**
+- **`llmCharacter`:** LlamaCPP component for chat responses.
+- **Ollama Config:** `ollamaUrl` and `ollamaModel` for local inference.
+- **`chatHistory`:** Stores the conversation log.
+
+**Core Methods:**
+| Method | Description |
+|--------|-------------|
+| `SetCharacterContext(...)` | Initializes the chat with the character's details and triggers an opening remark. |
+| `onInputFieldSubmit(string message)` | Sends player messages to the LLM and displays the streamed response. |
+| `SetAIText(string text)` | Updates the chat display during response streaming. |
+
+---
+
+### SceneManager.cs
+
+**Purpose:** A simple UI state machine that manages panel visibility for different application states.
+
+**Key Components:**
+- **UI Panels:** `configurationPanel`, `backgroundPanel`, `chatPanel`, `loadingIndicator`.
+- **`SceneState` Enum:** `Configuration`, `Background`, `Chat`.
+
+**Core Methods:**
+| Method | Description |
+|--------|-------------|
+| `SwitchToScene(SceneState newState)` | Activates the appropriate panels for the given state. |
+| `ShowLoadingIndicator(bool show)` | Toggles the loading indicator visibility. |
+| `UpdateCurrentSituation(string text)` | Updates the "Current Situation" text on the background panel. |
+| `ResetToConfiguration()` | Returns the UI to the initial configuration state. |
+
+---
+
+## LlamaCPP Integration
+
+Located in `Scripts/Runtime/Llamacpp/`
+
+### How It Works
+
+LlamaCPP provides high-performance LLM inference. The integration connects to a **remote llama.cpp server** (local server management has been removed for simplicity).
+
+### Key Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `LLM.cs` | Server configuration component. Manages connection settings (port, context size, API key). |
+| `LLMCaller.cs` | Base class for making LLM requests. Handles local/remote switching and request management. |
+| `LLMChatTemplates.cs` | Chat template definitions for different model formats. |
+| `LLMInterface.cs` | Request/response data structures for the llama.cpp API. |
+
+### Basic Usage
+
+```csharp
+// LLMCaller handles the connection
+public LLMCaller llmCharacter;
+
+// Send a chat message and receive streaming response
+string response = await llmCharacter.Chat(prompt, OnPartialResponse);
+
+// Callback for streaming tokens
+void OnPartialResponse(string partial) {
+    responseText.text = partial;
+}
+```
+
+### Configuration
+
+- **Remote Mode:** Set `remote = true` and configure `host` (e.g., `localhost:13333`).
+- **Context Size:** Adjust `contextSize` on the `LLM` component (default: 8192).
+- **Chat Template:** Set the appropriate template for your model in `chatTemplate`.
+
+---
+
+## Ollama Integration
+
+Located in `Scripts/Runtime/Ollama/`
+
+### How It Works
+
+Ollama provides a simple REST API for running LLMs locally. The integration wraps the Ollama API with async/await patterns and streaming support.
+
+### Key Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `Chat.cs` | Chat completions with history management. Supports streaming responses. |
+| `Generate.cs` | Raw text generation without chat context. |
+| `Embeddings.cs` | Generate vector embeddings for RAG applications. |
+| `RAG.cs` | Retrieval Augmented Generation helpers. |
+| `ToolCalling.cs` | Function/tool calling support. |
+| `Payload.cs` | Request/response data structures. |
+
+### Basic Usage
+
+```csharp
+// Initialize a chat session
+Ollama.InitChat(historyLimit: 8, system: "You are a helpful assistant.");
+
+// Send a chat message (non-streaming)
+string response = await Ollama.Chat("gemma3:4b", "Hello!");
+
+// Send a chat message (streaming)
+await Ollama.ChatStream(
+    onTextReceived: (text) => responseText.text += text,
+    model: "gemma3:4b",
+    prompt: "Tell me a story"
+);
+```
+
+### Configuration
+
+- **Server URL:** Configure via `OllamaSettings` ScriptableObject or directly in scripts.
+- **Model:** Use Ollama model syntax (e.g., `gemma3:4b`, `llama3:8b`).
+- **Keep Alive:** Set how long the model stays loaded in memory (default: 300 seconds).
+
+### Chat History
+
+```csharp
+// Save chat to disk
+Ollama.SaveChatHistory("mychat.dat");
+
+// Load chat from disk
+Ollama.LoadChatHistory("mychat.dat", historyLimit: 8);
+```
+
+---
+
+## Stable Diffusion Integration
+
+Located in `Scripts/Runtime/StableDiffusion/`
+
+### How It Works
+
+Connects to an **Automatic1111 Stable Diffusion WebUI** server to generate images from text prompts.
+
+### Key Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `StableDiffusionGenerator.cs` | Base class with progress tracking and server communication. |
+| `StableDiffusionText2Image.cs` | Generate images from text prompts. |
+| `StableDiffusionImage2Image.cs` | Transform existing images with prompts. |
+| `StableDiffusionText2Material.cs` | Generate PBR materials from text. |
+| `StableDiffusionConfiguration.cs` | Server profiles and global settings. |
+| `SDSettings.cs` | Per-profile generation defaults. |
+
+### Basic Usage
+
+```csharp
+public StableDiffusionText2Image sdGenerator;
+
+// Configure the prompt
+sdGenerator.prompt = "fantasy warrior portrait, detailed, dramatic lighting";
+sdGenerator.negativePrompt = "blurry, low quality";
+sdGenerator.width = 512;
+sdGenerator.height = 512;
+sdGenerator.steps = 30;
+
+// Subscribe to completion event
+sdGenerator.OnImageGenerated.AddListener(OnPortraitGenerated);
+
+// Generate
+sdGenerator.Generate();
+
+void OnPortraitGenerated(Texture2D texture) {
+    portraitImage.texture = texture;
+}
+```
+
+### Configuration
+
+- **Server URL:** Configure in `StableDiffusionConfiguration` component.
+- **Sampler:** Select from available samplers (e.g., `Euler a`, `DPM++ 2M`).
+- **Model:** Select from models available on your SD server.
+- **Parameters:**
+  - `steps`: Number of diffusion steps (higher = better quality, slower).
+  - `cfgScale`: How closely to follow the prompt (7-12 typical).
+  - `seed`: Use `-1` for random, or set a specific seed for reproducibility.
+  - `width/height`: Image dimensions (128-2048, must be multiples of 8).
+
+### Server Profiles
+
+Use `StableDiffusionConfiguration` to manage multiple server profiles:
+- Local development server
+- Remote production server
+- Different model configurations
+
+---
+
+## Quick Reference: Dual Inference Support
+
+The asset supports two LLM backends:
+
+| Backend | Use Case | Configuration |
+|---------|----------|---------------|
+| **LlamaCPP** | Remote llama.cpp server | Set `host` and `port` on `LLM` component |
+| **Ollama** | Local Ollama server | Set URL and model in scripts or `OllamaSettings` |
+
+Select your preferred backend via the **Inference Method** dropdown in the character configuration UI.
+
+---
+
+## Need Help?
+
+- [Full Documentation](https://velesio.github.io/velesio-aiserver/unity-integrations/rpg-generator/)
+- [Discord Support](https://discord.gg/9c6JZedYNc)
