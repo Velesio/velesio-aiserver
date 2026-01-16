@@ -18,12 +18,11 @@ High-performance, microservice-based AI inference server with Unity integration 
 
 - 🚀 **[Self Hosted Quickstart](docs/quickstart-selfhost.md)** - Get started with your own infrastructure!
 
-## 🎮 Unity Integrations
+## 🎮 Unity Integration
 
 Built specifically for Unity developers:
 
-- **[LLM for Unity](https://assetstore.unity.com/packages/tools/ai-ml-integration/llm-for-unity-273604)** - Text Generation
-- **[SD Integration For Untiy](https://github.com/dobrado76/Stable-Diffusion-Unity-Integration)** - Image Generation
+- **[Velesio AIntegration on the Unity Asset Store!](https://assetstore.unity.com/packages/tools/generative-ai/velesio-aintegration-self-hosted-ai-bridge-for-unity-335152)**
 
 ## 📚 Documentation
 
@@ -60,8 +59,6 @@ Distributed microservice design for maximum flexibility:
 ---
 
 ## 🔌 Open Source References
-[UndreamAI UnityAsset and Server](https://github.com/undreamai)
-[dobrado76 SD Integration for Unity](https://github.com/dobrado76/Stable-Diffusion-Unity-Integration)
 [Automatic1111 SD Web server](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 [LLAMACPP](https://github.com/ggml-org/llama.cpp)
 
